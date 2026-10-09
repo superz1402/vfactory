@@ -1,4 +1,5 @@
 runs/
 __pycache__/
 .visitor_token
+.tg_offset
 *.pyc
