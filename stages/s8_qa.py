@@ -65,9 +65,24 @@ def decode_clean(final):
     return r.returncode == 0 and "Error" not in (r.stderr or "")
 
 
+def _source_stats(run_dir):
+    """Source mix from either pipeline: stock (04_shots.json) or charmedia
+    (04_charmedia.json — every cut is face-verified real video, no stills)."""
+    sp = os.path.join(run_dir, "04_shots.json")
+    cp = os.path.join(run_dir, "04_charmedia.json")
+    if os.path.exists(sp):
+        return json.load(open(sp))["stats"]
+    if os.path.exists(cp):
+        cm = json.load(open(cp))
+        n = sum(len(v.get("cuts", [])) for v in cm.get("scenes", {}).values())
+        return {"video_shots": n, "stills": 0, "still_frac": 0.0,
+                "note": f"charmedia: {n} face-verified video cuts (0 stills)"}
+    return {"video_shots": 0, "stills": 0, "still_frac": 1.0,
+            "note": "unknown source mix"}
+
+
 def run(run_dir):
     final = os.path.join(run_dir, "final.mp4")
-    shots = json.load(open(os.path.join(run_dir, "04_shots.json")))
     tl = json.load(open(os.path.join(run_dir, "06_timeline.json")))
     dur = _ffprobe_dur(final)
 
@@ -87,7 +102,7 @@ def run(run_dir):
          f"{cm['cuts_per_min']} cpm (refs: 13.1-13.5)")
     gate("asl<=6.5s", cm["asl_s"] <= 6.5, f"ASL {cm['asl_s']}s (refs: 4.4-4.6s)")
 
-    stats = shots["stats"]
+    stats = _source_stats(run_dir)
     gate("video_shots>=55pct", stats["still_frac"] <= 0.45,
          f"{stats['video_shots']} video / {stats['stills']} stills "
          f"({round(100-stats['still_frac']*100)}% video)")
