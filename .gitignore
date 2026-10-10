@@ -3,3 +3,4 @@ __pycache__/
 .visitor_token
 .tg_offset
 *.pyc
+footage/music/cache/

@@ -1,0 +1,1143 @@
+{
+ "character": "ahyeon",
+ "built": "2026-10-10 06:36:29",
+ "sources": [
+  {
+   "video_id": "xw7Y2gviWbA",
+   "title": "BABYMONSTER - AHYEON 'Dangerously' COVER (Clean Ver.)",
+   "channel": "BABYMONSTER",
+   "url": "https://www.youtube.com/watch?v=xw7Y2gviWbA",
+   "kind": "solo",
+   "workspace": "ahyeon-studioch",
+   "normalized": "/home/z/my-project/cce-ws/ahyeon-studioch/output/analysis/normalized.mp4",
+   "duration": 146.12,
+   "raw_intervals": [
+    {
+     "start": 28.028,
+     "end": 33.033,
+     "duration": 5.005,
+     "n_samples": 11,
+     "mean_cos": 0.4874,
+     "max_cos": 0.5496,
+     "shots": [
+      0
+     ]
+    },
+    {
+     "start": 35.035,
+     "end": 38.038,
+     "duration": 3.003,
+     "n_samples": 7,
+     "mean_cos": 0.4712,
+     "max_cos": 0.5207,
+     "shots": [
+      0
+     ]
+    },
+    {
+     "start": 48.006,
+     "end": 49.007,
+     "duration": 1.001,
+     "n_samples": 3,
+     "mean_cos": 0.5214,
+     "max_cos": 0.5747,
+     "shots": [
+      0
+     ]
+    },
+    {
+     "start": 50.509,
+     "end": 51.51,
+     "duration": 1.001,
+     "n_samples": 3,
+     "mean_cos": 0.5031,
+     "max_cos": 0.5548,
+     "shots": [
+      0
+     ]
+    },
+    {
+     "start": 63.021,
+     "end": 67.025,
+     "duration": 4.004,
+     "n_samples": 9,
+     "mean_cos": 0.4995,
+     "max_cos": 0.5784,
+     "shots": [
+      0
+     ]
+    },
+    {
+     "start": 68.026,
+     "end": 70.028,
+     "duration": 2.002,
+     "n_samples": 5,
+     "mean_cos": 0.4844,
+     "max_cos": 0.5186,
+     "shots": [
+      0
+     ]
+    },
+    {
+     "start": 80.038,
+     "end": 83.5,
+     "duration": 3.462,
+     "n_samples": 8,
+     "mean_cos": 0.5176,
+     "max_cos": 0.5777,
+     "shots": [
+      0
+     ]
+    },
+    {
+     "start": 86.003,
+     "end": 93.01,
+     "duration": 7.007,
+     "n_samples": 15,
+     "mean_cos": 0.4876,
+     "max_cos": 0.5575,
+     "shots": [
+      0
+     ]
+    },
+    {
+     "start": 103.02,
+     "end": 107.024,
+     "duration": 4.004,
+     "n_samples": 9,
+     "mean_cos": 0.4847,
+     "max_cos": 0.5654,
+     "shots": [
+      1
+     ]
+    },
+    {
+     "start": 131.506,
+     "end": 132.507,
+     "duration": 1.001,
+     "n_samples": 3,
+     "mean_cos": 0.4572,
+     "max_cos": 0.4912,
+     "shots": [
+      2
+     ]
+    },
+    {
+     "start": 134.009,
+     "end": 135.01,
+     "duration": 1.001,
+     "n_samples": 3,
+     "mean_cos": 0.4614,
+     "max_cos": 0.4883,
+     "shots": [
+      2
+     ]
+    },
+    {
+     "start": 136.511,
+     "end": 137.512,
+     "duration": 1.001,
+     "n_samples": 3,
+     "mean_cos": 0.5,
+     "max_cos": 0.5647,
+     "shots": [
+      2
+     ]
+    }
+   ],
+   "grouped_scenes": [
+    {
+     "scene_id": "scene_001",
+     "start": 28.03,
+     "end": 51.51,
+     "span_s": 23.48,
+     "raw_visible_s": 10.01,
+     "visibility_ratio": 0.426,
+     "n_raw_intervals": 4,
+     "raw_intervals": [
+      {
+       "start": 28.028,
+       "end": 33.033,
+       "duration": 5.005,
+       "mean_cos": 0.4874,
+       "max_cos": 0.5496,
+       "shots": [
+        0
+       ]
+      },
+      {
+       "start": 35.035,
+       "end": 38.038,
+       "duration": 3.003,
+       "mean_cos": 0.4712,
+       "max_cos": 0.5207,
+       "shots": [
+        0
+       ]
+      },
+      {
+       "start": 48.006,
+       "end": 49.007,
+       "duration": 1.001,
+       "mean_cos": 0.5214,
+       "max_cos": 0.5747,
+       "shots": [
+        0
+       ]
+      },
+      {
+       "start": 50.509,
+       "end": 51.51,
+       "duration": 1.001,
+       "mean_cos": 0.5031,
+       "max_cos": 0.5548,
+       "shots": [
+        0
+       ]
+      }
+     ],
+     "n_samples": 48,
+     "n_ahyeon_samples": 24,
+     "ahyeon_mean_cos": 0.4889,
+     "members_present": {
+      "ahyeon": 24
+     },
+     "speech_seconds": 23.5,
+     "confidence": 0.513
+    },
+    {
+     "scene_id": "scene_002",
+     "start": 63.02,
+     "end": 107.02,
+     "span_s": 44.0,
+     "raw_visible_s": 20.48,
+     "visibility_ratio": 0.465,
+     "n_raw_intervals": 5,
+     "raw_intervals": [
+      {
+       "start": 63.021,
+       "end": 67.025,
+       "duration": 4.004,
+       "mean_cos": 0.4995,
+       "max_cos": 0.5784,
+       "shots": [
+        0
+       ]
+      },
+      {
+       "start": 68.026,
+       "end": 70.028,
+       "duration": 2.002,
+       "mean_cos": 0.4844,
+       "max_cos": 0.5186,
+       "shots": [
+        0
+       ]
+      },
+      {
+       "start": 80.038,
+       "end": 83.5,
+       "duration": 3.462,
+       "mean_cos": 0.5176,
+       "max_cos": 0.5777,
+       "shots": [
+        0
+       ]
+      },
+      {
+       "start": 86.003,
+       "end": 93.01,
+       "duration": 7.007,
+       "mean_cos": 0.4876,
+       "max_cos": 0.5575,
+       "shots": [
+        0
+       ]
+      },
+      {
+       "start": 103.02,
+       "end": 107.024,
+       "duration": 4.004,
+       "mean_cos": 0.4847,
+       "max_cos": 0.5654,
+       "shots": [
+        1
+       ]
+      }
+     ],
+     "n_samples": 89,
+     "n_ahyeon_samples": 47,
+     "ahyeon_mean_cos": 0.4928,
+     "members_present": {
+      "ahyeon": 47
+     },
+     "speech_seconds": 44.0,
+     "confidence": 0.531
+    },
+    {
+     "scene_id": "scene_003",
+     "start": 131.51,
+     "end": 137.51,
+     "span_s": 6.01,
+     "raw_visible_s": 3.0,
+     "visibility_ratio": 0.5,
+     "n_raw_intervals": 3,
+     "raw_intervals": [
+      {
+       "start": 131.506,
+       "end": 132.507,
+       "duration": 1.001,
+       "mean_cos": 0.4572,
+       "max_cos": 0.4912,
+       "shots": [
+        2
+       ]
+      },
+      {
+       "start": 134.009,
+       "end": 135.01,
+       "duration": 1.001,
+       "mean_cos": 0.4614,
+       "max_cos": 0.4883,
+       "shots": [
+        2
+       ]
+      },
+      {
+       "start": 136.511,
+       "end": 137.512,
+       "duration": 1.001,
+       "mean_cos": 0.5,
+       "max_cos": 0.5647,
+       "shots": [
+        2
+       ]
+      }
+     ],
+     "n_samples": 13,
+     "n_ahyeon_samples": 9,
+     "ahyeon_mean_cos": 0.4729,
+     "members_present": {
+      "ahyeon": 9
+     },
+     "speech_seconds": 5.9,
+     "confidence": 0.51
+    }
+   ]
+  },
+  {
+   "video_id": "06mCrMgv0zY",
+   "title": "BABYMONSTER - DRIP / THE FIRST TAKE",
+   "channel": "THE FIRST TAKE",
+   "url": "https://www.youtube.com/watch?v=06mCrMgv0zY",
+   "kind": "group",
+   "workspace": "ahyeon-grp",
+   "normalized": "/home/z/my-project/cce-ws/ahyeon-grp/output/analysis/normalized.mp4",
+   "duration": 255.24,
+   "raw_intervals": [
+    {
+     "start": 19.52,
+     "end": 20.521,
+     "duration": 1.001,
+     "n_samples": 3,
+     "mean_cos": 0.6141,
+     "max_cos": 0.6444,
+     "shots": [
+      8
+     ]
+    },
+    {
+     "start": 44.511,
+     "end": 46.013,
+     "duration": 1.502,
+     "n_samples": 4,
+     "mean_cos": 0.4595,
+     "max_cos": 0.4756,
+     "shots": [
+      20
+     ]
+    },
+    {
+     "start": 49.016,
+     "end": 50.017,
+     "duration": 1.001,
+     "n_samples": 3,
+     "mean_cos": 0.6103,
+     "max_cos": 0.694,
+     "shots": [
+      22
+     ]
+    },
+    {
+     "start": 51.518,
+     "end": 52.519,
+     "duration": 1.001,
+     "n_samples": 3,
+     "mean_cos": 0.4712,
+     "max_cos": 0.5292,
+     "shots": [
+      23
+     ]
+    },
+    {
+     "start": 66.033,
+     "end": 74.508,
+     "duration": 8.475,
+     "n_samples": 18,
+     "mean_cos": 0.602,
+     "max_cos": 0.6848,
+     "shots": [
+      24,
+      25
+     ]
+    },
+    {
+     "start": 86.52,
+     "end": 87.521,
+     "duration": 1.001,
+     "n_samples": 4,
+     "mean_cos": 0.4748,
+     "max_cos": 0.5483,
+     "shots": [
+      27
+     ]
+    },
+    {
+     "start": 106.039,
+     "end": 109.543,
+     "duration": 3.504,
+     "n_samples": 8,
+     "mean_cos": 0.5965,
+     "max_cos": 0.7068,
+     "shots": [
+      31
+     ]
+    },
+    {
+     "start": 166.033,
+     "end": 171.538,
+     "duration": 5.505,
+     "n_samples": 12,
+     "mean_cos": 0.5665,
+     "max_cos": 0.6524,
+     "shots": [
+      44
+     ]
+    },
+    {
+     "start": 197.531,
+     "end": 202.035,
+     "duration": 4.504,
+     "n_samples": 10,
+     "mean_cos": 0.5788,
+     "max_cos": 0.6179,
+     "shots": [
+      51
+     ]
+    },
+    {
+     "start": 206.039,
+     "end": 208.542,
+     "duration": 2.503,
+     "n_samples": 6,
+     "mean_cos": 0.5264,
+     "max_cos": 0.6056,
+     "shots": [
+      53
+     ]
+    },
+    {
+     "start": 225.058,
+     "end": 227.06,
+     "duration": 2.002,
+     "n_samples": 5,
+     "mean_cos": 0.6314,
+     "max_cos": 0.6964,
+     "shots": [
+      58
+     ]
+    },
+    {
+     "start": 241.074,
+     "end": 242.075,
+     "duration": 1.001,
+     "n_samples": 3,
+     "mean_cos": 0.5407,
+     "max_cos": 0.5812,
+     "shots": [
+      65,
+      66
+     ]
+    }
+   ],
+   "grouped_scenes": [
+    {
+     "scene_id": "scene_001",
+     "start": 19.52,
+     "end": 20.52,
+     "span_s": 1.0,
+     "raw_visible_s": 1.0,
+     "visibility_ratio": 1.0,
+     "n_raw_intervals": 1,
+     "raw_intervals": [
+      {
+       "start": 19.52,
+       "end": 20.521,
+       "duration": 1.001,
+       "mean_cos": 0.6141,
+       "max_cos": 0.6444,
+       "shots": [
+        8
+       ]
+      }
+     ],
+     "n_samples": 3,
+     "n_ahyeon_samples": 3,
+     "ahyeon_mean_cos": 0.6141,
+     "members_present": {
+      "ahyeon": 3
+     },
+     "speech_seconds": 1.0,
+     "confidence": 0.751
+    },
+    {
+     "scene_id": "scene_002",
+     "start": 44.51,
+     "end": 52.52,
+     "span_s": 8.01,
+     "raw_visible_s": 3.5,
+     "visibility_ratio": 0.438,
+     "n_raw_intervals": 3,
+     "raw_intervals": [
+      {
+       "start": 44.511,
+       "end": 46.013,
+       "duration": 1.502,
+       "mean_cos": 0.4595,
+       "max_cos": 0.4756,
+       "shots": [
+        20
+       ]
+      },
+      {
+       "start": 49.016,
+       "end": 50.017,
+       "duration": 1.001,
+       "mean_cos": 0.6103,
+       "max_cos": 0.694,
+       "shots": [
+        22
+       ]
+      },
+      {
+       "start": 51.518,
+       "end": 52.519,
+       "duration": 1.001,
+       "mean_cos": 0.4712,
+       "max_cos": 0.5292,
+       "shots": [
+        23
+       ]
+      }
+     ],
+     "n_samples": 17,
+     "n_ahyeon_samples": 10,
+     "ahyeon_mean_cos": 0.5083,
+     "members_present": {
+      "ahyeon": 10,
+      "asa": 9,
+      "chiquita": 5,
+      "pharita": 1,
+      "rami": 6,
+      "rora": 13,
+      "ruka": 2
+     },
+     "speech_seconds": 6.4,
+     "confidence": 0.528
+    },
+    {
+     "scene_id": "scene_003",
+     "start": 66.03,
+     "end": 74.51,
+     "span_s": 8.47,
+     "raw_visible_s": 8.47,
+     "visibility_ratio": 1.0,
+     "n_raw_intervals": 1,
+     "raw_intervals": [
+      {
+       "start": 66.033,
+       "end": 74.508,
+       "duration": 8.475,
+       "mean_cos": 0.602,
+       "max_cos": 0.6848,
+       "shots": [
+        24,
+        25
+       ]
+      }
+     ],
+     "n_samples": 18,
+     "n_ahyeon_samples": 18,
+     "ahyeon_mean_cos": 0.602,
+     "members_present": {
+      "ahyeon": 18
+     },
+     "speech_seconds": 8.5,
+     "confidence": 0.779
+    },
+    {
+     "scene_id": "scene_004",
+     "start": 86.52,
+     "end": 87.52,
+     "span_s": 1.0,
+     "raw_visible_s": 1.0,
+     "visibility_ratio": 1.0,
+     "n_raw_intervals": 1,
+     "raw_intervals": [
+      {
+       "start": 86.52,
+       "end": 87.521,
+       "duration": 1.001,
+       "mean_cos": 0.4748,
+       "max_cos": 0.5483,
+       "shots": [
+        27
+       ]
+      }
+     ],
+     "n_samples": 4,
+     "n_ahyeon_samples": 4,
+     "ahyeon_mean_cos": 0.4748,
+     "members_present": {
+      "ahyeon": 4,
+      "asa": 1,
+      "chiquita": 2,
+      "rami": 1,
+      "rora": 2
+     },
+     "speech_seconds": 1.0,
+     "confidence": 0.684
+    },
+    {
+     "scene_id": "scene_005",
+     "start": 106.04,
+     "end": 109.54,
+     "span_s": 3.5,
+     "raw_visible_s": 3.5,
+     "visibility_ratio": 1.0,
+     "n_raw_intervals": 1,
+     "raw_intervals": [
+      {
+       "start": 106.039,
+       "end": 109.543,
+       "duration": 3.504,
+       "mean_cos": 0.5965,
+       "max_cos": 0.7068,
+       "shots": [
+        31
+       ]
+      }
+     ],
+     "n_samples": 8,
+     "n_ahyeon_samples": 8,
+     "ahyeon_mean_cos": 0.5965,
+     "members_present": {
+      "ahyeon": 8
+     },
+     "speech_seconds": 3.5,
+     "confidence": 0.795
+    },
+    {
+     "scene_id": "scene_006",
+     "start": 166.03,
+     "end": 171.54,
+     "span_s": 5.51,
+     "raw_visible_s": 5.5,
+     "visibility_ratio": 1.0,
+     "n_raw_intervals": 1,
+     "raw_intervals": [
+      {
+       "start": 166.033,
+       "end": 171.538,
+       "duration": 5.505,
+       "mean_cos": 0.5665,
+       "max_cos": 0.6524,
+       "shots": [
+        44
+       ]
+      }
+     ],
+     "n_samples": 12,
+     "n_ahyeon_samples": 12,
+     "ahyeon_mean_cos": 0.5665,
+     "members_present": {
+      "ahyeon": 12
+     },
+     "speech_seconds": 5.5,
+     "confidence": 0.757
+    },
+    {
+     "scene_id": "scene_007",
+     "start": 197.53,
+     "end": 208.54,
+     "span_s": 11.01,
+     "raw_visible_s": 7.01,
+     "visibility_ratio": 0.636,
+     "n_raw_intervals": 2,
+     "raw_intervals": [
+      {
+       "start": 197.531,
+       "end": 202.035,
+       "duration": 4.504,
+       "mean_cos": 0.5788,
+       "max_cos": 0.6179,
+       "shots": [
+        51
+       ]
+      },
+      {
+       "start": 206.039,
+       "end": 208.542,
+       "duration": 2.503,
+       "mean_cos": 0.5264,
+       "max_cos": 0.6056,
+       "shots": [
+        53
+       ]
+      }
+     ],
+     "n_samples": 23,
+     "n_ahyeon_samples": 16,
+     "ahyeon_mean_cos": 0.5592,
+     "members_present": {
+      "ahyeon": 16,
+      "asa": 6,
+      "chiquita": 2,
+      "pharita": 5,
+      "rami": 2,
+      "ruka": 2
+     },
+     "speech_seconds": 11.0,
+     "confidence": 0.619
+    },
+    {
+     "scene_id": "scene_008",
+     "start": 225.06,
+     "end": 227.06,
+     "span_s": 2.0,
+     "raw_visible_s": 2.0,
+     "visibility_ratio": 1.0,
+     "n_raw_intervals": 1,
+     "raw_intervals": [
+      {
+       "start": 225.058,
+       "end": 227.06,
+       "duration": 2.002,
+       "mean_cos": 0.6314,
+       "max_cos": 0.6964,
+       "shots": [
+        58
+       ]
+      }
+     ],
+     "n_samples": 5,
+     "n_ahyeon_samples": 5,
+     "ahyeon_mean_cos": 0.6314,
+     "members_present": {
+      "ahyeon": 5
+     },
+     "speech_seconds": 2.0,
+     "confidence": 0.787
+    },
+    {
+     "scene_id": "scene_009",
+     "start": 241.07,
+     "end": 242.07,
+     "span_s": 1.0,
+     "raw_visible_s": 1.0,
+     "visibility_ratio": 1.0,
+     "n_raw_intervals": 1,
+     "raw_intervals": [
+      {
+       "start": 241.074,
+       "end": 242.075,
+       "duration": 1.001,
+       "mean_cos": 0.5407,
+       "max_cos": 0.5812,
+       "shots": [
+        65,
+        66
+       ]
+      }
+     ],
+     "n_samples": 3,
+     "n_ahyeon_samples": 3,
+     "ahyeon_mean_cos": 0.5407,
+     "members_present": {
+      "ahyeon": 3
+     },
+     "speech_seconds": 1.0,
+     "confidence": 0.707
+    }
+   ]
+  },
+  {
+   "video_id": "O99aP4AvEF8",
+   "title": "BABYMONSTER - SHEESH / THE FIRST TAKE",
+   "channel": "THE FIRST TAKE",
+   "url": "https://www.youtube.com/watch?v=O99aP4AvEF8",
+   "kind": "group",
+   "workspace": "ahyeon-studio2",
+   "normalized": "/home/z/my-project/cce-ws/ahyeon-studio2/output/analysis/normalized.mp4",
+   "duration": 242.47,
+   "raw_intervals": [
+    {
+     "start": 84.985,
+     "end": 86.486,
+     "duration": 1.501,
+     "n_samples": 4,
+     "mean_cos": 0.481,
+     "max_cos": 0.5467,
+     "shots": [
+      33
+     ]
+    },
+    {
+     "start": 92.492,
+     "end": 93.493,
+     "duration": 1.001,
+     "n_samples": 3,
+     "mean_cos": 0.5889,
+     "max_cos": 0.6349,
+     "shots": [
+      35
+     ]
+    },
+    {
+     "start": 97.497,
+     "end": 98.999,
+     "duration": 1.502,
+     "n_samples": 4,
+     "mean_cos": 0.6065,
+     "max_cos": 0.67,
+     "shots": [
+      38
+     ]
+    },
+    {
+     "start": 111.511,
+     "end": 114.514,
+     "duration": 3.003,
+     "n_samples": 7,
+     "mean_cos": 0.5562,
+     "max_cos": 0.6347,
+     "shots": [
+      43
+     ]
+    },
+    {
+     "start": 118.485,
+     "end": 120.487,
+     "duration": 2.002,
+     "n_samples": 5,
+     "mean_cos": 0.621,
+     "max_cos": 0.6648,
+     "shots": [
+      43
+     ]
+    },
+    {
+     "start": 123.49,
+     "end": 124.491,
+     "duration": 1.001,
+     "n_samples": 3,
+     "mean_cos": 0.6415,
+     "max_cos": 0.6564,
+     "shots": [
+      44
+     ]
+    },
+    {
+     "start": 185.485,
+     "end": 190.991,
+     "duration": 5.506,
+     "n_samples": 12,
+     "mean_cos": 0.6307,
+     "max_cos": 0.6817,
+     "shots": [
+      58
+     ]
+    },
+    {
+     "start": 193.46,
+     "end": 197.964,
+     "duration": 4.504,
+     "n_samples": 10,
+     "mean_cos": 0.5778,
+     "max_cos": 0.6434,
+     "shots": [
+      60
+     ]
+    },
+    {
+     "start": 217.984,
+     "end": 220.487,
+     "duration": 2.503,
+     "n_samples": 6,
+     "mean_cos": 0.6198,
+     "max_cos": 0.6627,
+     "shots": [
+      70
+     ]
+    },
+    {
+     "start": 231.465,
+     "end": 232.466,
+     "duration": 1.001,
+     "n_samples": 3,
+     "mean_cos": 0.6208,
+     "max_cos": 0.6415,
+     "shots": [
+      77
+     ]
+    }
+   ],
+   "grouped_scenes": [
+    {
+     "scene_id": "scene_001",
+     "start": 84.98,
+     "end": 86.49,
+     "span_s": 1.5,
+     "raw_visible_s": 1.5,
+     "visibility_ratio": 1.0,
+     "n_raw_intervals": 1,
+     "raw_intervals": [
+      {
+       "start": 84.985,
+       "end": 86.486,
+       "duration": 1.501,
+       "mean_cos": 0.481,
+       "max_cos": 0.5467,
+       "shots": [
+        33
+       ]
+      }
+     ],
+     "n_samples": 4,
+     "n_ahyeon_samples": 4,
+     "ahyeon_mean_cos": 0.481,
+     "members_present": {
+      "ahyeon": 4
+     },
+     "speech_seconds": 1.5,
+     "confidence": 0.683
+    },
+    {
+     "scene_id": "scene_002",
+     "start": 92.49,
+     "end": 93.49,
+     "span_s": 1.0,
+     "raw_visible_s": 1.0,
+     "visibility_ratio": 1.0,
+     "n_raw_intervals": 1,
+     "raw_intervals": [
+      {
+       "start": 92.492,
+       "end": 93.493,
+       "duration": 1.001,
+       "mean_cos": 0.5889,
+       "max_cos": 0.6349,
+       "shots": [
+        35
+       ]
+      }
+     ],
+     "n_samples": 3,
+     "n_ahyeon_samples": 3,
+     "ahyeon_mean_cos": 0.5889,
+     "members_present": {
+      "ahyeon": 3
+     },
+     "speech_seconds": 1.0,
+     "confidence": 0.744
+    },
+    {
+     "scene_id": "scene_003",
+     "start": 97.5,
+     "end": 99.0,
+     "span_s": 1.5,
+     "raw_visible_s": 1.5,
+     "visibility_ratio": 1.0,
+     "n_raw_intervals": 1,
+     "raw_intervals": [
+      {
+       "start": 97.497,
+       "end": 98.999,
+       "duration": 1.502,
+       "mean_cos": 0.6065,
+       "max_cos": 0.67,
+       "shots": [
+        38
+       ]
+      }
+     ],
+     "n_samples": 4,
+     "n_ahyeon_samples": 4,
+     "ahyeon_mean_cos": 0.6065,
+     "members_present": {
+      "ahyeon": 4
+     },
+     "speech_seconds": 1.5,
+     "confidence": 0.769
+    },
+    {
+     "scene_id": "scene_004",
+     "start": 111.51,
+     "end": 124.49,
+     "span_s": 12.98,
+     "raw_visible_s": 6.01,
+     "visibility_ratio": 0.463,
+     "n_raw_intervals": 3,
+     "raw_intervals": [
+      {
+       "start": 111.511,
+       "end": 114.514,
+       "duration": 3.003,
+       "mean_cos": 0.5562,
+       "max_cos": 0.6347,
+       "shots": [
+        43
+       ]
+      },
+      {
+       "start": 118.485,
+       "end": 120.487,
+       "duration": 2.002,
+       "mean_cos": 0.621,
+       "max_cos": 0.6648,
+       "shots": [
+        43
+       ]
+      },
+      {
+       "start": 123.49,
+       "end": 124.491,
+       "duration": 1.001,
+       "mean_cos": 0.6415,
+       "max_cos": 0.6564,
+       "shots": [
+        44
+       ]
+      }
+     ],
+     "n_samples": 27,
+     "n_ahyeon_samples": 15,
+     "ahyeon_mean_cos": 0.5949,
+     "members_present": {
+      "ahyeon": 15,
+      "ruka": 12
+     },
+     "speech_seconds": 13.0,
+     "confidence": 0.595
+    },
+    {
+     "scene_id": "scene_005",
+     "start": 185.49,
+     "end": 197.96,
+     "span_s": 12.48,
+     "raw_visible_s": 10.01,
+     "visibility_ratio": 0.802,
+     "n_raw_intervals": 2,
+     "raw_intervals": [
+      {
+       "start": 185.485,
+       "end": 190.991,
+       "duration": 5.506,
+       "mean_cos": 0.6307,
+       "max_cos": 0.6817,
+       "shots": [
+        58
+       ]
+      },
+      {
+       "start": 193.46,
+       "end": 197.964,
+       "duration": 4.504,
+       "mean_cos": 0.5778,
+       "max_cos": 0.6434,
+       "shots": [
+        60
+       ]
+      }
+     ],
+     "n_samples": 27,
+     "n_ahyeon_samples": 22,
+     "ahyeon_mean_cos": 0.6067,
+     "members_present": {
+      "ahyeon": 22
+     },
+     "speech_seconds": 12.5,
+     "confidence": 0.704
+    },
+    {
+     "scene_id": "scene_006",
+     "start": 217.98,
+     "end": 220.49,
+     "span_s": 2.5,
+     "raw_visible_s": 2.5,
+     "visibility_ratio": 1.0,
+     "n_raw_intervals": 1,
+     "raw_intervals": [
+      {
+       "start": 217.984,
+       "end": 220.487,
+       "duration": 2.503,
+       "mean_cos": 0.6198,
+       "max_cos": 0.6627,
+       "shots": [
+        70
+       ]
+      }
+     ],
+     "n_samples": 6,
+     "n_ahyeon_samples": 6,
+     "ahyeon_mean_cos": 0.6198,
+     "members_present": {
+      "ahyeon": 6
+     },
+     "speech_seconds": 2.5,
+     "confidence": 0.764
+    },
+    {
+     "scene_id": "scene_007",
+     "start": 231.47,
+     "end": 232.47,
+     "span_s": 1.0,
+     "raw_visible_s": 1.0,
+     "visibility_ratio": 1.0,
+     "n_raw_intervals": 1,
+     "raw_intervals": [
+      {
+       "start": 231.465,
+       "end": 232.466,
+       "duration": 1.001,
+       "mean_cos": 0.6208,
+       "max_cos": 0.6415,
+       "shots": [
+        77
+       ]
+      }
+     ],
+     "n_samples": 3,
+     "n_ahyeon_samples": 3,
+     "ahyeon_mean_cos": 0.6208,
+     "members_present": {
+      "ahyeon": 3
+     },
+     "speech_seconds": 1.0,
+     "confidence": 0.749
+    }
+   ]
+  }
+ ]
+}

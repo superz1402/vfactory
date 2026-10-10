@@ -24,18 +24,39 @@ TEMPLATE = {
 }
 
 
+def footage_brief():
+    """Tell the writer what REAL footage exists so visual beats match it."""
+    lib_path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                            "footage", "library.json")
+    try:
+        lib = json.load(open(lib_path))
+    except Exception:
+        return ""
+    lines = ["AVAILABLE FOOTAGE (real, character-verified — write scenes that "
+             "these shots can carry):"]
+    for s in lib["sources"]:
+        vis = sum(i.get("duration", 0) for i in s["raw_intervals"])
+        kind = ("SOLO close-ups of the character singing" if s["kind"] == "solo"
+                else "GROUP live-performance wide shots (character among members)")
+        lines.append(f"- {s['title']} ({s['channel']}) -> {kind}, ~{vis:.0f}s usable")
+    return "\n".join(lines)
+
+
 def run(run_dir, topic, style="documentary", n_scenes=7, region="us"):
     out_path = os.path.join(run_dir, "02_script.json")
     research = json.load(open(os.path.join(run_dir, "01_research.json")))
     brief = research["brief"]
 
     shape = json.dumps(TEMPLATE, ensure_ascii=False)
+    fb = footage_brief()
     prompt = f"""TOPIC: {topic}
 STYLE: {style}
 SCENES: exactly {n_scenes} — id 1 is a HOOK (question or bold statement), ids 2..{n_scenes-1} are the body (chronological or thematic), id {n_scenes} is an OUTRO (takeaway + forward-looking line).
-Each scene: "narration" = 20-40 spoken words; "on_screen" = 3-6 word caption; "visual_query" = a concrete visual image search query in English (a place, person-at-work, object, crowd, stage, screen — NOT abstract text).
+Each scene: "narration" = 20-40 spoken words; "on_screen" = 3-6 word caption; "visual_query" = which of the AVAILABLE FOOTAGE shots should carry this scene (e.g. "Ahyeon solo vocal close-up" or "group live performance wide shot") — concrete, never abstract text.
 Return ONLY valid JSON matching this shape exactly, no commentary:
 {shape}
+
+{fb}
 
 SOURCES (use only these facts):
 {brief[:9000]}"""

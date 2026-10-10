@@ -99,13 +99,28 @@ def chat(prompt, system=None, thinking=False, retries=2, timeout=300):
     return None
 
 
+def _repair_json(text):
+    """Fix common LLM JSON typos: missing colon after key, trailing commas."""
+    fixed = re.sub(r'"([A-Za-z_][A-Za-z0-9_]*)"\s+(?="|\[|\{|\d|true|false|null)',
+                   r'"\1": ', text)
+    fixed = re.sub(r",\s*([}\]])", r"\1", fixed)
+    return fixed
+
+
 def chat_json(prompt, system=None, retries=2, timeout=300):
-    """Chat that must return JSON; extracts the outermost object/array."""
+    """Chat that must return JSON; extracts the outermost object/array.
+    Applies light repair (missing colons, trailing commas) before giving up."""
     txt = chat(prompt, system=system, retries=retries, timeout=timeout)
     if not txt:
         return None
     txt = re.sub(r"```(?:json)?", "", txt)
-    return _extract_json(txt)
+    parsed = _extract_json(txt)
+    if parsed is not None:
+        return parsed
+    try:
+        return json.loads(_repair_json(txt))
+    except (json.JSONDecodeError, ValueError):
+        return None
 
 
 def tts(text, out_path, voice="tongtong", speed=1.0, fmt="wav", retries=2, timeout=240):

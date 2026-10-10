@@ -1,0 +1,28 @@
+{
+ "sources": [
+  {
+   "video_id": "xw7Y2gviWbA",
+   "title": "BABYMONSTER - AHYEON 'Dangerously' COVER (Clean Ver.)",
+   "channel": "BABYMONSTER",
+   "kind": "solo",
+   "workspace": "ahyeon-studioch",
+   "local_file": "/home/z/my-project/ytdl-agent/downloads/xw7Y2gviWbA.mp4"
+  },
+  {
+   "video_id": "06mCrMgv0zY",
+   "title": "BABYMONSTER - DRIP / THE FIRST TAKE",
+   "channel": "THE FIRST TAKE",
+   "kind": "group",
+   "workspace": "ahyeon-grp",
+   "local_file": "/home/z/my-project/ytdl-agent/downloads/06mCrMgv0zY.mp4"
+  },
+  {
+   "video_id": "O99aP4AvEF8",
+   "title": "BABYMONSTER - SHEESH / THE FIRST TAKE",
+   "channel": "THE FIRST TAKE",
+   "kind": "group",
+   "workspace": "ahyeon-studio2",
+   "local_file": "/home/z/my-project/ytdl-agent/downloads/O99aP4AvEF8.mp4"
+  }
+ ]
+}

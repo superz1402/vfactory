@@ -10,7 +10,7 @@ import argparse, json, os, re, sys, time, traceback
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE)
-from stages import s1_research, s2_script, s3_voice, s4_media, s5_music, s6_render, s7_deliver  # noqa: E402
+from stages import s1_research, s2_script, s3_voice, s4_footage, s5_music, s6_render, s7_deliver, s8_qc  # noqa: E402
 
 
 def slugify(text, maxlen=48):
@@ -59,8 +59,7 @@ def main():
         ("script", lambda: s2_script.run(run_dir, topic["topic"], topic.get("style", "documentary"),
                                          topic.get("scenes", 7), topic.get("region", "us"))),
         ("voice", lambda: s3_voice.run(run_dir, topic.get("tts_speed", 1.0))),
-        ("media", lambda: s4_media.run(run_dir, topic.get("region", "us"),
-                                       topic.get("ai_broll", False))),
+        ("media", lambda: s4_footage.run(run_dir)),
     ]
     for name, fn in steps:
         marker = os.path.join(run_dir, f".done_{name}")
@@ -76,7 +75,8 @@ def main():
     # timeline -> music -> render
     tl_path = os.path.join(run_dir, "06_timeline.json")
     if not os.path.exists(tl_path) or args.rebuild:
-        durs, starts, total = s6_render.scene_durations(run_dir)
+        durs = s6_render.scene_durations(run_dir)
+        starts, total = s6_render.layout(durs, None)
         json.dump({"durations": durs, "starts": starts, "total": total},
                   open(tl_path, "w"), indent=1)
         log(run_dir, f"timeline computed ({total:.0f}s)")
@@ -93,6 +93,18 @@ def main():
                      f"({info['total']:.0f}s video)")
     else:
         log(run_dir, "skip render (final.mp4 exists)")
+
+    # QC gate — delivery is blocked when any check fails
+    if not os.path.exists(os.path.join(run_dir, "qc_report.json")) or args.rebuild:
+        t0 = time.time()
+        s8_qc.run(run_dir)
+        log(run_dir, f"stage qc done in {time.time()-t0:.0f}s")
+    else:
+        qc = json.load(open(os.path.join(run_dir, "qc_report.json")))
+        if qc.get("status") != "pass":
+            s8_qc.run(run_dir)
+        else:
+            log(run_dir, "skip qc (passed report exists)")
 
     size_mb = os.path.getsize(os.path.join(run_dir, "final.mp4")) / 1048576
     log(run_dir, f"final.mp4 ready: {size_mb:.1f} MB")
