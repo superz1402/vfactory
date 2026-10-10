@@ -23,16 +23,16 @@ def run(run_dir, speed=1.0):
     os.makedirs(out_dir, exist_ok=True)
     plan = json.load(open(os.path.join(run_dir, "02_script.json")))
     timings, failures = [], []
-    for sc in plan["scenes"]:
-        wav = os.path.join(out_dir, f"scene_{sc['id']:02d}.wav")
+    for b in plan["beats"]:
+        wav = os.path.join(out_dir, f"beat_{b['id']:02d}.wav")
         if not (os.path.exists(wav) and os.path.getsize(wav) > 1000):
-            ok = zai.tts(sc["narration"], wav, voice=VOICE, speed=speed, fmt="wav")
+            ok = zai.tts(b["narration"], wav, voice=VOICE, speed=speed, fmt="wav")
             if not ok:
-                failures.append(sc["id"])
+                failures.append(b["id"])
                 continue
-        timings.append({"id": sc["id"], "wav": wav, "audio": round(audio_len(wav), 2)})
+        timings.append({"id": b["id"], "wav": wav, "audio": round(audio_len(wav), 2)})
     if failures:
-        raise RuntimeError(f"TTS failed for scenes {failures}")
+        raise RuntimeError(f"TTS failed for beats {failures}")
     json.dump({"voice": VOICE, "speed": speed, "timings": timings},
               open(os.path.join(run_dir, "03_timings.json"), "w"), indent=1)
     return timings
