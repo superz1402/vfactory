@@ -140,9 +140,13 @@ def pass_c(run_dir, starts, total, video):
         mix_in += f"[s{n}]"
     fc.append(f"{mix_in}amix=inputs={len(timings)}:duration=longest:"
               f"normalize=0[nar]")
-    fc.append("[bed][nar]sidechaincompress=threshold=0.015:ratio=8:attack=40"
+    # ASPLIT LAW: [nar] feeds sidechaincompress AND the final amix — without an
+    # explicit asplit the narration frames go to the sidechain branch only and
+    # the mix ends up bed-only (silent voiceover, ASR-verified bug).
+    fc.append("[nar]asplit=2[nar1][nar2]")
+    fc.append("[bed][nar1]sidechaincompress=threshold=0.015:ratio=8:attack=40"
               ":release=700:makeup=1[ducked]")
-    fc.append("[nar][ducked]amix=inputs=2:duration=longest:normalize=0[mix]")
+    fc.append("[nar2][ducked]amix=inputs=2:duration=longest:normalize=0[mix]")
     fc.append(f"[mix]loudnorm=I=-13.5:TP=-1.2:LRA=11,atrim=0:{total:.2f},"
               f"afade=t=out:st={max(total - 1.0, 0):.2f}:d=1.0[aout]")
     script = os.path.join(run_dir, "06_final", "passc.txt")
@@ -274,9 +278,10 @@ def chapter_mux(run_dir, ch, video_dur, W, H, out_mp4):
         f"atrim=0:{vdur:.2f},apad=whole_dur={vdur:.2f}[bed];"
         f"[1:a]aformat=channel_layouts=stereo,aresample=48000,"
         f"adelay=600|600[nar];"
-        f"[bed][nar]sidechaincompress=threshold=0.015:ratio=8:attack=40"
+        f"[nar]asplit=2[nar1][nar2];"  # ASPLIT LAW: see pass_c comment
+        f"[bed][nar1]sidechaincompress=threshold=0.015:ratio=8:attack=40"
         f":release=700:makeup=1[ducked];"
-        f"[nar][ducked]amix=inputs=2:duration=longest:normalize=0[mix];"
+        f"[nar2][ducked]amix=inputs=2:duration=longest:normalize=0[mix];"
         f"[mix]loudnorm=I=-13.5:TP=-1.2:LRA=11,atrim=0:{vdur:.2f},"
         f"afade=t=out:st={max(vdur - 1.2, 0):.2f}:d=1.2[aout]")
     script = os.path.join(run_dir, "06_final", f"chaudio_{ch['id']:02d}.txt")

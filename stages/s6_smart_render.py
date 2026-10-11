@@ -130,9 +130,13 @@ def pass_c(tl, video, run_dir):
     score = os.path.join(run_dir, "05_music", "score.wav")
     narr = tl["narration_wav"]
     total = tl["video_total"]
-    # narration starts at t=0; score under it; duck score when narration speaks
-    fc = ("[0:a][1:a]sidechaincompress=threshold=0.02:ratio=6:attack=25:release=500:makeup=1[bed];"
-          "[1:a][bed]amix=inputs=2:duration=first:normalize=0[mix];"
+    # narration starts at t=0; score under it; duck score when narration speaks.
+    # ASPLIT LAW: narration is used BOTH as the duck key and as a mix voice —
+    # without an explicit asplit the frames go to the sidechain branch only and
+    # the final mix loses the voiceover entirely (ASR-verified bug).
+    fc = ("[1:a]asplit=2[narA][narK];"
+          "[0:a][narK]sidechaincompress=threshold=0.02:ratio=6:attack=25:release=500:makeup=1[bed];"
+          "[narA][bed]amix=inputs=2:duration=first:normalize=0[mix];"
           "[mix]loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[aout]")
     cmd = ["ffmpeg", "-y", "-v", "error",
            "-i", score, "-i", narr, "-i", video,

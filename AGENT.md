@@ -83,6 +83,23 @@ The core improvement that made v2 acceptable. Every scene in `02_script.json` de
 - Pass B re-encodes concat at `crf 24, maxrate 4.5M` to fit Telegram's 48MB bot limit.
 - Caches are content-aware: pass A validates a sidecar `shot_i.json` (clip + in_point + dur),
   pass B rebuilds if any shot file is newer than the track. Never trust duration-only caches.
+- **ASPLIT LAW (audio mux):** when the narration bus feeds BOTH `sidechaincompress`
+  (as the duck key) AND the final `amix` (as a voice), it MUST be explicitly split first:
+  `[nar]asplit=2[narA][narK]`. Reusing one label for two consumers is accepted by the
+  graph parser but routes the narration frames into the sidechain branch only — the final
+  mix comes out bed-only. This produced a fully silent voiceover that volume probes
+  missed (mix levels looked "normal"); only ASR caught it. Applies to `s6_render.py`,
+  `s6_chapters.py`, `s6_smart_render.py` (all fixed 2026-10-12); `s6_audio.py` was born
+  with the split. Any new mux code follows the same law.
+- **ASR voiceover gate:** after every final mux, extract 1-2 mono 16k windows
+  (`ffmpeg -ss ... -ac 1 -ar 16000`) and run `z-ai asr` — a non-empty transcription is
+  the pass condition for "voiceover exists". Volume/level probes CANNOT detect a silent
+  narration bus (the music bed dominates levels). ASR >30s files fails (code 1214) and
+  mono-only (code 1214 again) — trim windows and force mono.
+- **Terminal display mangles bracket-heavy strings:** `cat`/`rg` through some terminal
+  layers eat `[m` sequences (`[mix]` displays as `ix]`). Do NOT edit code based on
+  displayed filter strings — verify with `od -c` or the Read/Grep tools before treating
+  a suspected corruption as real. This phantom cost a full debugging cycle.
 
 ## 6. Delivery protocol (`stages/s7`, `lib/telegram.py`, `lib/storageto.py`)
 
@@ -117,6 +134,10 @@ The core improvement that made v2 acceptable. Every scene in `02_script.json` de
 | PyAV 15 removed `metadata_errors` | faster-whisper crash | decode via ffmpeg → numpy float32 |
 | Telegram sendVideo 504 | looks like failure | retry ×3, it's transient |
 | concat demuxer relative paths | doubled paths, open fail | absolute paths everywhere |
+| `[nar]` reused by sidechain + amix | mix = bed only, voice silent | ASPLIT LAW (`asplit=2`) — see §5 |
+| ASR 400 code 1214 | file >30s or not mono | trim windows, `-ac 1 -ar 16000` |
+| bracket strings via shell cat | `[mix]` displays as `ix]` | verify with `od -c` / Read tool, not displayed text |
+| sandbox recycle wipes dotfiles | `.tg_token` gone | telegram.py falls back `.tg_token` → `.tg_token_submitter` → `TG_TOKEN` env |
 
 ## 9. Repository map
 

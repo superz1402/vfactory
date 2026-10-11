@@ -11,8 +11,17 @@ TG_DIRECT_LIMIT = 48 * 1024 * 1024  # 50 MB bot API cap, 2 MB safety margin
 
 
 def token():
-    with open(TOKEN_PATH) as fh:
-        return fh.read().strip()
+    # Resolution order: env TG_TOKEN -> .tg_token (primary @Ctoapkbot)
+    # -> .tg_token_submitter (backup @Submittermebot, owner-provided).
+    # Sandbox recycles wipe dotfiles; the fallback keeps delivery alive.
+    if os.environ.get("TG_TOKEN"):
+        return os.environ["TG_TOKEN"].strip()
+    for p in (TOKEN_PATH, "/home/z/my-project/.tg_token_submitter"):
+        if os.path.exists(p):
+            with open(p) as fh:
+                return fh.read().strip()
+    raise FileNotFoundError(
+        "no telegram token: TG_TOKEN env, .tg_token, .tg_token_submitter")
 
 
 def _api(method, **kw):

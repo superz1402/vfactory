@@ -250,9 +250,14 @@ def pass_c(run_dir, starts, total, video):
                   f"adelay={ms}|{ms}[s{n}]")
         mix_in += f"[s{n}]"
     fc.append(f"{mix_in}amix=inputs={len(timings)}:duration=longest:normalize=0[nar]")
-    fc.append("[bed][nar]sidechaincompress=threshold=0.015:ratio=8:attack=40"
+    # ASPLIT LAW: [nar] feeds BOTH sidechaincompress (key) AND the final amix.
+    # Reusing one label for two consumers routes the narration frames into the
+    # sidechain branch only -> final mix is bed-only (silent voiceover bug,
+    # ASR-verified in run 1009-054500). Always asplit before dual use.
+    fc.append("[nar]asplit=2[nar1][nar2]")
+    fc.append("[bed][nar1]sidechaincompress=threshold=0.015:ratio=8:attack=40"
               ":release=700:makeup=1[ducked]")
-    fc.append("[nar][ducked]amix=inputs=2:duration=longest:normalize=0[mix]")
+    fc.append("[nar2][ducked]amix=inputs=2:duration=longest:normalize=0[mix]")
     fc.append(f"[mix]loudnorm=I=-14:TP=-1.5:LRA=11,atrim=0:{total:.2f},"
               f"afade=t=out:st={max(total - 1.0, 0):.2f}:d=1.0[aout]")
     script = os.path.join(run_dir, "06_final", "passc.txt")
