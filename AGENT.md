@@ -129,6 +129,9 @@ stages/s4_smart.py     SMART DIRECTOR: whisper word-align + entity matcher → t
 stages/s5_score.py     synthesized cinematic score (exact duration, A-minor bed)
 stages/s6_smart_render.py  per-shot renders → concat → narration+ducked score mux
 stages/s7_deliver.py   telegram / storage.to + delivery.json
+stages/s8_qa.py, s8_qc.py  QC gates from the character-verified lineage (keep using them)
+tools/doc_builder/     hand-verified documentary build path (v3) — robust download,
+                       TTS, 3-pass audio, probe sheets, upload ladder
 lib/zai.py             z-ai CLI wrappers (chat, tts, image_search, download, gen_video_clip)
 lib/telegram.py        bot delivery (token path overridable via TG_TOKEN_PATH)
 lib/storageto.py       storage.to uploader (3-step, multipart, visitor token)
