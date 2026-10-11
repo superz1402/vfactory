@@ -20,6 +20,7 @@ All paths end in s8_qa hard gates (cut cadence, LUFS, dead air, integrity)
 — delivery is blocked on fail unless --force.
 """
 import argparse
+import glob
 import json
 import os
 import re
@@ -121,10 +122,29 @@ def main():
                     help="deliver even if QA gates fail (never default)")
     ap.add_argument("--chat-id", default=None)
     ap.add_argument("--run-dir", default=None)
+    ap.add_argument("--fresh", action="store_true",
+                    help="force a brand-new run dir even if an unfinished "
+                         "run with the same topic exists (default: resume "
+                         "the newest unfinished run — long renders must "
+                         "survive watchdog timeouts)")
     ap.add_argument("--rebuild", action="store_true")
     args = ap.parse_args()
 
-    run_dir = args.run_dir or os.path.join(BASE, "runs", slugify(args.topic))
+    run_dir = args.run_dir
+    if not run_dir:
+        # slugify embeds %m%d-%H%M%S; strip BOTH to get the topic prefix and
+        # resume the newest UNFINISHED run for the same topic. Without this,
+        # every re-invocation minted a fresh dir and long renders (>10 min
+        # watchdog) could never finish — proven by 7 orphaned dirs 2026-10-11.
+        prefix = slugify(args.topic).rsplit("-", 2)[0]
+        if not args.fresh:
+            cands = sorted(glob.glob(os.path.join(BASE, "runs", prefix + "-*")))
+            unfinished = [d for d in cands
+                          if not os.path.exists(os.path.join(d, "final.mp4"))]
+            if unfinished:
+                run_dir = unfinished[-1]
+        if not run_dir:
+            run_dir = os.path.join(BASE, "runs", slugify(args.topic))
     os.makedirs(run_dir, exist_ok=True)
     topic_json = os.path.join(run_dir, "00_topic.json")
     if not os.path.exists(topic_json) or args.rebuild:
