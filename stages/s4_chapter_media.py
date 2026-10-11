@@ -284,6 +284,44 @@ def run_chapters(run_dir, region):
                               region, used_sigs)
             if ent:
                 shots.append(ent)
+        # 2b) DENSIFY: reformulated second-pass queries (entity + role context).
+        # A documentary chapter needs ~16+ shots (QA gates: ASL<=12s, >=4 cpm);
+        # thin chapters read as a photo slideshow (round-1 user complaint).
+        if len(shots) < n_shots:
+            ents = [e for e in ch.get("entities", []) if e][:2] or \
+                _keywords(ch.get("title", ""))[:2]
+            ctx = {"cold_open": ["stage lights", "concert"],
+                   "context": ["trainee", "childhood"],
+                   "body": ["performance stage", "music show"],
+                   "rise": ["comeback stage", "chart"],
+                   "turning_point": ["hiatus", "return stage"],
+                   "climax": ["concert encore", "festival"],
+                   "resolution": ["award show", "celebration"],
+                   "outro": ["fans crowd", "lightstick ocean"]}.get(
+                ch.get("role", ""), ["stage", "performance"])
+            rq = [f"{e} {c}" for e in ents for c in ctx]
+            rq += [f"{e} kpop" for e in ents]
+            qi2 = 0
+            while len(shots) < n_shots and qi2 < len(rq):
+                q = rq[qi2]
+                qi2 += 1
+                hit = _search_one(
+                    q, os.path.join(media_dir, f"ch{cid:02d}_d{qi2:02d}"),
+                    region, used_sigs)
+                if hit:
+                    shots.append(hit)
+        # 2c) last resort: re-use this chapter's own visuals so no chapter is
+        # slideshow-thin; s6 gives each position a different camera move, and
+        # video reuses advance their in_point so segments never replay.
+        src_pool = [s for s in shots if s.get("kind") in ("image", "video")]
+        k = 0
+        while len(shots) < n_shots and src_pool and k < 14:
+            clone = dict(src_pool[k % len(src_pool)])
+            if clone.get("kind") == "video":
+                clone["in_point"] = round(2.5 * (1 + k % 4), 2)
+            clone["reuse"] = True
+            shots.append(clone)
+            k += 1
         # 3) fallback cards for any remaining gap
         while len(shots) < max(4, n_shots // 2):
             card = fallback_card(run_dir, cid * 100 + len(shots),
