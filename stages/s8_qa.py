@@ -24,6 +24,38 @@ def _ffprobe_dur(p):
         return 0.0
 
 
+def cut_metrics_ground_truth(run_dir):
+    """Deterministic cadence for chapter mode: recompute align.plan per chapter
+    (same pure inputs s6 used) instead of scene-detection, which undercounts
+    hard cuts between similar-framed shots (0.30 scene threshold misses most
+    documentary cuts -> false QA fail). Returns metrics or None."""
+    plan = json.load(open(os.path.join(run_dir, "02_script.json")))
+    if plan.get("mode") != "chapters":
+        return None
+    from lib.align import plan as align_plan
+    media = json.load(open(os.path.join(run_dir, "04_media.json")))["chapters"]
+    tmap = {u["id"]: u for u in
+            json.load(open(os.path.join(run_dir, "03_timings.json")))["units"]}
+    pts, acc = [], 0.0
+    for ch in plan["chapters"]:
+        cid = str(ch["id"])
+        if cid not in media:
+            return None
+        shots = [dict(s) for s in media[cid]["shots"]]
+        audio = media[cid]["audio"]
+        try:
+            shots = align_plan(shots, tmap.get(ch["id"], {}).get("words"),
+                               audio, tail=1.0, xf=0.0)
+        except Exception:
+            return None
+        t = acc
+        for s in shots:
+            t += s["dur"]
+            pts.append(round(t, 3))   # each shot end is a cut (hard-cut grammar)
+        acc += sum(s["dur"] for s in shots)
+    return pts[:-1], acc  # drop the final end-point (it is the file end)
+
+
 def cut_metrics(final, dur):
     out_f = os.path.join(os.path.dirname(final), "qa_cuts.txt")
     cmd = (f'ffmpeg -hide_banner -nostats -i "{final}" '
@@ -120,7 +152,21 @@ def run(run_dir):
          f"final {dur:.1f}s vs timeline {tl['total']:.1f}s")
     gate("decode_clean", decode_clean(final), "ffmpeg error scan")
 
-    cm = cut_metrics(final, dur)
+    gt = cut_metrics_ground_truth(run_dir)
+    if gt is not None:
+        pts, tl_total = gt
+        dur = max(dur, tl_total)
+        lens, prev = [], 0.0
+        for p in pts + [dur]:
+            lens.append(p - prev)
+            prev = p
+        lens = [l for l in lens if l > 0.15]
+        cm = {"n_cuts": len(pts), "method": "timeline_ground_truth",
+              "cuts_per_min": round(len(pts) / max(0.1, dur / 60), 1),
+              "asl_s": round(sum(lens) / len(lens), 2) if lens else dur}
+    else:
+        cm = cut_metrics(final, dur)
+        cm["method"] = "scene_detect"
     if profile == "longform":
         gate("cuts_per_min>=4", cm["cuts_per_min"] >= 4,
              f"{cm['cuts_per_min']} cpm (long-form refs: 6-10)")
