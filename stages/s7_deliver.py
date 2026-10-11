@@ -22,8 +22,11 @@ def _tg_transcode(final, run_dir, max_mb=46):
         out = os.path.join(run_dir, name)
         if os.path.exists(out):
             # same settings won't shrink on re-encode: too big -> next rung
-            if os.path.getsize(out) <= max_mb * 1048576:
+            sz = os.path.getsize(out)
+            if 1_000_000 < sz <= max_mb * 1048576:
                 return out
+            if sz == 0:
+                os.remove(out)   # crashed encode leaves 0 bytes
             continue
         r = sp.run(["ffmpeg", "-y", "-hide_banner", "-nostats", "-i", final,
                     "-vf", vf, "-c:v", "libx264", "-preset", "medium",

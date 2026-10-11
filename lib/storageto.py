@@ -25,10 +25,12 @@ def _visitor_token():
     return tok
 
 
-def _headers(extra=None, bearer=None):
+def _headers(extra=None, bearer=None, owner=None):
     h = {"X-Visitor-Token": _visitor_token()}
     if bearer:
         h["Authorization"] = f"Bearer {bearer}"
+    if owner:
+        h["X-Owner-Token"] = owner       # multipart ops authenticate THIS way
     if extra:
         h.update(extra)
     return h
@@ -60,7 +62,7 @@ def upload(path, bearer=None, collection_id=None, progress=None):
         raise RuntimeError(f"storage.to init failed: {init.get('error')} (http {r.status_code})")
 
     etags = []
-    owner = init.get("owner_token") or bearer   # multipart ops need THIS bearer
+    owner = init.get("owner_token") or bearer   # multipart ops need THIS token
     if init.get("type") == "multipart":
         upload_id = init["upload_id"]
         part_size = init.get("part_size", PART_SIZE_FALLBACK)
@@ -72,8 +74,8 @@ def upload(path, bearer=None, collection_id=None, progress=None):
                 fh.seek((part_no - 1) * part_size)
                 chunk = fh.read(part_size)
                 if part_no not in urls:
-                    pr = requests.post(f"{BASE}/upload/parts", timeout=30,
-                                       headers=_headers(bearer=owner),
+                    pr = requests.post(f"{BASE}/upload/parts", timeout=60,
+                                       headers=_headers(bearer=owner, owner=owner),
                                        json={"upload_id": upload_id,
                                              "part_numbers": [part_no]})
                     pj = pr.json()
@@ -88,8 +90,8 @@ def upload(path, bearer=None, collection_id=None, progress=None):
                 if progress:
                     progress(part_no, total_parts)
 
-        cr = requests.post(f"{BASE}/upload/complete-multipart", timeout=60,
-                           headers=_headers(bearer=owner),
+        cr = requests.post(f"{BASE}/upload/complete-multipart", timeout=120,
+                           headers=_headers(bearer=owner, owner=owner),
                            json={"upload_id": upload_id, "parts": etags})
         if not cr.json().get("success"):
             raise RuntimeError(f"complete-multipart failed: {cr.text[:200]}")
@@ -107,7 +109,8 @@ def upload(path, bearer=None, collection_id=None, progress=None):
     if collection_id:
         payload["collection_id"] = collection_id
     confirm_bearer = owner if init.get("type") == "multipart" else bearer
-    cr = requests.post(f"{BASE}/upload/confirm", headers=_headers(bearer=confirm_bearer),
+    cr = requests.post(f"{BASE}/upload/confirm",
+                       headers=_headers(bearer=confirm_bearer, owner=owner),
                        timeout=60, json=payload)
     cj = cr.json()
     if not cj.get("success"):
