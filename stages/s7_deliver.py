@@ -121,6 +121,16 @@ def run(run_dir, deliver=True, chat_id=None):
                    f"(storage.to • link valid until {up['expires_at'] or 'expiry'})" + credits_line)
             sent = telegram.send_message(msg, chat_id=chat_id)
             result["message_id"] = sent.get("result", {}).get("message_id")
+        else:
+            # direct send fit — still mirror the FULL-QUALITY file and send the link
+            try:
+                up = storageto.upload(final)
+                result["mirror"] = {k: up[k] for k in ("url", "id", "expires_at")}
+                msg = (f"<b>{title}</b> — full quality ({mb:.1f} MB, {tl['total']:.0f}s)\n"
+                       f"⬇️ <a href=\"{up['url']}\">{up['url']}</a>" + credits_line)
+                telegram.send_message(msg, chat_id=chat_id)
+            except Exception as e:  # noqa: BLE001 — mirror is best-effort
+                result["mirror_error"] = str(e)[:200]
     json.dump(result, open(os.path.join(run_dir, "delivery.json"), "w"),
               ensure_ascii=False, indent=1)
     return result
