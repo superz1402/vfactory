@@ -139,7 +139,7 @@ def pass_c(run_dir, starts, total, video):
                   f"adelay={ms}|{ms}[s{n}]")
         mix_in += f"[s{n}]"
     fc.append(f"{mix_in}amix=inputs={len(timings)}:duration=longest:"
-              f"normalize=0[nar]")
+              f"normalize=0,apad=whole_dur={total:.2f}[nar]")
     # ASPLIT LAW: [nar] feeds sidechaincompress AND the final amix — without an
     # explicit asplit the narration frames go to the sidechain branch only and
     # the mix ends up bed-only (silent voiceover, ASR-verified bug).
@@ -166,21 +166,38 @@ def pass_c(run_dir, starts, total, video):
 
 
 # --------------------------------------------------------- chapter mode ----
-MOVES = ("in", "out", "pan_r", "pan_l")
+# MOTION DOCTRINE (mortiflix-oss study, 2026-10-11):
+#   1. nothing moves linearly — every Ken Burns move uses ease-out progress
+#      p = 1-(1-on/frames)^2 (fast start, soft landing)
+#   2. a 6-move camera vocabulary so consecutive shots never repeat the same
+#      motion pattern (was a static-feeling 4-move cycle)
+#   3. captions animate: alpha ramp + y drift with settle (never pop in)
+#   4. sound design only on section hits (chapter starts): whoosh, low level
+#      — within-chapter cuts stay silent (documentary grammar)
+MOVES = ("in", "out", "pan_r", "pan_l", "pan_up", "diag")
 
 
 def kb_filter(move, frames, W, H):
-    """4-move Ken Burns cycle; pan moves drift horizontally at fixed zoom."""
+    """6-move EASED Ken Burns cycle. Ease-out progress p=1-(1-x)^2:
+    motion starts brisk and settles — never mechanical-linear."""
+    p = f"(1-pow(1-on/{frames},2))"  # eased progress 0..1
     if move == "in":
-        z = f"zoompan=z='min(1.0+0.10*on/{frames},1.10)':x='(iw-iw/zoom)/2'" \
+        z = f"zoompan=z='min(1.0+0.10*{p},1.10)':x='(iw-iw/zoom)/2'" \
             f":y='(ih-ih/zoom)/2'"
     elif move == "out":
-        z = f"zoompan=z='max(1.10-0.10*on/{frames},1.0)':x='(iw-iw/zoom)/2'" \
+        z = f"zoompan=z='max(1.10-0.10*{p},1.0)':x='(iw-iw/zoom)/2'" \
             f":y='(ih-ih/zoom)/2'"
     elif move == "pan_r":
-        z = f"zoompan=z='1.08':x='(iw-iw/zoom)*on/{frames}':y='(ih-ih/zoom)/2'"
-    else:
-        z = f"zoompan=z='1.08':x='(iw-iw/zoom)*(1-on/{frames})':y='(ih-ih/zoom)/2'"
+        z = f"zoompan=z='1.08':x='(iw-iw/zoom)*{p}':y='(ih-ih/zoom)/2'"
+    elif move == "pan_l":
+        z = f"zoompan=z='1.08':x='(iw-iw/zoom)*pow(1-on/{frames},2)'" \
+            f":y='(ih-ih/zoom)/2'"
+    elif move == "pan_up":
+        z = f"zoompan=z='1.08':x='(iw-iw/zoom)/2'" \
+            f":y='(ih-ih/zoom)*{p}'"
+    else:  # diag: eased zoom-in with a vertical settle — carries the eye
+        z = f"zoompan=z='min(1.0+0.08*{p},1.08)':x='(iw-iw/zoom)/2'" \
+            f":y='(ih-ih/zoom)*(1-0.5*{p})'"
     return (f"scale={W}:{H}:force_original_aspect_ratio=increase,"
             f"crop={W}:{H}," + z + f":d={frames}:s={W}x{H}:fps=30")
 
@@ -199,9 +216,10 @@ def render_shot(src, kind, dur, move, W, H, out, in_point=0.0):
                "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
                "-pix_fmt", "yuv420p", out]
     elif kind == "card":
+        p = f"(1-pow(1-on/{frames},2))"  # eased card breathe
         cmd = ["ffmpeg", "-y", "-v", "error", "-loop", "1", "-i", src,
                "-t", f"{dur:.2f}", "-vf",
-               f"zoompan=z='min(1.0+0.06*on/{frames},1.06)'"
+               f"zoompan=z='min(1.0+0.06*{p},1.06)'"
                f":x='(iw-iw/zoom)/2':y='(ih-ih/zoom)/2':d={frames}:s={W}x{H}:fps=30",
                "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
                "-pix_fmt", "yuv420p", out]
@@ -223,25 +241,35 @@ def chapter_video(run_dir, ch, shots, W, H, out_mp4, caption=None, big=False):
     for i, s in enumerate(shots, 1):
         cp = os.path.join(work, f"ch{ch['id']:02d}_s{i:02d}.mp4")
         if not (os.path.exists(cp) and os.path.getsize(cp) > 10000):
-            move = MOVES[(ch["id"] + i) % 4]
+            move = MOVES[(ch["id"] + i) % len(MOVES)]
             render_shot(s["path"], s.get("kind", "image"), s["dur"], move, W, H,
                         cp, in_point=s.get("in_point", 0.0))
         clip_paths.append(cp)
-    # title card on the opening shot — doctrine allows <=3 cards per video
+    # title card on the opening shot — doctrine allows <=3 cards per video.
+    # Animated: alpha ramp + eased y-drift settle (mortiflix: never pop text).
     if caption:
         tf = esc_textfile(run_dir, f"ch{ch['id']:02d}_title", caption)
         cap_done = clip_paths[0] + ".capdone"
         if not os.path.exists(cap_done):
+            end = min(4.6, shots[0]["dur"])
             size = 72 if big else 52
-            ypos = "(h-th)/2-140" if big else "h-190"
+            if big:
+                ypos = f"(h-th)/2-140+26*clip(1-(t-0.5)/0.8,0,1)"
+                alpha = (f"if(lt(t,0.5),0,if(lt(t,1.0),(t-0.5)/0.5,"
+                         f"if(gt(t,{end - 0.7:.2f}),max(0,({end - 0.7:.2f}-t)/0.7),1)))")
+            else:
+                ypos = "h-190"
+                alpha = (f"if(lt(t,0.7),0,if(lt(t,1.2),(t-0.7)/0.5,"
+                         f"if(gt(t,{end - 0.6:.2f}),max(0,({end - 0.6:.2f}-t)/0.6),1)))")
             tmp = clip_paths[0] + ".cap.mp4"
             subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", clip_paths[0],
                             "-vf",
                             f"drawtext=fontfile={FONT}:textfile={tf}:fontsize={size}"
                             f":fontcolor=white:borderw=2:bordercolor=black@0.65"
                             f":box=1:boxcolor=black@0.38:boxborderw=18"
-                            f":x=(w-tw)/2:y={ypos}"
-                            f":enable='between(t,0.4,{min(4.6, shots[0]['dur'])})'",
+                            f":x=(w-tw)/2:y='{ypos}'"
+                            f":alpha='{alpha}'"
+                            f":enable='between(t,0.4,{end:.2f})'",
                             "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
                             "-pix_fmt", "yuv420p", tmp],
                            capture_output=True, timeout=600, check=True)
@@ -265,23 +293,45 @@ def chapter_video(run_dir, ch, shots, W, H, out_mp4, caption=None, big=False):
     return out_mp4
 
 
+def _whoosh_file(run_dir, cid):
+    """Section-hit SFX (mortiflix sound-design law: hits only on the
+    important actions = chapter starts). Deterministic, cached per chapter."""
+    d = os.path.join(run_dir, "06_final", "sfx")
+    os.makedirs(d, exist_ok=True)
+    p = os.path.join(d, f"whoosh_{cid:02d}.wav")
+    if not os.path.exists(p):
+        import numpy as np
+        import scipy.io.wavfile as wavfile
+        from lib.audio import sfx as sfxlib
+        x = sfxlib.whoosh(0.7, 1.0)
+        buf = np.zeros((len(x), 2), dtype=np.float32)
+        buf[:, 0], buf[:, 1] = x, x
+        wavfile.write(p, sfxlib.SR,
+                      (np.clip(buf, -1.0, 1.0) * 32767).astype(np.int16))
+    return p
+
+
 def chapter_mux(run_dir, ch, video_dur, W, H, out_mp4):
-    """Chapter audio: bed segment + VO (ducked) + loudnorm -> final chapter."""
+    """Chapter audio: bed segment + VO (ducked) + whoosh hit at the chapter
+    cut + loudnorm -> final chapter. ASPLIT LAW respected (explicit split)."""
     music = json.load(open(os.path.join(run_dir, "05_music.json")))
     bed = music["beds"][str(ch["id"])]
     t = {u["id"]: u for u in
          json.load(open(os.path.join(run_dir, "03_timings.json")))["units"]}
     vo = t[ch["id"]]["wav"]
+    sfx = _whoosh_file(run_dir, ch["id"])
     vdur = video_dur
     fc = (
         f"[0:a]aformat=channel_layouts=stereo,aresample=48000,"
         f"atrim=0:{vdur:.2f},apad=whole_dur={vdur:.2f}[bed];"
         f"[1:a]aformat=channel_layouts=stereo,aresample=48000,"
-        f"adelay=600|600[nar];"
+        f"adelay=600|600,apad=whole_dur={vdur:.2f}[nar];"  # pad: sidechain stops at VO EOF otherwise
+        f"[2:a]aformat=channel_layouts=stereo,aresample=48000,"
+        f"adelay=120|120,volume=0.30[sfx];"
         f"[nar]asplit=2[nar1][nar2];"  # ASPLIT LAW: see pass_c comment
         f"[bed][nar1]sidechaincompress=threshold=0.015:ratio=8:attack=40"
         f":release=700:makeup=1[ducked];"
-        f"[nar2][ducked]amix=inputs=2:duration=longest:normalize=0[mix];"
+        f"[nar2][ducked][sfx]amix=inputs=3:duration=longest:normalize=0[mix];"
         f"[mix]loudnorm=I=-13.5:TP=-1.2:LRA=11,atrim=0:{vdur:.2f},"
         f"afade=t=out:st={max(vdur - 1.2, 0):.2f}:d=1.2[aout]")
     script = os.path.join(run_dir, "06_final", f"chaudio_{ch['id']:02d}.txt")
@@ -289,6 +339,7 @@ def chapter_mux(run_dir, ch, video_dur, W, H, out_mp4):
         fh.write(fc)
     tmp = out_mp4 + ".a.mp4"
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", bed, "-i", vo,
+                    "-i", sfx,
                     "-filter_complex_script", script, "-map", "[aout]",
                     "-ar", "48000", "-c:a", "aac", "-b:a", "192k", tmp],
                    capture_output=True, timeout=900, check=True)

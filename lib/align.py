@@ -82,7 +82,7 @@ def _solve(shots, anchors, audio_dur, tail, xf):
         starts[i] = st
         prev = st + MIN_SHOT
     # collision: later anchor cut pushed past audio end?
-    if starts[anchored[-1][1]] + MIN_SHOT > total:
+    if anchored and starts[anchored[-1][1]] + MIN_SHOT > total:
         # fall back to even layout
         anchored = []
 
