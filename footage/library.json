@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
  "character": "ahyeon",
  "built": "2026-10-10 06:36:29",
  "sources": [
@@ -1138,6 +1139,145 @@
      "confidence": 0.749
     }
    ]
+=======
+ "clips": [
+  {
+   "clip_id": "dangerously_eval",
+   "file": "/home/z/my-project/ytdl-agent/downloads/xw7Y2gviWbA.mp4",
+   "video_id": "xw7Y2gviWbA",
+   "source_title": "AHYEON Dangerously (Last Evaluation solo)",
+   "entities": [
+    "ahyeon_solo",
+    "stage_performance"
+   ],
+   "duration": 146.118458,
+   "verified": "title+vision",
+   "segment_hints": {
+    "whole": "ahyeon solo studio performance"
+   }
+  },
+  {
+   "clip_id": "sheesh_tft",
+   "file": "/home/z/my-project/ytdl-agent/downloads/O99aP4AvEF8.mp4",
+   "video_id": "O99aP4AvEF8",
+   "source_title": "BABYMONSTER SHEESH - THE FIRST TAKE",
+   "entities": [
+    "babymonster_members",
+    "stage_performance",
+    "ahyeon_solo"
+   ],
+   "duration": 242.472925,
+   "verified": "title+vision+asr",
+   "segment_hints": {
+    "t120-160": "AHYEON vocal showcase"
+   }
+  },
+  {
+   "clip_id": "drip_tft",
+   "file": "/home/z/my-project/ytdl-agent/downloads/06mCrMgv0zY.mp4",
+   "video_id": "06mCrMgv0zY",
+   "source_title": "BABYMONSTER DRIP - THE FIRST TAKE",
+   "entities": [
+    "babymonster_members",
+    "stage_performance",
+    "ahyeon_solo"
+   ],
+   "duration": 255.2439,
+   "verified": "title+vision+asr",
+   "segment_hints": {
+    "t115-155": "AHYEON vocal line"
+   }
+  },
+  {
+   "clip_id": "drip_mv",
+   "file": "/home/z/my-project/ytdl-agent/downloads/video_Zp-Jhuhq0bQ.mp4",
+   "source_title": "BABYMONSTER - 'DRIP' M/V (official)",
+   "entities": [
+    "babymonster_members",
+    "mv_quality",
+    "ahyeon_solo"
+   ],
+   "duration": 187.059955,
+   "verified": "title"
+  },
+  {
+   "clip_id": "blackpink_group",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/blackpink_group.mp4",
+   "source_title": "BLACKPINK - 'How You Like That' M/V (official)",
+   "entities": [
+    "blackpink_group",
+    "mv_quality"
+   ],
+   "duration": 183.484082,
+   "verified": "title"
+  },
+  {
+   "clip_id": "visual_film",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/visual_film.mp4",
+   "source_title": "[BABYMONS7ER] VISUAL FILM (return-era reveal)",
+   "entities": [
+    "announcement",
+    "babymonster_members",
+    "ahyeon_solo"
+   ],
+   "duration": 57.028209,
+   "verified": "title"
+  },
+  {
+   "clip_id": "introducing_ahyeon",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/introducing_ahyeon.mp4",
+   "source_title": "BABYMONSTER - Introducing AHYEON (official)",
+   "entities": [
+    "ahyeon_solo",
+    "announcement"
+   ],
+   "duration": 495.142313,
+   "verified": "title"
+  },
+  {
+   "clip_id": "batter_up_mv",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/batter_up_mv.mp4",
+   "source_title": "BABYMONSTER - 'BATTER UP' M/V (debut as six)",
+   "entities": [
+    "babymonster_members",
+    "mv_quality"
+   ],
+   "duration": 198.391293,
+   "verified": "title"
+  },
+  {
+   "clip_id": "sheesh_mv",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/sheesh_mv.mp4",
+   "source_title": "BABYMONSTER - 'SHEESH' M/V (all seven debut)",
+   "entities": [
+    "babymonster_members",
+    "mv_quality"
+   ],
+   "duration": 185.132698,
+   "verified": "title"
+  },
+  {
+   "clip_id": "ahyeon_drip_facecam",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/ahyeon_drip_facecam.mp4",
+   "source_title": "AHYEON 'DRIP' FaceCam 4K @Inkigayo (SBS)",
+   "entities": [
+    "ahyeon_solo",
+    "stage_performance"
+   ],
+   "duration": 233.987483,
+   "verified": "title"
+  },
+  {
+   "clip_id": "stuck_middle_mv",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/stuck_middle_mv.mp4",
+   "source_title": "BABYMONSTER - 'Stuck In The Middle' M/V",
+   "entities": [
+    "babymonster_members",
+    "mv_quality"
+   ],
+   "duration": 257.393197,
+   "verified": "title"
+>>>>>>> 89d9880 (v2: smart scene director — word-aligned entity-matched cuts + AGENT.md operating system)
   }
  ]
 }

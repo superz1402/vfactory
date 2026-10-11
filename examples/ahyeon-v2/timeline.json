@@ -1,0 +1,334 @@
+{
+ "fps": 30,
+ "w": 1920,
+ "h": 1080,
+ "gap": 0.35,
+ "lead": 0.3,
+ "narration_total": 72.14,
+ "video_total": 73.34,
+ "narration_wav": "/home/z/my-project/vfactory/runs/ahyeon-v2-smart/04_smart/narration_full.wav",
+ "scene_bounds": {
+  "1": {
+   "start": 0.0,
+   "dur": 7.26
+  },
+  "2": {
+   "start": 7.61,
+   "dur": 13.7
+  },
+  "3": {
+   "start": 21.66,
+   "dur": 7.82
+  },
+  "4": {
+   "start": 29.83,
+   "dur": 7.5
+  },
+  "5": {
+   "start": 37.68,
+   "dur": 6.14
+  },
+  "6": {
+   "start": 44.17,
+   "dur": 7.38
+  },
+  "7": {
+   "start": 51.9,
+   "dur": 4.02
+  },
+  "8": {
+   "start": 56.27,
+   "dur": 5.78
+  },
+  "9": {
+   "start": 62.4,
+   "dur": 4.38
+  },
+  "10": {
+   "start": 67.13,
+   "dur": 4.66
+  }
+ },
+ "shots": [
+  {
+   "start": 0.0,
+   "end": 1.1,
+   "dur": 1.1,
+   "narr_start": 0.0,
+   "narr_end": 1.1,
+   "scene": 1,
+   "span_index": 0,
+   "entity": "blackpink_group",
+   "clip": "blackpink_group",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/blackpink_group.mp4",
+   "in_point": 27.78,
+   "punch": "in"
+  },
+  {
+   "start": 1.1,
+   "end": 3.36,
+   "dur": 2.26,
+   "narr_start": 1.1,
+   "narr_end": 3.36,
+   "scene": 1,
+   "span_index": 1,
+   "entity": "blackpink_group",
+   "clip": "blackpink_group",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/blackpink_group.mp4",
+   "in_point": 123.85,
+   "punch": "out"
+  },
+  {
+   "start": 3.36,
+   "end": 7.61,
+   "dur": 4.25,
+   "narr_start": 3.36,
+   "narr_end": 7.609999999999999,
+   "scene": 1,
+   "span_index": 2,
+   "entity": "announcement",
+   "clip": "visual_film",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/visual_film.mp4",
+   "in_point": 23.32,
+   "punch": "in"
+  },
+  {
+   "start": 7.61,
+   "end": 11.96,
+   "dur": 4.35,
+   "narr_start": 7.61,
+   "narr_end": 11.96,
+   "scene": 2,
+   "span_index": 0,
+   "entity": "ahyeon_solo",
+   "clip": "ahyeon_drip_facecam",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/ahyeon_drip_facecam.mp4",
+   "in_point": 69.66,
+   "punch": "out"
+  },
+  {
+   "start": 11.96,
+   "end": 18.94,
+   "dur": 6.98,
+   "narr_start": 11.96,
+   "narr_end": 18.94,
+   "scene": 2,
+   "span_index": 1,
+   "entity": "ahyeon_solo",
+   "clip": "ahyeon_drip_facecam",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/ahyeon_drip_facecam.mp4",
+   "in_point": 116.01,
+   "punch": "in"
+  },
+  {
+   "start": 18.94,
+   "end": 21.66,
+   "dur": 2.72,
+   "narr_start": 18.94,
+   "narr_end": 21.66,
+   "scene": 2,
+   "span_index": 2,
+   "entity": "babymonster_members",
+   "clip": "sheesh_mv",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/sheesh_mv.mp4",
+   "in_point": 82.98,
+   "punch": "out"
+  },
+  {
+   "start": 21.66,
+   "end": 24.62,
+   "dur": 2.96,
+   "narr_start": 21.66,
+   "narr_end": 24.62,
+   "scene": 3,
+   "span_index": 0,
+   "entity": "ahyeon_solo",
+   "clip": "introducing_ahyeon",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/introducing_ahyeon.mp4",
+   "in_point": 151.56,
+   "punch": "in"
+  },
+  {
+   "start": 24.62,
+   "end": 29.83,
+   "dur": 5.21,
+   "narr_start": 24.62,
+   "narr_end": 29.830000000000002,
+   "scene": 3,
+   "span_index": 1,
+   "entity": "ahyeon_solo",
+   "clip": "introducing_ahyeon",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/introducing_ahyeon.mp4",
+   "in_point": 383.44,
+   "punch": "out"
+  },
+  {
+   "start": 29.83,
+   "end": 31.54,
+   "dur": 1.71,
+   "narr_start": 29.83,
+   "narr_end": 31.54,
+   "scene": 4,
+   "span_index": 0,
+   "entity": "babymonster_members",
+   "clip": "batter_up_mv",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/batter_up_mv.mp4",
+   "in_point": 51.42,
+   "punch": "in"
+  },
+  {
+   "start": 31.54,
+   "end": 37.68,
+   "dur": 6.14,
+   "narr_start": 31.54,
+   "narr_end": 37.68,
+   "scene": 4,
+   "span_index": 1,
+   "entity": "babymonster_members",
+   "clip": "batter_up_mv",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/batter_up_mv.mp4",
+   "in_point": 152.94,
+   "punch": "out"
+  },
+  {
+   "start": 37.68,
+   "end": 39.4,
+   "dur": 1.72,
+   "narr_start": 37.68,
+   "narr_end": 39.4,
+   "scene": 5,
+   "span_index": 0,
+   "entity": "announcement",
+   "clip": "visual_film",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/visual_film.mp4",
+   "in_point": 8.0,
+   "punch": "in"
+  },
+  {
+   "start": 39.4,
+   "end": 44.17,
+   "dur": 4.77,
+   "narr_start": 39.4,
+   "narr_end": 44.17,
+   "scene": 5,
+   "span_index": 1,
+   "entity": "announcement",
+   "clip": "visual_film",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/visual_film.mp4",
+   "in_point": 9.72,
+   "punch": "out"
+  },
+  {
+   "start": 44.17,
+   "end": 47.4,
+   "dur": 3.23,
+   "narr_start": 44.17,
+   "narr_end": 47.4,
+   "scene": 6,
+   "span_index": 0,
+   "entity": "babymonster_members",
+   "clip": "sheesh_mv",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/sheesh_mv.mp4",
+   "in_point": 42.03,
+   "punch": "in"
+  },
+  {
+   "start": 47.4,
+   "end": 51.9,
+   "dur": 4.5,
+   "narr_start": 47.4,
+   "narr_end": 51.900000000000006,
+   "scene": 6,
+   "span_index": 1,
+   "entity": "babymonster_members",
+   "clip": "sheesh_mv",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/sheesh_mv.mp4",
+   "in_point": 148.81,
+   "punch": "out"
+  },
+  {
+   "start": 51.9,
+   "end": 56.27,
+   "dur": 4.37,
+   "narr_start": 51.9,
+   "narr_end": 56.27,
+   "scene": 7,
+   "span_index": 0,
+   "entity": "ahyeon_solo",
+   "clip": "ahyeon_drip_facecam",
+   "file": "/home/z/my-project/ytdl-agent/downloads/entity/ahyeon_drip_facecam.mp4",
+   "in_point": 105.2,
+   "punch": "in"
+  },
+  {
+   "start": 56.27,
+   "end": 62.4,
+   "dur": 6.13,
+   "narr_start": 56.27,
+   "narr_end": 62.400000000000006,
+   "scene": 8,
+   "span_index": 0,
+   "entity": "stage_performance",
+   "clip": "sheesh_tft",
+   "file": "/home/z/my-project/ytdl-agent/downloads/O99aP4AvEF8.mp4",
+   "in_point": 118.0,
+   "punch": "out"
+  },
+  {
+   "start": 62.4,
+   "end": 63.3,
+   "dur": 0.9,
+   "narr_start": 62.4,
+   "narr_end": 63.3,
+   "scene": 9,
+   "span_index": 0,
+   "entity": "ahyeon_solo",
+   "clip": "dangerously_eval",
+   "file": "/home/z/my-project/ytdl-agent/downloads/xw7Y2gviWbA.mp4",
+   "in_point": 47.18,
+   "punch": "in"
+  },
+  {
+   "start": 63.3,
+   "end": 67.13,
+   "dur": 3.83,
+   "narr_start": 63.3,
+   "narr_end": 67.13,
+   "scene": 9,
+   "span_index": 1,
+   "entity": "ahyeon_solo",
+   "clip": "dangerously_eval",
+   "file": "/home/z/my-project/ytdl-agent/downloads/xw7Y2gviWbA.mp4",
+   "in_point": 27.54,
+   "punch": "out"
+  },
+  {
+   "start": 67.13,
+   "end": 70.14,
+   "dur": 3.01,
+   "narr_start": 67.13,
+   "narr_end": 70.14,
+   "scene": 10,
+   "span_index": 0,
+   "entity": "babymonster_members",
+   "clip": "drip_mv",
+   "file": "/home/z/my-project/ytdl-agent/downloads/video_Zp-Jhuhq0bQ.mp4",
+   "in_point": 113.3,
+   "punch": "in"
+  },
+  {
+   "start": 70.14,
+   "end": 73.34,
+   "dur": 3.2,
+   "narr_start": 70.14,
+   "narr_end": 72.13999999999999,
+   "scene": 10,
+   "span_index": 1,
+   "entity": "babymonster_members",
+   "clip": "drip_mv",
+   "file": "/home/z/my-project/ytdl-agent/downloads/video_Zp-Jhuhq0bQ.mp4",
+   "in_point": 71.66,
+   "punch": "out"
+  }
+ ]
+}

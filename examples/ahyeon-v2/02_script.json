@@ -1,0 +1,181 @@
+{
+ "title": "Ahyeon: The Voice of BABYMONSTER (v2 — entity-anchored)",
+ "logline": "When YG needed a new voice seven years after BLACKPINK, a trainee named Ahyeon became the centerpiece of BABYMONSTER.",
+ "topic": "Ahyeon BABYMONSTER main vocalist journey",
+ "style": "documentary",
+ "aspect": "16:9",
+ "clip_hints": {
+  "blackpink_group": [
+   "blackpink_group"
+  ],
+  "announcement": [
+   "visual_film",
+   "introducing_ahyeon"
+  ],
+  "ahyeon_solo": [
+   "ahyeon_drip_facecam",
+   "introducing_ahyeon",
+   "dangerously_eval",
+   "sheesh_tft",
+   "drip_tft"
+  ],
+  "babymonster_members": [
+   "sheesh_mv",
+   "batter_up_mv",
+   "drip_mv",
+   "stuck_middle_mv"
+  ],
+  "stage_performance": [
+   "sheesh_tft",
+   "drip_tft"
+  ]
+ },
+ "scenes": [
+  {
+   "id": 1,
+   "label": "hook",
+   "narration": "Seven years after BLACKPINK, YG Entertainment was ready to introduce its first new girl group since them.",
+   "visual": [
+    {
+     "entity": "blackpink_group",
+     "anchor": "BLACKPINK",
+     "note": "screen must show BLACKPINK the moment the word is spoken",
+     "clip": "blackpink_group"
+    },
+    {
+     "entity": "announcement",
+     "anchor": "ready",
+     "note": "then pivot to the new-group reveal film",
+     "clip": "visual_film"
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "label": "body",
+   "narration": "At the center of it: a trainee named Ahyeon — the voice YG chose to lead BABYMONSTER.",
+   "visual": [
+    {
+     "entity": "ahyeon_solo",
+     "anchor": [
+      "Ahyeon",
+      "ahyahn",
+      "ah yahn"
+     ],
+     "clip": "ahyeon_drip_facecam"
+    },
+    {
+     "entity": "babymonster_members",
+     "anchor": "BABYMONSTER",
+     "clip": "sheesh_mv"
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "label": "body",
+   "narration": "On January 15, 2023, YG introduced her to the world — main vocalist, lead rapper, and lead dancer.",
+   "visual": [
+    {
+     "entity": "ahyeon_solo",
+     "anchor": "introduced",
+     "note": "official 'Introducing AHYEON' footage",
+     "clip": "introducing_ahyeon"
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "label": "body",
+   "narration": "But when the group finally debuted, Ahyeon was not there — BABYMONSTER stepped on stage as six.",
+   "visual": [
+    {
+     "entity": "babymonster_members",
+     "anchor": "debuted",
+     "note": "BATTER UP era — the debut as six",
+     "clip": "batter_up_mv"
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "label": "body",
+   "narration": "Fans waited — then YG announced her return, and BABYMONSTER was seven again.",
+   "visual": [
+    {
+     "entity": "announcement",
+     "anchor": "announced",
+     "note": "BABYMONS7ER visual film — the return-era reveal",
+     "clip": "visual_film",
+     "in_point": 8.0
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "label": "body",
+   "narration": "On April 1, 2024, all seven members finally debuted together with SHEESH.",
+   "visual": [
+    {
+     "entity": "babymonster_members",
+     "anchor": "seven",
+     "note": "all members on screen when 'seven members' is spoken",
+     "clip": "sheesh_mv"
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "label": "body",
+   "narration": "Ahyeon's vocals carried the chorus — and the world started to listen.",
+   "visual": [
+    {
+     "entity": "ahyeon_solo",
+     "anchor": "vocals",
+     "note": "Ahyeon-only focus cam",
+     "clip": "ahyeon_drip_facecam"
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "label": "body",
+   "narration": "On THE FIRST TAKE, one uninterrupted live vocal settled every doubt about her voice.",
+   "visual": [
+    {
+     "entity": "stage_performance",
+     "anchor": "TAKE",
+     "in_point": 118.0,
+     "note": "SHEESH THE FIRST TAKE at Ahyeon's vocal showcase (~t120)",
+     "clip": "sheesh_tft"
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "label": "body",
+   "narration": "From a fifteen-year-old trainee to the centerpiece of a global stage —",
+   "visual": [
+    {
+     "entity": "ahyeon_solo",
+     "anchor": "trainee",
+     "note": "Dangerously solo studio performance",
+     "clip": "dangerously_eval"
+    }
+   ]
+  },
+  {
+   "id": 10,
+   "label": "outro",
+   "narration": "this is Ahyeon — the voice of BABYMONSTER.",
+   "visual": [
+    {
+     "entity": "babymonster_members",
+     "anchor": "BABYMONSTER",
+     "note": "end on the group, Ahyeon at center — DRIP era",
+     "clip": "drip_mv"
+    }
+   ]
+  }
+ ]
+}

@@ -5,7 +5,7 @@ uses send_message with the link."""
 import os
 import requests
 
-TOKEN_PATH = "/home/z/my-project/.tg_token"
+TOKEN_PATH = os.environ.get("TG_TOKEN_PATH", "/home/z/my-project/.tg_token")
 DEFAULT_CHAT = "1263089875"
 TG_DIRECT_LIMIT = 48 * 1024 * 1024  # 50 MB bot API cap, 2 MB safety margin
 

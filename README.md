@@ -1,5 +1,10 @@
 # vfactory — topic → full video, one command
 
+> **ANY AGENT OPERATING THIS REPO: READ [`AGENT.md`](AGENT.md) FIRST — it is the
+> must-follow operating system (quality doctrine, scene doctrine, render traps,
+> delivery protocol, closure rules).**
+
+
 Send a topic. Get a finished video — research, script, narration, visuals,
 score, render, delivery. Fully autonomous.
 

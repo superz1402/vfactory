@@ -1,0 +1,57 @@
+{
+ "final": "/home/z/my-project/vfactory/runs/ahyeon-v2-smart/06_final/final.mp4",
+ "size": 20909990,
+ "channel": "telegram_direct",
+ "bot": "@Submittermebot",
+ "ok": true,
+ "resp": {
+  "ok": false,
+  "error_code": 504,
+  "description": "Gateway Timeout"
+ },
+ "storage": {
+  "url": "https://storage.to/Le0cRidhT",
+  "id": "Le0cRidhT",
+  "expires_at": "2026-10-14T01:19:51+00:00",
+  "size": 20909990,
+  "filename": "final.mp4",
+  "storage": "storageto",
+  "owner_token": "<REDACTED>"
+ },
+ "telegram_link_msg": {
+  "ok": true,
+  "result": {
+   "message_id": 214,
+   "from": {
+    "id": 8856348501,
+    "is_bot": true,
+    "first_name": "Submittermebot",
+    "username": "Submittermebot"
+   },
+   "chat": {
+    "id": 1263089875,
+    "first_name": "Unknown",
+    "last_name": "Factor1402\ud83d\udc3e",
+    "username": "Unknownfactor1402",
+    "type": "private"
+   },
+   "date": 1791681593,
+   "text": "AHYEON documentary v2 (full quality):\nhttps://storage.to/Le0cRidhT",
+   "entities": [
+    {
+     "offset": 38,
+     "length": 28,
+     "type": "url"
+    }
+   ],
+   "link_preview_options": {
+    "url": "https://storage.to/Le0cRidhT"
+   }
+  }
+ },
+ "telegram_message_id": 217,
+ "storage_url": "https://storage.to/Le0cRidhT",
+ "link_message_id": 215,
+ "retries": "sendVideo 504 x2 then success",
+ "local_copy": "download/AHYEON_The_Voice_of_BABYMONSTER_v2_entity_matched.mp4"
+}
