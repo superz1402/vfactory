@@ -19,11 +19,13 @@ import hashlib
 import json
 import os
 import random
+import re
 import subprocess
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from lib import zai  # noqa: E402
+from lib.align import _keywords  # noqa: E402  (shared stopword tokenizer)
 
 SHOT_SEC = 8.0        # average long-form shot length
 SHOTS_PER_QUERY = 1   # valid hits to keep per query
@@ -124,6 +126,77 @@ def _local_footage(topic):
     return files
 
 
+# ------------------------------------------------- entity footage library ----
+def _library():
+    """Entity-tagged clip library (footage/library.json): title-verified clips
+    from official sources. Returns [{path, entities, title, dur}]."""
+    lp = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                      "footage", "library.json")
+    if not os.path.exists(lp):
+        return []
+    try:
+        lib = json.load(open(lp))
+    except Exception:
+        return []
+    out = []
+    for c in lib.get("clips", []):
+        path = c.get("path") or c.get("file") or ""
+        if not os.path.exists(path):
+            continue
+        out.append({"path": path, "entities": c.get("entities") or [],
+                    "title": c.get("source_title") or c.get("title") or "",
+                    "dur": float(c.get("duration") or 0) or None})
+    return out
+
+
+def _clip_dur(path):
+    r = subprocess.run(["ffprobe", "-v", "error", "-show_entries",
+                        "format=duration", "-of", "csv=p=0", path],
+                       capture_output=True, text=True)
+    try:
+        return float(r.stdout.strip())
+    except ValueError:
+        return 0.0
+
+
+def _lib_match(chapter, lib, used_segs, max_per_chapter=4):
+    """Allocate library clips for a chapter by entity/title match.
+
+    Each clip's segments ADVANCE globally (doctrine: same clip continues,
+    never replays). Returns shots with kind=video + in_point.
+    """
+    if not lib:
+        return []
+    terms = set()
+    for e in chapter.get("entities", []):
+        terms.update(t for t in re.sub(r"[^a-z0-9 ]", " ", e.lower()).split()
+                     if len(t) > 2)
+    for q in chapter.get("visual_queries", []):
+        terms.update(t for t in _keywords(q))
+    shots = []
+    for clip in lib:
+        if len(shots) >= max_per_chapter:
+            break
+        hay = " ".join(clip["entities"]).lower() + " " + clip["title"].lower()
+        score = sum(1 for t in terms if t in hay)
+        if score <= 0:
+            continue
+        path = clip["path"]
+        dur = clip["dur"] or _clip_dur(path)
+        if dur < 20:
+            continue
+        cur, last_end = used_segs.get(path, (0.0, 0.0))
+        if cur + 12 > dur:               # exhausted -> wrap to fresh pass
+            cur, last_end = 0.0, 0.0
+        in_pt = cur
+        used_segs[path] = (cur + 12.0, dur)   # next use continues forward
+        shots.append({"path": path, "kind": "video", "query": "library:" +
+                      (clip["entities"][0] if clip["entities"] else "clip"),
+                      "in_point": round(in_pt, 2),
+                      "credit": clip["title"][:160], "caption": ""})
+    return shots
+
+
 def _keyword_hit(query, path):
     q = set(query.lower().replace("_", " ").split())
     name = os.path.basename(path).lower().replace("_", " ").replace("-", " ")
@@ -165,6 +238,8 @@ def run_chapters(run_dir, region):
     timings = {t["id"]: t["audio"] for t in
                json.load(open(os.path.join(run_dir, "03_timings.json")))["units"]}
     pool = _local_footage(topic)
+    lib = _library()
+    used_segs = {}      # library clip path -> (cursor, dur): segments advance
     used_pool = set()
     used_sigs = []      # global (cross-chapter) duplicate rejection
     rng = random.Random(topic.get("topic", ""))
@@ -184,7 +259,11 @@ def run_chapters(run_dir, region):
         shots = []
         queries = [q for q in ch.get("visual_queries", []) if q][:12]
         qi = 0
-        # 1) local footage matched by keywords
+        # 1) entity-tagged library clips (title-verified official sources;
+        #    segments advance so a clip continues, never replays)
+        for s in _lib_match(ch, lib, used_segs):
+            shots.append(s)
+        # 2) local footage matched by filename keywords
         for q in queries:
             if len(shots) >= n_shots:
                 break

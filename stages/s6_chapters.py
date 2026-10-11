@@ -181,12 +181,14 @@ def kb_filter(move, frames, W, H):
             f"crop={W}:{H}," + z + f":d={frames}:s={W}x{H}:fps=30")
 
 
-def render_shot(src, kind, dur, move, W, H, out):
+def render_shot(src, kind, dur, move, W, H, out, in_point=0.0):
     frames = max(int(dur * 30), 2)
     if kind == "video":
-        # exact frame count (doctrine: -t pads drift; -frames:v is exact)
-        frames = max(int(dur * 30), 2)
-        cmd = ["ffmpeg", "-y", "-v", "error", "-stream_loop", "-1", "-i", src,
+        # exact frame count (doctrine: -t pads drift; -frames:v is exact);
+        # -ss before -i trims from the clip's advancing in_point
+        ss = ["-ss", f"{max(in_point, 0.0):.2f}"] if in_point else []
+        cmd = ["ffmpeg", "-y", "-v", "error"] + ss + \
+              ["-stream_loop", "-1", "-i", src,
                "-vf", f"scale={W}:{H}:force_original_aspect_ratio=increase,"
                       f"crop={W}:{H},fps=30",
                "-frames:v", str(frames), "-an",
@@ -218,7 +220,8 @@ def chapter_video(run_dir, ch, shots, W, H, out_mp4, caption=None, big=False):
         cp = os.path.join(work, f"ch{ch['id']:02d}_s{i:02d}.mp4")
         if not (os.path.exists(cp) and os.path.getsize(cp) > 10000):
             move = MOVES[(ch["id"] + i) % 4]
-            render_shot(s["path"], s.get("kind", "image"), s["dur"], move, W, H, cp)
+            render_shot(s["path"], s.get("kind", "image"), s["dur"], move, W, H,
+                        cp, in_point=s.get("in_point", 0.0))
         clip_paths.append(cp)
     # title card on the opening shot — doctrine allows <=3 cards per video
     if caption:
