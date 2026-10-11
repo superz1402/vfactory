@@ -1,40 +1,59 @@
 #!/usr/bin/env python3
-"""Stage 3: narration TTS per scene -> WAVs + measured timings (ffprobe)."""
-import json, os, subprocess, sys
+"""Stage 3: narration TTS per beat/scene/chapter -> WAVs + measured timings.
+
+Voice selection via 00_topic.json "voice": preset name (doc_male_us...),
+provider string (edge:en-GB-RyanNeural / zai:tongtong) or empty = default
+(zai:tongtong — identical to v2.1 behavior).
+
+Word-level timestamps stored per unit (exact for edge, approximated for zai)
+and cached in a .words sidecar so resume keeps them. The long-form path uses
+word timings for entity-aligned cuts (lib/align.py) and subtitles (lib/srt.py).
+"""
+import json
+import os
+import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from lib import zai  # noqa: E402
-
-VOICE = "tongtong"
-
-
-def audio_len(path):
-    r = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
-                        "-of", "default=noprint_wrappers=1:nokey=1", path],
-                       capture_output=True, text=True)
-    try:
-        return float(r.stdout.strip())
-    except ValueError:
-        return 0.0
+from lib import voice  # noqa: E402
+from lib.voice import audio_len  # noqa: E402
 
 
 def run(run_dir, speed=1.0):
     out_dir = os.path.join(run_dir, "03_voice")
     os.makedirs(out_dir, exist_ok=True)
     plan = json.load(open(os.path.join(run_dir, "02_script.json")))
+    topic = json.load(open(os.path.join(run_dir, "00_topic.json")))
+    vname = voice.resolve(topic.get("voice"))
+
+    if plan.get("chapters"):
+        units, kind = plan["chapters"], "chapter"
+    elif plan.get("beats"):
+        units, kind = plan["beats"], "beat"
+    else:
+        units, kind = plan.get("scenes", []), "scene"
     timings, failures = [], []
-    for b in plan["beats"]:
-        wav = os.path.join(out_dir, f"beat_{b['id']:02d}.wav")
+    for u in units:
+        uid = u["id"]
+        base = os.path.join(out_dir, f"{kind}_{uid:02d}")
+        wav, side = base + ".wav", base + ".words.json"
+        words = []
         if not (os.path.exists(wav) and os.path.getsize(wav) > 1000):
-            ok = zai.tts(b["narration"], wav, voice=VOICE, speed=speed, fmt="wav")
-            if not ok:
-                failures.append(b["id"])
+            r = voice.synth(u["narration"], wav, voice=vname, speed=speed)
+            if not r or not os.path.exists(wav) or os.path.getsize(wav) < 1000:
+                failures.append(uid)
                 continue
-        timings.append({"id": b["id"], "wav": wav, "audio": round(audio_len(wav), 2)})
+            json.dump(r["words"], open(side, "w"), ensure_ascii=False)
+            words = r["words"]
+        elif os.path.exists(side):
+            words = json.load(open(side))
+        timings.append({"id": uid, "wav": wav, "audio": round(audio_len(wav), 2),
+                        "words": words, "kind": kind})
     if failures:
-        raise RuntimeError(f"TTS failed for beats {failures}")
-    json.dump({"voice": VOICE, "speed": speed, "timings": timings},
-              open(os.path.join(run_dir, "03_timings.json"), "w"), indent=1)
+        raise RuntimeError(f"TTS failed for {kind}s {failures}")
+    out = {"voice": vname, "speed": speed, "kind": kind, "units": timings,
+           "timings": timings}  # "timings" kept for v2.1 consumers
+    json.dump(out, open(os.path.join(run_dir, "03_timings.json"), "w"),
+              ensure_ascii=False, indent=1)
     return timings
 
 

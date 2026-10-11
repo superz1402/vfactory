@@ -17,6 +17,22 @@ motion, synthesized cinematic score (sidechain-ducked under VO, loudnorm
 -14 LUFS), delivered to Telegram (direct ≤48 MB) or storage.to (bigger),
 link pushed to the same chat.
 
+## Long-form documentaries (v3) — up to 29 minutes
+
+```
+python3 vfactory.py "Ahyeon: The Main Vocalist Story" --minutes 29 --voice doc_male_us
+```
+
+- ~2.6-min **chapters**, each scripted (fact-disciplined, length-enforced),
+  voiced with **word-level timestamps**, sourced with entity-matched visuals,
+  scored with a **real-instrument composition** (lemo-opuscar sampler engine
+  on CC0/CC-BY libraries — VSCO2CE strings, Salamander piano, VCSL), rendered
+  with **entity-aligned hard cuts** (the screen shows the subject at the
+  moment it is spoken) and concatenated. Per-chapter checkpoints: an
+  interrupted 29-min render resumes at the broken chapter.
+- Deliveries ship with `subtitles.srt` + `music_credits.txt` (auto CC
+  attribution) and pass the s8 QA gates (long-form profile).
+
 ## Pipeline
 
 | Stage | What happens | Checkpoint |

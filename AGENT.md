@@ -139,3 +139,61 @@ footage/library.json   entity-tagged clip library (title-verified)
 scripts/               build drivers, farm fetch, footage search, proofs
 runs/                  every build with full artifacts (audit trail)
 ```
+
+---
+
+## 10. Long-form doctrine (v3, `--minutes N`) — 29-minute class documentaries
+
+Modules: `stages/s2_chapters.py` -> `s3_voice` -> `s4_chapter_media.py` ->
+`s5_chapter_score.py` -> `s6_chapters.py` -> `s8_qa` (longform profile) -> `s7`.
+
+1. **Chapters, not one giant render.** N minutes -> ~N/2.6 chapters of
+   ~2.6 min (~400 words each). s2 enforces length with a continuation loop
+   (append, don't rewrite). Each chapter checkpoints independently
+   (`.done_ch_<id>` + `chapter_NN.mp4`) — a crashed 29-min render resumes
+   at the broken chapter, never from zero.
+2. **Entity alignment is word-exact.** Edge voices give REAL word timestamps
+   (no whisper needed). `lib/align.py` anchors each shot's cut to the first
+   spoken occurrence of its query's keywords (LEAD 0.35s), fills unanchored
+   shots into gaps, and guarantees durations sum to audio+tail EXACTLY.
+   "Say BLACKPINK -> cut to BLACKPINK as the word lands."
+3. **Hard cuts on words; xfades are not used inside chapters** (§5 doctrine).
+   Chapter videos join by concat demuxer `-c copy` (uniform encodes are a
+   hard requirement for the final concat too). Chapter edges get fades.
+4. **Title cards: at most 3 per video** (ch1 big title + climax/turning_point
+   + outro). No per-shot captions.
+5. **Music = original composition, never source audio.** `lib/score.py`
+   composes a real-instrument score (lemo-opuscar sampler, MIT; CC0/CC-BY
+   sample libraries in `lib/audio/instruments/`, NOT in git — fetch before
+   running longform) per chapter with a narrative intensity arc, act
+   stingers and an outro resolve. CC-BY attribution is auto-written to
+   `music_credits.txt` — never delete it. Fallback chain: sampler ->
+   legacy synth (only if libraries are missing).
+6. **Voices.** `--voice doc_male_us` (or any `edge:*`/`zai:*`). Provider
+   failure falls back to zai automatically. ffprobe every output.
+7. **QA profile longform** (s8_qa): cut cadence >=4 cpm, ASL <=12s (soft),
+   LUFS in [-14,-10] (chapter loudnorm targets I=-13.5 so fades land the
+   final inside the gate), dead-air + integrity gates unchanged.
+8. **Delivery for big files**: 720p Telegram transcode ladder (s7) then
+   storage.to multipart; `subtitles.srt` (from word timings) + credits ship
+   with every run.
+9. **zoompan rules**: `d=frames` is correct ONLY for stills (one input frame
+   expanded); for VIDEO sources use fps-normalized scale/crop without
+   zoompan, and trim with `-frames:v` — never `-t` (cumulative desync).
+
+## 11. Repository map (v3 additions)
+
+```
+stages/s2_chapters.py       long-form chapter generator (continuation loop)
+stages/s4_chapter_media.py  entity-matched per-chapter sourcing (validated,
+                            perceptual dedup, watermark-farm skip)
+stages/s5_chapter_score.py  per-chapter real-instrument scores + credits
+stages/s6_chapters.py       per-chapter render: 4-move Ken Burns (stills),
+                            hard-cut concat, per-chapter loudnorm mix
+lib/voice.py                edge-tts (word timestamps) + zai providers
+lib/score.py                score composer on the sampler engine
+lib/audio/                  sampler/pluck/sfx (ported from lemo-opuscar, MIT)
+                            + instruments/ sample libraries (not in git)
+lib/align.py                narration->shot word-time alignment
+lib/srt.py                  subtitles from word timings
+```

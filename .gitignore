@@ -5,3 +5,4 @@ __pycache__/
 *.pyc
 cache/
 research/refs/
+lib/audio/instruments/

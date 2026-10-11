@@ -6,6 +6,7 @@ import json, os, subprocess, sys, time
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from lib import storageto, telegram  # noqa: E402
+from lib import srt as srt_mod  # noqa: E402
 
 
 def _tg_transcode(final, run_dir, max_mb=46):
@@ -39,7 +40,9 @@ def run(run_dir, deliver=True, chat_id=None):
     topic = json.load(open(os.path.join(run_dir, "00_topic.json")))
     plan = json.load(open(os.path.join(run_dir, "02_script.json")))
     tl = json.load(open(os.path.join(run_dir, "06_timeline.json")))
-    shots = json.load(open(os.path.join(run_dir, "04_shots.json")))
+    shots = {"stats": {"total_shots": 0}}
+    if os.path.exists(os.path.join(run_dir, "04_shots.json")):
+        shots = json.load(open(os.path.join(run_dir, "04_shots.json")))
     qa = {}
     qa_path = os.path.join(run_dir, "07_qa.json")
     if os.path.exists(qa_path):
@@ -48,21 +51,44 @@ def run(run_dir, deliver=True, chat_id=None):
     mb = size / 1024 / 1024
     title = plan.get("title", topic["topic"])
     n_beats = len(plan.get("beats", []))
-    credit = ""
-    cr_path = os.path.join(run_dir, "06_music_credit.json")
-    if os.path.exists(cr_path):
-        cr = json.load(open(cr_path))
-        if cr.get("license"):
-            credit = f"\n\n♪ Music: {cr['license']}"
+    n_chapters = len(plan.get("chapters", []))
+    structure = (f"{n_chapters} chapters" if n_chapters else f"{n_beats} beats")
+    # side deliverables: subtitles + music credits (any mode)
+    srt_path, n_cues, credits_line = None, 0, ""
+    try:
+        srt_path, n_cues = srt_mod.build(run_dir)
+    except Exception:
+        srt_path = None
+    music_json = os.path.join(run_dir, "05_music.json")
+    if os.path.exists(music_json):
+        mu = json.load(open(music_json))
+        cr = mu.get("credits", "")
+        if isinstance(cr, (list, tuple)):
+            cr = "\n".join(str(x) for x in cr)
+        if cr:
+            with open(os.path.join(run_dir, "music_credits.txt"), "w") as fh:
+                fh.write(cr + "\n")
+            credits_line = f"\n\n♪ {cr.splitlines()[0]}"
+    else:
+        cr_path = os.path.join(run_dir, "06_music_credit.json")
+        if os.path.exists(cr_path):
+            cr = json.load(open(cr_path))
+            if cr.get("license"):
+                credits_line = f"\n\n♪ Music: {cr['license']}"
     qa_line = ""
     if qa.get("overall"):
         qa_line = f" • QA {qa['overall'].upper()}"
-    caption = (f"<b>{title}</b> — a short documentary\n{topic['topic']}\n"
-               f"{tl['total']:.0f}s • {n_beats} beats • {shots['stats']['total_shots']} shots"
+    caption = (f"<b>{title}</b>\n{topic['topic']}\n"
+               f"{tl['total']:.0f}s • {structure} • "
+               f"{shots['stats'].get('total_shots', 0)} shots"
                f"{qa_line} • {mb:.1f} MB\n"
-               f"built by vfactory v2" + credit)
+               f"built by vfactory" + credits_line)
     chat_id = chat_id or topic.get("chat_id") or telegram.DEFAULT_CHAT
-    result = {"file": final, "size_mb": round(mb, 1), "chat_id": chat_id}
+    result = {"file": final, "size_mb": round(mb, 1), "chat_id": chat_id,
+              "structure": structure}
+    if srt_path:
+        result["subtitles"] = srt_path
+        result["subtitles_cues"] = n_cues
 
     if not deliver:
         result["delivered"] = False
@@ -89,9 +115,9 @@ def run(run_dir, deliver=True, chat_id=None):
             up = storageto.upload(final)
             result.update({"method": "storageto", "ok": True, **{k: up[k] for k in
                            ("url", "id", "expires_at")}})
-            msg = (f"<b>{title}</b> — {tl['total']:.0f}s documentary, {mb:.1f} MB{qa_line}\n"
+            msg = (f"<b>{title}</b> — {tl['total']:.0f}s, {structure}, {mb:.1f} MB{qa_line}\n"
                    f"⬇️ <a href=\"{up['url']}\">{up['url']}</a>\n"
-                   f"(storage.to • link valid until {up['expires_at'] or 'expiry'})" + credit)
+                   f"(storage.to • link valid until {up['expires_at'] or 'expiry'})" + credits_line)
             sent = telegram.send_message(msg, chat_id=chat_id)
             result["message_id"] = sent.get("result", {}).get("message_id")
     json.dump(result, open(os.path.join(run_dir, "delivery.json"), "w"),

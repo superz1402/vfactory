@@ -66,10 +66,11 @@ def decode_clean(final):
 
 
 def _source_stats(run_dir):
-    """Source mix from either pipeline: stock (04_shots.json) or charmedia
-    (04_charmedia.json — every cut is face-verified real video, no stills)."""
+    """Source mix from any pipeline: stock (04_shots.json), charmedia
+    (04_charmedia.json), or long-form chapters (04_media.json)."""
     sp = os.path.join(run_dir, "04_shots.json")
     cp = os.path.join(run_dir, "04_charmedia.json")
+    mp = os.path.join(run_dir, "04_media.json")
     if os.path.exists(sp):
         return json.load(open(sp))["stats"]
     if os.path.exists(cp):
@@ -77,6 +78,20 @@ def _source_stats(run_dir):
         n = sum(len(v.get("cuts", [])) for v in cm.get("scenes", {}).values())
         return {"video_shots": n, "stills": 0, "still_frac": 0.0,
                 "note": f"charmedia: {n} face-verified video cuts (0 stills)"}
+    if os.path.exists(mp):
+        media = json.load(open(mp)).get("chapters", {})
+        vids = stills = 0
+        for ch in media.values():
+            for s in ch.get("shots", []):
+                if s.get("kind") == "video":
+                    vids += 1
+                else:
+                    stills += 1
+        tot = max(vids + stills, 1)
+        return {"video_shots": vids, "stills": stills,
+                "still_frac": round(stills / tot, 3),
+                "note": "long-form chapters (still-heavy by design; "
+                        "documentary Ken Burns grammar)"}
     return {"video_shots": 0, "stills": 0, "still_frac": 1.0,
             "note": "unknown source mix"}
 
@@ -85,6 +100,14 @@ def run(run_dir):
     final = os.path.join(run_dir, "final.mp4")
     tl = json.load(open(os.path.join(run_dir, "06_timeline.json")))
     dur = _ffprobe_dur(final)
+
+    # profile: long-form documentaries use slower cadence + still-heavy grammar
+    profile = "short"
+    tp = os.path.join(run_dir, "00_topic.json")
+    if os.path.exists(tp):
+        t = json.load(open(tp))
+        if t.get("minutes") and t["minutes"] >= 3:
+            profile = "longform"
 
     checks = []
 
@@ -98,14 +121,23 @@ def run(run_dir):
     gate("decode_clean", decode_clean(final), "ffmpeg error scan")
 
     cm = cut_metrics(final, dur)
-    gate("cuts_per_min>=7", cm["cuts_per_min"] >= 7,
-         f"{cm['cuts_per_min']} cpm (refs: 13.1-13.5)")
-    gate("asl<=6.5s", cm["asl_s"] <= 6.5, f"ASL {cm['asl_s']}s (refs: 4.4-4.6s)")
-
-    stats = _source_stats(run_dir)
-    gate("video_shots>=55pct", stats["still_frac"] <= 0.45,
-         f"{stats['video_shots']} video / {stats['stills']} stills "
-         f"({round(100-stats['still_frac']*100)}% video)")
+    if profile == "longform":
+        gate("cuts_per_min>=4", cm["cuts_per_min"] >= 4,
+             f"{cm['cuts_per_min']} cpm (long-form refs: 6-10)")
+        gate("asl<=12s", cm["asl_s"] <= 12.0, f"ASL {cm['asl_s']}s "
+             "(long-form refs: 7-11s)", severity="soft")
+        stats = _source_stats(run_dir)
+        gate("source_mix_reported", True,
+             f"{stats['video_shots']} video / {stats['stills']} stills — "
+             f"{stats.get('note', '')}", severity="soft")
+    else:
+        gate("cuts_per_min>=7", cm["cuts_per_min"] >= 7,
+             f"{cm['cuts_per_min']} cpm (refs: 13.1-13.5)")
+        gate("asl<=6.5s", cm["asl_s"] <= 6.5, f"ASL {cm['asl_s']}s (refs: 4.4-4.6s)")
+        stats = _source_stats(run_dir)
+        gate("video_shots>=55pct", stats["still_frac"] <= 0.45,
+             f"{stats['video_shots']} video / {stats['stills']} stills "
+             f"({round(100-stats['still_frac']*100)}% video)")
 
     am = audio_metrics(final)
     gate("lufs_in_range", am["lufs"] is not None and -14.0 <= am["lufs"] <= -10.0,
@@ -124,8 +156,8 @@ def run(run_dir):
         subprocess.run(["ffmpeg", "-y", "-hide_banner", "-nostats", "-ss", str(ts),
                         "-i", final, "-frames:v", "1", "-q:v", "3",
                         os.path.join(fdir, f"qa{i}.jpg")], capture_output=True)
-    report = {"overall": overall, "duration": round(dur, 1), "cuts": cm,
-              "audio": am, "source_mix": stats, "checks": checks,
+    report = {"overall": overall, "profile": profile, "duration": round(dur, 1),
+              "cuts": cm, "audio": am, "source_mix": stats, "checks": checks,
               "frames": fdir}
     json.dump(report, open(os.path.join(run_dir, "07_qa.json"), "w"), indent=1)
     return report
