@@ -10,29 +10,30 @@ from lib import srt as srt_mod  # noqa: E402
 
 
 def _tg_transcode(final, run_dir, max_mb=46):
-    """Re-encode to 720p CRF23 (faststart) small enough for Telegram sendVideo."""
-    out = os.path.join(run_dir, "tg_720p.mp4")
-    if os.path.exists(out) and os.path.getsize(out) <= max_mb * 1048576:
-        return out
-    r = subprocess.run(["ffmpeg", "-y", "-hide_banner", "-nostats", "-i", final,
-                        "-vf", "scale=1280:720:force_original_aspect_ratio=decrease",
-                        "-c:v", "libx264", "-preset", "medium", "-crf", "23",
-                        "-c:a", "aac", "-b:a", "160k",
-                        "-movflags", "+faststart", out],
-                       capture_output=True, text=True, timeout=1800)
-    if r.returncode != 0 or not os.path.exists(out):
-        return None
-    if os.path.getsize(out) > max_mb * 1048576:
-        # one quality step down
-        r = subprocess.run(["ffmpeg", "-y", "-hide_banner", "-nostats", "-i", final,
-                            "-vf", "scale=1152:648",
-                            "-c:v", "libx264", "-preset", "medium", "-crf", "25",
-                            "-c:a", "aac", "-b:a", "128k",
-                            "-movflags", "+faststart", out],
-                           capture_output=True, text=True, timeout=1800)
-        if r.returncode != 0 or os.path.getsize(out) > max_mb * 1048576:
-            return None
-    return out
+    """Ladder to fit Telegram sendVideo: 720p crf23 -> 540p crf25 -> 480p crf26.
+    Long-form docs (29 min) usually land on 480p for direct send."""
+    import subprocess as sp
+    ladder = [
+        ("tg_720p.mp4", "scale=1280:720:force_original_aspect_ratio=decrease", "23", "160k"),
+        ("tg_540p.mp4", "scale=960:540:force_original_aspect_ratio=decrease", "25", "128k"),
+        ("tg_480p.mp4", "scale=854:480:force_original_aspect_ratio=decrease", "26", "128k"),
+    ]
+    for name, vf, crf, abr in ladder:
+        out = os.path.join(run_dir, name)
+        if os.path.exists(out):
+            # same settings won't shrink on re-encode: too big -> next rung
+            if os.path.getsize(out) <= max_mb * 1048576:
+                return out
+            continue
+        r = sp.run(["ffmpeg", "-y", "-hide_banner", "-nostats", "-i", final,
+                    "-vf", vf, "-c:v", "libx264", "-preset", "medium",
+                    "-crf", crf, "-c:a", "aac", "-b:a", abr,
+                    "-movflags", "+faststart", out],
+                   capture_output=True, text=True, timeout=3600)
+        if r.returncode == 0 and os.path.exists(out) and \
+                os.path.getsize(out) <= max_mb * 1048576:
+            return out
+    return None
 
 
 def run(run_dir, deliver=True, chat_id=None):
