@@ -1,5 +1,10 @@
-runs/
-__pycache__/
+.tg_token
+.tg_token_submitter
+.gh_token
+.nvapi_token
 .visitor_token
 .tg_offset
+runs/
+footage_pool/*.mp4
+__pycache__/
 *.pyc

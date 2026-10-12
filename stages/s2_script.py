@@ -24,8 +24,34 @@ TEMPLATE = {
 }
 
 
-def run(run_dir, topic, style="documentary", n_scenes=7, region="us"):
+def load_script_file(path, topic, region="us"):
+    """Load a hand-authored script (films/<name>/script.json), validate it."""
+    plan = json.load(open(path))
+    if "scenes" not in plan or not isinstance(plan["scenes"], list) or len(plan["scenes"]) < 3:
+        raise RuntimeError(f"script file {path} has no valid scenes list")
+    for i, sc in enumerate(plan["scenes"], 1):
+        sc["id"] = i
+        for k in ("label", "narration", "on_screen", "visual_query"):
+            sc.setdefault(k, "")
+        sc.setdefault("footage_tags", [])
+        sc["narration"] = sc["narration"].strip()
+        if not sc["narration"]:
+            raise RuntimeError(f"scene {i} has empty narration")
+    plan["topic"] = plan.get("topic", topic)
+    plan["region"] = region
+    plan["source"] = "script_file"
+    return plan
+
+
+def run(run_dir, topic, style="documentary", n_scenes=7, region="us",
+        script_file=None):
     out_path = os.path.join(run_dir, "02_script.json")
+    if script_file and os.path.exists(script_file):
+        plan = load_script_file(script_file, topic, region)
+        json.dump(plan, open(out_path, "w"), ensure_ascii=False, indent=1)
+        print(f"[s2] loaded script file: {script_file} "
+              f"({len(plan['scenes'])} scenes)")
+        return plan
     research = json.load(open(os.path.join(run_dir, "01_research.json")))
     brief = research["brief"]
 
@@ -59,5 +85,6 @@ SOURCES (use only these facts):
 if __name__ == "__main__":
     d = json.load(open(sys.argv[1]))  # 00_topic.json
     run(os.path.dirname(sys.argv[1]), d["topic"], d.get("style", "documentary"),
-        d.get("n_scenes", 7), d.get("region", "us"))
+        d.get("n_scenes", 7), d.get("region", "us"),
+        d.get("script_file"))
     print("script done:", d["topic"])

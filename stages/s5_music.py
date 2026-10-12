@@ -1,59 +1,162 @@
 #!/usr/bin/env python3
-"""Stage 5: background music bed — synthesized, zero licensing risk.
-Two moods: 'dark' (documentary/cinematic) and 'bright' (hype/explainer).
-Recipe proven in scripts/doc_audio_proof.sh (Session 28): drone layers +
-tremolo + filtered air, ducked under VO in stage 6 via sidechaincompress."""
+"""Stage 5 v2: structured music bed — numpy synthesis, zero licensing risk.
+
+Progression: Am - F - C - G (A-minor i-VI-III-VII), 8s per chord, looping.
+Layers: warm pad (additive harmonics + slow attack), sub root, piano-ish pluck
+arpeggio (decaying harmonics), air (filtered noise), soft pulse for momentum.
+Dynamics: sparse intro (14s), arpeggio enters at 14s, swell every ~110s,
+global fade-in/out. Mixed under VO in s6 via sidechain ducking."""
 import json, os, subprocess, sys
 
-sys.path.insert(0, os.path.dirname(__file__))
+import numpy as np
+
+SR = 48000
+CHORDS = {  # (root_hz, chord tones)
+    "Am": (110.00, [110.00, 164.81, 220.00, 261.63]),
+    "F":  (87.31,  [87.31, 130.81, 174.61, 220.00]),
+    "C":  (65.41,  [130.81, 164.81, 196.00, 261.63]),
+    "G":  (98.00,  [98.00, 146.83, 196.00, 246.94]),
+}
+PROG = ["Am", "F", "C", "G"]
+CHORD_SEC = 8.0
+
+
+def env_ad(n, attack, decay_tau):
+    t = np.arange(n) / SR
+    e = np.minimum(t / max(attack, 1e-3), 1.0) * np.exp(-np.maximum(t - attack, 0) / decay_tau)
+    return e
+
+
+def pad_note(freq, n, detune=0.15):
+    t = np.arange(n) / SR
+    out = np.zeros(n)
+    for h, amp in ((1, 1.0), (2, 0.38), (3, 0.18), (4, 0.09)):
+        vib = 1 + 0.0015 * np.sin(2 * np.pi * 0.13 * t * h)
+        out += amp * np.sin(2 * np.pi * freq * h * vib * t)
+        out += amp * 0.6 * np.sin(2 * np.pi * freq * h * (1 + detune / 100) * t)
+    return out / 3.2
+
+
+def pluck(freq, n):
+    t = np.arange(n) / SR
+    body = (np.sin(2 * np.pi * freq * t) +
+            0.5 * np.sin(2 * np.pi * freq * 2 * t) +
+            0.22 * np.sin(2 * np.pi * freq * 3 * t))
+    return body * env_ad(n, 0.004, 0.55)
+
+
+def build(total):
+    n_total = int(total * SR)
+    mixL = np.zeros(n_total)
+    mixR = np.zeros(n_total)
+
+    # --- chord pad + sub (looped progression) ---
+    chord_n = int(CHORD_SEC * SR)
+    tpos = 0
+    ci = 0
+    while tpos < n_total:
+        name = PROG[ci % len(PROG)]
+        root, tones = CHORDS[name]
+        n = min(chord_n + int(1.5 * SR), n_total - tpos)  # 1.5s overlap blend
+        seg = np.zeros(n)
+        for f in tones:
+            seg += pad_note(f, n)
+        seg /= len(tones)
+        swell = np.ones(n)
+        sw = int(0.9 * SR)
+        swell[:sw] = np.linspace(0, 1, sw)          # soft attack per chord
+        mixL[tpos:tpos + n] += seg * swell
+        mixR[tpos:tpos + n] += seg * swell[::-1] * 0.9   # width via inverse env
+        tpos += chord_n
+        ci += 1
+    pad_gain = 0.16
+    mixL *= pad_gain
+    mixR *= pad_gain
+
+    # sub root (continuous, follows progression roots at low level)
+    tpos = 0
+    ci = 0
+    while tpos < n_total:
+        root = CHORDS[PROG[ci % len(PROG)]][0] / 2
+        n = min(chord_n, n_total - tpos)
+        t = np.arange(n) / SR
+        sub = 0.5 * np.sin(2 * np.pi * root * t) * np.minimum(t / 0.6, 1)
+        mixL[tpos:tpos + n] += sub * 0.20
+        mixR[tpos:tpos + n] += sub * 0.20
+        tpos += chord_n
+        ci += 1
+
+    # --- pluck arpeggio (enters at 14s) ---
+    tpos = int(14 * SR)
+    step = 0.0            # running 16th position
+    eighth = CHORD_SEC / 8
+    ci = 0
+    rng = np.random.default_rng(2026)
+    while tpos < n_total:
+        name = PROG[int((tpos / SR) / CHORD_SEC) % len(PROG)]
+        _, tones = CHORDS[name]
+        pattern = [0, 2, 1, 3, 2, 3, 1, 2]
+        for k in range(8):
+            if tpos >= n_total:
+                break
+            f = tones[pattern[k]] * (2 if k % 3 == 0 else 1)
+            n = int(eighth * SR * 2)
+            e = min(1.0, (tpos / SR) / 60.0)           # plucks grow over first minute
+            v = 0.11 * e * (0.8 + 0.4 * rng.random())
+            pn = pluck(f, n) * v
+            pan = 0.5 + 0.35 * np.sin(k * 1.3)
+            end = min(tpos + n, n_total)
+            mixL[tpos:end] += pn[:end - tpos] * (1 - pan)
+            mixR[tpos:end] += pn[:end - tpos] * pan
+            tpos += int(eighth * SR)
+    # --- pulse (soft momentum, every 2 beats) ---
+    tpos = int(30 * SR)
+    while tpos < n_total:
+        n = int(0.5 * SR)
+        t = np.arange(n) / SR
+        kick = np.sin(2 * np.pi * 52 * t) * np.exp(-t / 0.06) * 0.16
+        end = min(tpos + n, n_total)
+        mixL[tpos:end] += kick[:end - tpos]
+        mixR[tpos:end] += kick[:end - tpos]
+        tpos += int(2.0 * SR)
+
+    # --- air ---
+    air = rng.normal(0, 1, n_total)
+    # cheap lowpass: cumulative smoothing
+    k = 96
+    air = np.convolve(air, np.ones(k) / k, mode="same")
+    mixL += air * 0.05
+    mixR += np.roll(air, 480) * 0.05
+
+    # --- global dynamics: fade in, swells every ~110s, fade out ---
+    t = np.arange(n_total) / SR
+    dyn = np.ones(n_total)
+    swell_period = 110.0
+    dyn += 0.22 * np.sin(2 * np.pi * t / swell_period - np.pi / 2)
+    fade_in = np.minimum(t / 5.0, 1.0)
+    fade_out = np.clip((total - t) / 7.0, 0, 1)
+    mixL *= dyn * fade_in * fade_out
+    mixR *= dyn * fade_in * fade_out
+
+    # normalize to -20 dBFS peak-ish (ducking + loudnorm handle the rest)
+    peak = max(np.abs(mixL).max(), np.abs(mixR).max(), 1e-9)
+    g = 0.1 / peak
+    return np.stack([mixL * g, mixR * g], axis=1)
 
 
 def run(run_dir, total_dur, mood=None):
     out_dir = os.path.join(run_dir, "05_music")
     os.makedirs(out_dir, exist_ok=True)
     bed = os.path.join(out_dir, "bed.wav")
-    dur = int(total_dur + 2)
-    topic = json.load(open(os.path.join(run_dir, "00_topic.json")))
-    mood = mood or ("dark" if topic.get("style", "documentary") in
-                    ("documentary", "cinematic", "dark") else "bright")
-
-    if mood == "dark":
-        layers = [
-            ("sine=frequency=55:duration=%d", 0.55, 0.15, 0.35),
-            ("sine=frequency=110:duration=%d", 0.30, 0.11, 0.45),
-            ("sine=frequency=164.81:duration=%d", 0.12, 0.10, 0.50),
-            ("sine=frequency=220.5:duration=%d", 0.10, 0.10, 0.60),
-        ]
-    else:  # bright — C major-ish stack
-        layers = [
-            ("sine=frequency=65.41:duration=%d", 0.50, 0.15, 0.35),
-            ("sine=frequency=130.81:duration=%d", 0.28, 0.11, 0.45),
-            ("sine=frequency=196.00:duration=%d", 0.14, 0.10, 0.50),
-            ("sine=frequency=261.63:duration=%d", 0.12, 0.10, 0.60),
-        ]
-
-    inputs, chains = [], []
-    names = ["drone", "sub", "fifth", "pad"]
-    for idx, (src, vol, tf, td) in enumerate(layers):
-        inputs += ["-f", "lavfi", "-i", src % dur]
-        chains.append(f"[{idx}]volume={vol},tremolo=f={tf}:d={td}[{names[idx]}]")
-    noise_idx = len(layers)
-    inputs += ["-f", "lavfi", "-i", f"anoisesrc=color=brown:duration={dur}:amplitude=0.05"]
-    chains.append(f"[{noise_idx}]lowpass=f=400,volume=0.15[air]")
-    mix_in = "".join(f"[{n}]" for n in names) + "[air]"
-
-    fc = (";".join(chains) + ";" + mix_in +
-          f"amix=inputs=5:duration=longest:normalize=0,"
-          f"lowpass=f=900,aecho=0.7:0.6:311|433:0.25|0.18,"
-          f"apulsator=hz=0.08:width=0.6,"
-          f"afade=t=in:d=4,afade=t=out:st={max(dur - 6, 1)}:d=6,"
-          f"aformat=channel_layouts=stereo[bed]")
-    proc = subprocess.run(["ffmpeg", "-y", "-v", "error"] + inputs +
-                          ["-filter_complex", fc, "-map", "[bed]", "-ar", "48000", bed],
-                          capture_output=True, timeout=300)
-    if proc.returncode != 0:
-        raise RuntimeError(f"bed synth failed: {proc.stderr.decode()[-400:]}")
-    json.dump({"mood": mood, "path": bed, "duration": dur},
+    pcm = (np.clip(build(total_dur + 2), -1, 1) * 32767).astype(np.int16)
+    import wave
+    with wave.open(bed, "wb") as w:
+        w.setnchannels(2)
+        w.setsampwidth(2)
+        w.setframerate(SR)
+        w.writeframes(pcm.tobytes())
+    json.dump({"mood": "aminor_progression", "path": bed,
+               "duration": total_dur + 2},
               open(os.path.join(run_dir, "05_music.json"), "w"), indent=1)
     return bed
 

@@ -1,0 +1,103 @@
+{
+  "_banned": {"video_Zp-Jhuhq0bQ.mp4": "Round-4 rule: DRIP MV footage banned (not indexed; kept on disk only)"},
+  "video_8i_wZQoqbwU.mp4": {
+    "title": "Last Evaluation - AHYEON (BABYMONSTER TV, pre-debut survival)",
+    "tags": ["last_evaluation", "ahyeon_solo", "practice", "trainee", "ahyeon_closeup", "stage_closeup"],
+    "era": "pre_debut"
+  },
+  "video_xw7Y2gviWbA.mp4": {
+    "title": "AHYEON - Dangerously (Charlie Puth cover, Clean Ver., official channel, ~77M views)",
+    "tags": ["dangerously_cover", "ahyeon_solo", "vocal_closeup", "ahyeon_closeup"],
+    "era": "pre_debut"
+  },
+  "video_O99aP4AvEF8.mp4": {
+    "title": "BABYMONSTER - SHEESH / THE FIRST TAKE #2 (2025-11-14, one-take live, 9.3M views)",
+    "tags": ["sheesh_tft", "vocal_closeup", "stage", "live", "sheesh_era"],
+    "era": "tour"
+  },
+  "video_06mCrMgv0zY.mp4": {
+    "title": "BABYMONSTER - DRIP / THE FIRST TAKE (one-take live, white studio)",
+    "tags": ["drip_tft", "vocal_closeup", "stage", "live", "drip_era"],
+    "era": "drip"
+  },
+  "video_2wA_b6YHjqQ.mp4": {
+    "title": "BABYMONSTER - SHEESH M/V (gothic cathedral set, official)",
+    "tags": ["sheesh_mv", "mv_group", "mv", "sheesh_era", "return"],
+    "era": "sheesh"
+  },
+  "video_eJCHKjt0MPw.mp4": {
+    "title": "BABYMONSTER - FOREVER M/V (official)",
+    "tags": ["mv_jungle", "forever_era", "mv_group", "mv", "stage"],
+    "era": "forever"
+  },
+  "video_wlHwjkYpSr0.mp4": {
+    "title": "BABYMONSTER - WE GO UP M/V (official)",
+    "tags": ["mv_group", "mv", "hotsauce_era", "stage"],
+    "era": "hotsauce"
+  },
+  "video_xn8mQqz2xmM.mp4": {
+    "title": "BABYMONSTER - HOT SAUCE M/V (official)",
+    "tags": ["mv_group", "mv", "hotsauce_era", "stage"],
+    "era": "hotsauce"
+  },
+  "video_XShaIZs7J7M.mp4": {
+    "title": "BABYMONSTER - Really Like You M/V (official)",
+    "tags": ["mv_group", "mv", "choom_era", "rechart"],
+    "era": "choom"
+  },
+  "video_c1jLt0EarG4.mp4": {
+    "title": "BABYMONSTER - CHOOM @ Show! MusicCore (MBCkpop broadcast stage)",
+    "tags": ["choom_era", "stage", "mv_group", "stage_closeup"],
+    "era": "choom"
+  },
+  "video_kV1iN31Ssfs.mp4": {
+    "title": "AHYEON fancam - CHOOM WORLD TOUR IN SEOUL (vertical close-up)",
+    "tags": ["tour", "fancam", "ahyeon_solo", "ahyeon_closeup", "choom_era", "stage_closeup"],
+    "era": "choom"
+  },
+  "video_BTAXPsjV4Eo.mp4": {
+    "title": "BABYMONSTER BEST LIVE VOCAL MOMENTS OF 2025 (vocal compilation)",
+    "tags": ["vocal_closeup", "ahyeon_closeup", "stage", "live"],
+    "era": "tour"
+  },
+  "video_2eezbfySJ7I.mp4": {
+    "title": "BABYMONSTER Hulu interview clip (ENG SUB)",
+    "tags": ["interview", "variety", "ahyeon_closeup"],
+    "era": "sheesh"
+  },
+  "video_ioNng23DkIM.mp4": {
+    "title": "BABYMONSTER M/V (festival lights set)",
+    "tags": ["mv_jungle", "mv_group", "mv", "forever_era"],
+    "era": "forever"
+  },
+  "video_GsV1i0QHi-o.mp4": {
+    "title": "BABYMONSTER - Stuck In The Middle M/V (official)",
+    "tags": ["mv_blue", "mv_group", "mv", "absence", "ahyeon_closeup"],
+    "era": "debut_six"
+  },
+  "video_olDWm2veCrM.mp4": {
+    "title": "BABYMONSTER M/V (pastel bus set)",
+    "tags": ["mv_pastel", "mv_group", "mv", "absence"],
+    "era": "debut_six"
+  },
+  "video_1myrYL8ybzM.mp4": {
+    "title": "BABYMONSTER performance video (red stage, group)",
+    "tags": ["mv_red", "mv_group", "mv", "drip_era", "stage"],
+    "era": "drip"
+  },
+  "video_jPS1dDnyxTQ.mp4": {
+    "title": "Music-show stage close-up (member fancam-style, yellow jersey)",
+    "tags": ["stage_closeup", "fancam", "stage", "ahyeon_closeup", "choom_era"],
+    "era": "choom"
+  },
+  "video_6kGauBXhawU.mp4": {
+    "title": "HELLO MONSTERS tour - Kanagawa Dangerously live (360p)",
+    "tags": ["tour", "stage", "fancam", "ahyeon_solo"],
+    "era": "tour"
+  },
+  "video_jap9rSZds7U.mp4": {
+    "title": "Knowing Bros cut - BABYMONSTER (360p, variety/interview)",
+    "tags": ["interview", "variety", "ahyeon_closeup"],
+    "era": "sheesh"
+  }
+}

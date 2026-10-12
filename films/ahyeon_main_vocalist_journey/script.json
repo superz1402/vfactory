@@ -1,0 +1,624 @@
+{
+ "title": "AHYEON: The Voice That Refused to Wait",
+ "topic": "Ahyeon BABYMONSTER main vocalist journey",
+ "style": "documentary",
+ "aspect": "16:9",
+ "logline": "From an eleven-year-old audition in Chuncheon to stadium stages across Asia — the full arc of BABYMONSTER's main vocalist: the reveal, the viral evaluation, the debut she had to miss, and the return that rewrote the story.",
+ "scenes": [
+  {
+   "label": "cold_open",
+   "act_open": true,
+   "on_screen": "APRIL 2024",
+   "footage_tags": [
+    "sheesh_mv",
+    "stage"
+   ],
+   "era": "sheesh",
+   "narration": "April 2024. Seven names on the stage, and one of them carries the weight of nine hundred days. The crowd does not chant her name to celebrate her. They chant it because they watched her almost lose everything before she ever debuted.",
+   "id": 1
+  },
+  {
+   "label": "thesis",
+   "on_screen": "",
+   "footage_tags": [
+    "ahyeon_closeup",
+    "stage_closeup"
+   ],
+   "era": "sheesh",
+   "narration": "This is the story of Jung Ahyeon — main vocalist of BABYMONSTER. A trainee at eleven. A viral star at fifteen. Missing from her own group's debut at sixteen. And by nineteen, the voice that arena crowds across Asia came to hear.",
+   "id": 2
+  },
+  {
+   "label": "chuncheon",
+   "act_open": true,
+   "on_screen": "CHUNCHEON, 2007",
+   "footage_tags": [
+    "interview",
+    "ahyeon_solo"
+   ],
+   "era": "pre_debut",
+   "narration": "Jung Ahyeon was born on April 11, 2007, in Chuncheon, a lakeside city in Gangwon Province. A kid who grew up speaking Korean, then English from age five, then Mandarin from age seven — long before anyone knew her name.",
+   "id": 3
+  },
+  {
+   "label": "audition",
+   "on_screen": "DECEMBER 2018",
+   "footage_tags": [
+    "interview",
+    "last_evaluation"
+   ],
+   "era": "pre_debut",
+   "narration": "In December 2018, at eleven years old, she passed her YG audition singing The Show by Lenka — a soft, almost shy song for a kid walking into the most demanding trainee system in K-pop. What followed was five years of training.",
+   "id": 4
+  },
+  {
+   "label": "training",
+   "on_screen": "FIVE YEARS",
+   "footage_tags": [
+    "last_evaluation",
+    "practice"
+   ],
+   "era": "pre_debut",
+   "narration": "Five years inside YG means vocal lessons until the voice stops shaking, dance practice past midnight, and monthly evaluations where one bad day can erase a debut timeline. Most trainees never make it out. She was about to find out why.",
+   "id": 5
+  },
+  {
+   "label": "training_culture",
+   "on_screen": "",
+   "footage_tags": [
+    "last_evaluation",
+    "practice",
+    "trainee"
+   ],
+   "era": "pre_debut",
+   "narration": "The Last Evaluation tapes show what that system looks like from the inside: members rehearsing in mirrored rooms, producers stopping a take mid-line, and trainees singing again from the top — because at YG, almost is not a word anyone rewards.",
+   "id": 6
+  },
+  {
+   "label": "reveal",
+   "act_open": true,
+   "on_screen": "JANUARY 2023",
+   "footage_tags": [
+    "last_evaluation",
+    "ahyeon_solo"
+   ],
+   "era": "pre_debut",
+   "narration": "January 2023. YG begins introducing BABYMONSTER to the world — not with a music video, but with raw performance footage. The second member they reveal is Ahyeon, and the internet takes one look at her and understands: this one is different.",
+   "id": 7
+  },
+  {
+   "label": "last_eval_intro",
+   "on_screen": "LAST EVALUATION",
+   "footage_tags": [
+    "last_evaluation",
+    "practice",
+    "ahyeon_solo"
+   ],
+   "era": "pre_debut",
+   "narration": "The footage came from Last Evaluation — YG's pre-debut survival series. Seven trainees, camera-locked, competing for a spot in the company's first new girl group in seven years. Ahyeon chose her song carefully: Dangerously, by Charlie Puth.",
+   "id": 8
+  },
+  {
+   "label": "dangerously_perf",
+   "act_open": true,
+   "on_screen": "DANGEROUSLY",
+   "footage_tags": [
+    "dangerously_cover",
+    "last_evaluation",
+    "ahyeon_solo"
+   ],
+   "era": "pre_debut",
+   "narration": "What she delivered was not a trainee performance. In YG's black-box studio, on a bare stand mic, a fifteen-year-old held a live vocal from a whisper to a full-throated climax while the lighting rig climbed from cool white to burning red.",
+   "id": 9
+  },
+  {
+   "label": "viral",
+   "on_screen": "8.74M IN 10 DAYS",
+   "footage_tags": [
+    "dangerously_cover",
+    "ahyeon_solo"
+   ],
+   "era": "pre_debut",
+   "narration": "Uploaded on April 22, 2023, the video passed eight-point-seven million views in under ten days. Charlie Puth — the man who wrote the song — reacted to it himself. It has since climbed past seventy-five million views and never stopped.",
+   "id": 10
+  },
+  {
+   "label": "viral_context",
+   "on_screen": "",
+   "footage_tags": [
+    "dangerously_cover",
+    "ahyeon_solo"
+   ],
+   "era": "pre_debut",
+   "narration": "To understand how big that number is: most debut music videos from major labels fight for months to reach what her evaluation clip reached in ten days. It was not marketing spend. It was one camera, one microphone, and a voice people could not scroll past.",
+   "id": 11
+  },
+  {
+   "label": "puth_gift",
+   "on_screen": "",
+   "footage_tags": [
+    "dangerously_cover",
+    "interview"
+   ],
+   "era": "pre_debut",
+   "narration": "YG's founder later revealed that Puth was so struck by the group that he gifted them an original song. For a team that had not even debuted yet, that is not promotion. That is the industry taking notice.",
+   "id": 12
+  },
+  {
+   "label": "debut_six",
+   "act_open": true,
+   "on_screen": "NOVEMBER 27, 2023",
+   "footage_tags": [
+    "batter_up",
+    "mv_group",
+    "debut_six"
+   ],
+   "era": "debut_six",
+   "narration": "November 27, 2023. BABYMONSTER finally debuts with BATTER UP. But the formation on stage is six, not seven. The group's most hyped voice is not in it.",
+   "id": 13
+  },
+  {
+   "label": "absence",
+   "on_screen": "#WelcomeBackAhyeon",
+   "footage_tags": [
+    "mv_pastel",
+    "mv_group",
+    "absence"
+   ],
+   "era": "debut_six",
+   "narration": "YG confirmed what fans feared: Ahyeon was on a health-related hiatus. She watched her group debut without her. There is no tutorial for being sixteen, watching your dream happen, from the outside.",
+   "id": 14
+  },
+  {
+   "label": "hold",
+   "on_screen": "",
+   "footage_tags": [
+    "mv_pastel",
+    "mv_blue",
+    "absence"
+   ],
+   "era": "debut_six",
+   "narration": "For two months the fandom lived in a strange silence — celebrating a debut that felt incomplete, and waiting. Her name never left the conversation. #WelcomeBackAhyeon was already forming in the corners of the internet.",
+   "id": 15
+  },
+  {
+   "label": "fandom_hold",
+   "on_screen": "HYEONIES",
+   "footage_tags": [
+    "mv_pastel",
+    "mv_blue",
+    "absence"
+   ],
+   "era": "debut_six",
+   "narration": "Her bias-fandom, the Hyeonies, kept her name alive through those months — compiling her old performances, translating her interviews, and refusing to let a debut without her feel complete. That loyalty would matter more than anyone predicted.",
+   "id": 16
+  },
+  {
+   "label": "return_announce",
+   "on_screen": "JANUARY 24, 2024",
+   "footage_tags": [
+    "interview",
+    "ahyeon_closeup",
+    "return"
+   ],
+   "era": "sheesh",
+   "narration": "January 24, 2024. YG announces her return. Within twenty-four hours, the hashtag draws millions of interactions. The group's debut song was about to be re-recorded with her voice on it — the past, literally, rewritten to include her.",
+   "id": 17
+  },
+  {
+   "label": "teaser",
+   "on_screen": "MARCH 15, 2024",
+   "footage_tags": [
+    "sheesh_mv",
+    "ahyeon_closeup",
+    "return"
+   ],
+   "era": "sheesh",
+   "narration": "March 15, 2024. The comeback teaser photos break the internet on sight. In them she stands with six bandmates — the first image of BABYMONSTER as a complete seven. Fans had waited nine hundred days for that picture.",
+   "id": 18
+  },
+  {
+   "label": "re_records",
+   "on_screen": "",
+   "footage_tags": [
+    "sheesh_mv",
+    "mv_blue",
+    "return"
+   ],
+   "era": "sheesh",
+   "narration": "Then YG did something rare: BATTER UP and Stuck In The Middle — the songs released during her absence — were re-recorded with her vocals added. The company did not move past the gap. It went back and repaired it.",
+   "id": 19
+  },
+  {
+   "label": "sheesh_debut",
+   "act_open": true,
+   "on_screen": "APRIL 1, 2024",
+   "footage_tags": [
+    "sheesh_mv",
+    "stage",
+    "sheesh_era"
+   ],
+   "era": "sheesh",
+   "narration": "April 1, 2024. The BABYMONS7ER mini album drops, led by SHEESH — and this is her formal debut as part of seven. The gothic set, the chant, the drop: a statement that the group's original blueprint was finally whole.",
+   "id": 20
+  },
+  {
+   "label": "her_words",
+   "on_screen": "",
+   "footage_tags": [
+    "interview",
+    "ahyeon_closeup"
+   ],
+   "era": "sheesh",
+   "narration": "At the debut media interview, she said it plainly: I wanted to recover quickly and return to the team. I'm fully recovered now, and I'm happy to be with everyone like this. No drama. Just work, and gratitude.",
+   "id": 21
+  },
+  {
+   "label": "scrutiny",
+   "on_screen": "",
+   "footage_tags": [
+    "stage_closeup",
+    "sheesh_era",
+    "fancam"
+   ],
+   "era": "sheesh",
+   "narration": "The return did not come with mercy. Every live stage was dissected online, and by June 2024 the discourse around her vocals turned harsh in places. She answered the only way that matters in this industry: by singing, live, with nowhere to hide.",
+   "id": 22
+  },
+  {
+   "label": "tft_first",
+   "on_screen": "THE FIRST TAKE",
+   "footage_tags": [
+    "sheesh_tft",
+    "vocal_closeup"
+   ],
+   "era": "sheesh",
+   "narration": "THE FIRST TAKE is K-pop's least forgiving room: one microphone, one take, a band behind you, no autotune, no second chances. BABYMONSTER walked in and performed SHEESH — and the video became proof, millions of views of proof.",
+   "id": 23
+  },
+  {
+   "label": "tft_context",
+   "on_screen": "",
+   "footage_tags": [
+    "sheesh_tft",
+    "vocal_closeup"
+   ],
+   "era": "sheesh",
+   "narration": "On that TFT stage, there is no safety net — the format bans post-production on vocals entirely. Watch her hands before the first line: the small breath, the stillness. Then watch what comes out of the speakers. That contrast is the whole argument for her voice.",
+   "id": 24
+  },
+  {
+   "label": "forever",
+   "act_open": true,
+   "on_screen": "JULY 2024",
+   "footage_tags": [
+    "mv_jungle",
+    "forever_era"
+   ],
+   "era": "forever",
+   "narration": "July 2024 brought FOREVER — brighter, freer, a group breathing again. Ahyeon's voice sits at the front of it, no longer a comeback story but simply the sound of the team. The narrative was shifting from sympathy to respect.",
+   "id": 25
+  },
+  {
+   "label": "seven_alive",
+   "on_screen": "",
+   "footage_tags": [
+    "mv_jungle",
+    "forever_era",
+    "mv_group"
+   ],
+   "era": "forever",
+   "narration": "With the full seven finally locked in, the group's chemistry changed on camera. Interviews from that era show a unit that had stopped performing like survivors and started performing like bandmates — and at the center of it, the member they had waited for.",
+   "id": 26
+  },
+  {
+   "label": "drip",
+   "on_screen": "NOVEMBER 2024",
+   "footage_tags": [
+    "drip_tft",
+    "mv_red",
+    "drip_era"
+   ],
+   "era": "drip",
+   "narration": "November 2024. The first full album: DRIP. Her belt sequence in the title track — the climb into those final high notes — became the moment fans replayed and analysts charted. The girl who auditioned with a lullaby was now hitting notes that made headlines.",
+   "id": 27
+  },
+  {
+   "label": "high_notes",
+   "on_screen": "",
+   "footage_tags": [
+    "drip_tft",
+    "vocal_closeup"
+   ],
+   "era": "drip",
+   "narration": "Fan analysts charted her DRIP climax note by note — a belt sequence that climbs across the top of her range and holds. Whether you read the charts or just your own reaction, the point lands the same way: the technique underneath the emotion is real.",
+   "id": 28
+  },
+  {
+   "label": "drip_tft",
+   "on_screen": "",
+   "footage_tags": [
+    "drip_tft",
+    "vocal_closeup"
+   ],
+   "era": "drip",
+   "narration": "They brought DRIP to THE FIRST TAKE — all seven, hand in hand, one take. You can watch her set her jaw before the climb, deliver it, and then break into laughter as the staff celebrate. Tension, release, receipt.",
+   "id": 29
+  },
+  {
+   "label": "tour_2025",
+   "act_open": true,
+   "on_screen": "HELLO MONSTERS",
+   "footage_tags": [
+    "tour",
+    "fancam",
+    "stage"
+   ],
+   "era": "tour",
+   "narration": "2025: the HELLO MONSTERS world tour, opening at Seoul's KSPO Dome in front of roughly twenty-six thousand people. On every leg of that tour, one solo stage belongs to her — Dangerously. The song that started everything, now performed in arenas.",
+   "id": 30
+  },
+  {
+   "label": "full_circle",
+   "on_screen": "",
+   "footage_tags": [
+    "dangerously_cover",
+    "tour",
+    "ahyeon_solo"
+   ],
+   "era": "tour",
+   "narration": "Think about that circle. A survival-show performance in a small studio, watched by millions. Two years later, the same song, the same voice, twenty-six thousand people screaming it back at her. Very few artists ever get to stand inside their own proof.",
+   "id": 31
+  },
+  {
+   "label": "trilingual",
+   "on_screen": "",
+   "footage_tags": [
+    "interview",
+    "variety",
+    "ahyeon_closeup"
+   ],
+   "era": "tour",
+   "narration": "Between cities, another dimension of her value kept surfacing: language. Korean on home stages, English with international press, Mandarin with Taiwanese and Hong Kong crowds — she runs fan meetings in three languages without a translator's pause.",
+   "id": 32
+  },
+  {
+   "label": "singles_2025",
+   "on_screen": "HOT SAUCE / WE GO UP",
+   "footage_tags": [
+    "mv_group",
+    "stage",
+    "hotsauce_era"
+   ],
+   "era": "hotsauce",
+   "narration": "Through 2025 the machine never stopped: HOT SAUCE in July, the WE GO UP mini album in October. Between releases she finished school on her own terms — announcing in November 2025 that she would skip the national college exam to commit fully to music.",
+   "id": 33
+  },
+  {
+   "label": "no_break",
+   "on_screen": "",
+   "footage_tags": [
+    "mv_group",
+    "hotsauce_era",
+    "stage"
+   ],
+   "era": "hotsauce",
+   "narration": "The schedule shows almost no gaps: a single in July, a mini album in October, a Japanese arena leg squeezed between, festival dates after that. The fifteen-year-old who went viral in a studio had become the group's engine — and the calendar treated her like one.",
+   "id": 34
+  },
+  {
+   "label": "tft_2",
+   "on_screen": "NOVEMBER 14, 2025",
+   "footage_tags": [
+    "sheesh_tft",
+    "vocal_closeup"
+   ],
+   "era": "tour",
+   "narration": "November 14, 2025. SHEESH on THE FIRST TAKE, again — all seven, one take, this time with the confidence of a group that has nothing left to prove. Nine-point-three million people watched it. The skeptics from 2024 went quiet.",
+   "id": 35
+  },
+  {
+   "label": "y2026_open",
+   "act_open": true,
+   "on_screen": "2026",
+   "footage_tags": [
+    "tour",
+    "stage",
+    "interview"
+   ],
+   "era": "y2026",
+   "narration": "2026 is the year the world stopped catching up. In January, the LOVE MONSTERS tour finale fills the Taipei Arena — twenty-four thousand seats — where Ahyeon works the crowd in Mandarin, one of three languages she commands on stage.",
+   "id": 36
+  },
+  {
+   "label": "graduation",
+   "on_screen": "JANUARY 8, 2026",
+   "footage_tags": [
+    "interview",
+    "ahyeon_closeup"
+   ],
+   "era": "y2026",
+   "narration": "On January 8, 2026, she graduates from Hanlim Multi Art School alongside her bandmate RAMI — a normal teenage milestone squeezed between world-tour dates. Eighteen years old, diploma in one hand, a sold-out itinerary in the other.",
+   "id": 37
+  },
+  {
+   "label": "choom",
+   "on_screen": "MAY 2026",
+   "footage_tags": [
+    "mv_group",
+    "stage_closeup",
+    "choom_era"
+   ],
+   "era": "choom",
+   "narration": "May 2026: the CHOOM mini album. She takes the stage holding a hand mic, no in-ear monitors, singing over a live band — the kind of stunt that only works if the voice is real. Clips of it flood short-form video across Asia.",
+   "id": 38
+  },
+  {
+   "label": "hand_mic",
+   "on_screen": "NO IN-EAR. NO NET.",
+   "footage_tags": [
+    "choom_era",
+    "stage_closeup",
+    "fancam"
+   ],
+   "era": "choom",
+   "narration": "The CHOOM promotion style made a quiet statement: she walked onto music-show stages holding a hand mic, no in-ear monitors, singing against a loud live band. That setup exposes everything. It is the opposite of hiding — and she chose it.",
+   "id": 39
+  },
+  {
+   "label": "rechart",
+   "on_screen": "",
+   "footage_tags": [
+    "fancam",
+    "stage",
+    "choom_era"
+   ],
+   "era": "choom",
+   "narration": "Then her fans did something unusual: they re-charted Really Like You — a 2024 album track — with a TikTok challenge that topped Korea's viral music chart for five straight days, forcing a special M Countdown stage. The fandom became a producer, not an audience.",
+   "id": 40
+  },
+  {
+   "label": "global_break",
+   "act_open": true,
+   "on_screen": "JULY 2026",
+   "footage_tags": [
+    "mv_group",
+    "tour",
+    "stage"
+   ],
+   "era": "y2026",
+   "narration": "July 2026. SUGAR HONEY ICE TEA debuts at number one on YouTube's global chart and becomes the group's first entry into US Top 40 radio rotation. For a Korean girl group born out of a survival show, that is a door-opening, not a peak.",
+   "id": 41
+  },
+  {
+   "label": "us_radio",
+   "on_screen": "US TOP 40",
+   "footage_tags": [
+    "mv_group",
+    "hotsauce_era",
+    "stage"
+   ],
+   "era": "y2026",
+   "narration": "US Top 40 radio is a wall that most K-pop acts never touch — it demands sustained western audience numbers, not a one-week spike. BABYMONSTER's first entry there, with Ahyeon's tone carrying the hook, meant western programmers were now calling the label.",
+   "id": 42
+  },
+  {
+   "label": "summer_sonic",
+   "on_screen": "SUMMER SONIC",
+   "footage_tags": [
+    "tour",
+    "fancam"
+   ],
+   "era": "y2026",
+   "narration": "August brings Summer Sonic in Japan at ZOZO Marine Stadium. September: Manila, then Macau's Venetian Arena. And at the Teen Music Awards in Hong Kong's Kai Tak Stadium, the group takes home a Global Icon trophy.",
+   "id": 43
+  },
+  {
+   "label": "kai_tak",
+   "on_screen": "KAI TAK STADIUM",
+   "footage_tags": [
+    "interview",
+    "tour",
+    "ahyeon_closeup"
+   ],
+   "era": "y2026",
+   "narration": "It is Ahyeon who accepts, speaking fluent Mandarin to a stadium crowd: If the word love does not exist, I would give my whole world to you. The clip goes mega-viral — not because it is polished, but because it is real.",
+   "id": 44
+  },
+  {
+   "label": "10b",
+   "on_screen": "10 BILLION VIEWS",
+   "footage_tags": [
+    "mv_group",
+    "stage"
+   ],
+   "era": "y2026",
+   "narration": "By late September 2026, BABYMONSTER's channel crosses ten billion cumulative views — the fastest any girl group has ever done it, with seventeen videos past one hundred million. BATTER UP alone passes four hundred million, the fastest debut song by a girl group.",
+   "id": 45
+  },
+  {
+   "label": "sh200m",
+   "on_screen": "200M+",
+   "footage_tags": [
+    "sheesh_mv",
+    "mv_group",
+    "stage"
+   ],
+   "era": "y2026",
+   "narration": "SHEESH, the song that marked her return, crossed two hundred million views — the comeback track became one of the group's defining anthems. Every milestone attached to it has her story folded inside it, whether the headline mentions that or not.",
+   "id": 46
+  },
+  {
+   "label": "dome",
+   "on_screen": "SOLO DOME CONCERTS",
+   "footage_tags": [
+    "tour",
+    "stage",
+    "ahyeon_solo"
+   ],
+   "era": "y2026",
+   "narration": "And then the announcement that reframes everything: her first solo dome concerts. Fifty-five thousand seats across two nights. Not a group stage with her name on it — her name on the marquee.",
+   "id": 47
+  },
+  {
+   "label": "dome_meaning",
+   "on_screen": "",
+   "footage_tags": [
+    "tour",
+    "ahyeon_solo",
+    "fancam"
+   ],
+   "era": "y2026",
+   "narration": "In the K-pop industry, a solo dome concert is not a reward — it is a verdict. Fifty-five thousand tickets for one voice means the accountants, the promoters, and the history books all agree on what she is now: a headliner.",
+   "id": 48
+  },
+  {
+   "label": "coda",
+   "act_open": true,
+   "on_screen": "",
+   "footage_tags": [
+    "dangerously_cover",
+    "ahyeon_solo",
+    "tour"
+   ],
+   "era": "y2026",
+   "narration": "Look at the whole arc in one breath: auditioned at eleven. Revealed at fifteen. Viral at fifteen. Missing from her own debut at sixteen. Debut, again, at seventeen. Arenas at eighteen. A dome at nineteen.",
+   "id": 49
+  },
+  {
+   "label": "why",
+   "on_screen": "",
+   "footage_tags": [
+    "ahyeon_closeup",
+    "vocal_closeup"
+   ],
+   "era": "y2026",
+   "narration": "Most debut stories are about arrival. Hers is about return — about a company that waited for her, fans that never unlearned her name, and a voice that turned a missed debut into the most quoted comeback narrative of her generation.",
+   "id": 50
+  },
+  {
+   "label": "lesson",
+   "on_screen": "",
+   "footage_tags": [
+    "ahyeon_closeup",
+    "vocal_closeup",
+    "stage"
+   ],
+   "era": "y2026",
+   "narration": "Ask ten fans why her story hits, and you will get the same answer in different words: everyone has a version of a dream that got delayed. She is the proof the delay is not the ending — that a debut postponed by health, fear, or luck can still become the debut everyone remembers.",
+   "id": 51
+  },
+  {
+   "label": "outro",
+   "on_screen": "AHYEON",
+   "footage_tags": [
+    "sheesh_mv",
+    "stage",
+    "ahyeon_solo"
+   ],
+   "era": "y2026",
+   "narration": "The evaluations are over. The hiatus is history. What remains is the simplest truth in the building: when Ahyeon opens her mouth on a stage, people stop talking about potential — and start talking about proof. This was the journey of BABYMONSTER's main vocalist. The next chapter belongs to her.",
+   "id": 52
+  }
+ ]
+}

@@ -38,6 +38,8 @@ def main():
                     help="generate scene-1 b-roll with AI video (slow)")
     ap.add_argument("--no-deliver", action="store_true")
     ap.add_argument("--chat-id", default=None)
+    ap.add_argument("--script-file", default=None,
+                    help="hand-authored script JSON (skips s1 research)")
     ap.add_argument("--run-dir", default=None, help="resume existing run")
     ap.add_argument("--rebuild", action="store_true", help="ignore checkpoints")
     args = ap.parse_args()
@@ -49,19 +51,24 @@ def main():
         json.dump({"topic": args.topic, "style": args.style, "scenes": args.scenes,
                    "aspect": args.aspect, "region": args.region,
                    "tts_speed": args.tts_speed, "ai_broll": args.ai_broll,
-                   "chat_id": args.chat_id, "created": time.strftime("%Y-%m-%d %H:%M:%S")},
+                   "script_file": args.script_file, "chat_id": args.chat_id,
+                   "created": time.strftime("%Y-%m-%d %H:%M:%S")},
                   open(topic_json, "w"), ensure_ascii=False, indent=1)
     topic = json.load(open(topic_json))
 
     log(run_dir, f"RUN START: {topic['topic']}")
+    script_file = topic.get("script_file")
     steps = [
-        ("research", lambda: s1_research.run(run_dir, topic["topic"], topic.get("region", "us"))),
         ("script", lambda: s2_script.run(run_dir, topic["topic"], topic.get("style", "documentary"),
-                                         topic.get("scenes", 7), topic.get("region", "us"))),
+                                         topic.get("scenes", 7), topic.get("region", "us"),
+                                         script_file)),
         ("voice", lambda: s3_voice.run(run_dir, topic.get("tts_speed", 1.0))),
         ("media", lambda: s4_media.run(run_dir, topic.get("region", "us"),
                                        topic.get("ai_broll", False))),
     ]
+    if not script_file:
+        steps.insert(0, ("research", lambda: s1_research.run(
+            run_dir, topic["topic"], topic.get("region", "us"))))
     for name, fn in steps:
         marker = os.path.join(run_dir, f".done_{name}")
         if os.path.exists(marker) and not args.rebuild:
