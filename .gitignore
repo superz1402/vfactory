@@ -1,0 +1,13 @@
+runs/
+__pycache__/
+.visitor_token
+.tg_offset
+*.pyc
+cache/
+research/refs/
+lib/audio/instruments/
+.tg_token
+.tg_token_submitter
+.gh_token
+.nvapi_token
+.tg_offset

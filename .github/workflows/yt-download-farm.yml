@@ -1,0 +1,199 @@
+# .github/workflows/yt-download-farm.yml
+# Remote download farm for ytagent.
+#
+# Triggered via API from a blocked cloud environment. Runs on GitHub's
+# runners (Azure IPs that YouTube doesn't block), installs Cloudflare WARP
+# for extra safety, downloads the video with yt-dlp, and uploads it as a
+# workflow artifact.
+#
+# Trigger from ytagent:
+#   ytagent download <url> --method github_actions_farm
+#
+# Or trigger manually via API:
+#   curl -X POST \
+#     -H "Authorization: token $GITHUB_TOKEN" \
+#     -H "Accept: application/vnd.github+json" \
+#     https://api.github.com/repos/Bilal140202/ytagent/actions/workflows/yt-download-farm.yml/dispatches \
+#     -d '{"ref":"main","inputs":{"video_url":"https://www.youtube.com/watch?v=VIDEO_ID"}}'
+
+name: YT Download Farm
+
+on:
+  workflow_dispatch:
+    inputs:
+      video_url:
+        description: 'YouTube video URL or ID'
+        required: true
+        type: string
+      video_id:
+        description: 'Video ID (11 chars, optional)'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Parse video ID
+        id: vid
+        run: |
+          URL="${{ github.event.inputs.video_url }}"
+          VID="${{ github.event.inputs.video_id }}"
+          if [ -z "$VID" ]; then
+            VID=$(echo "$URL" | grep -oE '[A-Za-z0-9_-]{11}' | head -1)
+          fi
+          echo "video_id=$VID" >> $GITHUB_OUTPUT
+          echo "Parsed video ID: $VID"
+
+      - name: Install Cloudflare WARP
+        run: |
+          curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+          sudo apt-get update -qq
+          sudo apt-get install -y cloudflare-warp
+          warp-cli --accept-tos registration new || echo 'WARP registration failed'
+          warp-cli --accept-tos mode proxy || true
+          warp-cli --accept-tos connect || true
+          for i in 1 2 3 4 5 6; do
+            sleep 3
+            if warp-cli --accept-tos status 2>/dev/null | grep -qi connected; then
+              echo "WARP connected (attempt $i)"
+              break
+            fi
+          done
+          warp-cli --accept-tos status || true
+          echo "Proxy: http://127.0.0.1:40000"
+        continue-on-error: true
+
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          ffmpeg -version | head -1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install yt-dlp + BGutil + Deno
+        run: |
+          pip install -U yt-dlp bgutil-ytdlp-pot-provider requests
+          curl -fsSL https://deno.land/install.sh | sudo DENO_INSTALL=/usr/local sh || echo 'deno install failed'
+          deno --version || echo 'deno unavailable — JS challenge solving will fail'
+
+      - name: Set up BGutil POT provider
+        run: |
+          git clone --depth=1 https://github.com/Brainicism/bgutil-ytdlp-pot-provider.git /tmp/bgutil
+          cd /tmp/bgutil/server
+          npm install --production
+          npm install typescript
+          ./node_modules/.bin/tsc
+          nohup node build/main.js --port 4416 &
+          sleep 5
+          curl -s http://127.0.0.1:4416/ping
+
+      - name: Download video
+        env:
+          YTDLP_PLUGIN_DIRS: /opt/hostedtoolcache/Python/3.12/x64/lib/python3.12/site-packages/yt_dlp_plugins
+        run: |
+          VID="${{ steps.vid.outputs.video_id }}"
+          echo "Downloading video: $VID"
+          if warp-cli --accept-tos status 2>/dev/null | grep -qi connected; then
+            PROXY_ARGS="--proxy http://127.0.0.1:40000"
+          else
+            PROXY_ARGS=""
+            echo "WARP not connected — downloading without proxy"
+          fi
+          echo "PROXY_ARGS=$PROXY_ARGS"
+
+          OK=0
+          OUTER=0
+          while [ "$OUTER" -lt 4 ]; do
+            OUTER=$((OUTER+1))
+            if [ "$OUTER" -gt 1 ]; then
+              echo "=== outer attempt $OUTER: refreshing WARP exit IP ==="
+              warp-cli --accept-tos disconnect || true
+              sleep 2
+              warp-cli --accept-tos connect || true
+              sleep 5
+              if warp-cli --accept-tos status 2>/dev/null | grep -qi connected; then
+                PARGS="--proxy http://127.0.0.1:40000"
+              else
+                PARGS=""
+              fi
+            else
+              PARGS="$PROXY_ARGS"
+            fi
+            echo "outer=$OUTER using PARGS='$PARGS'"
+            for CFG in tv_simply web web_safari mweb tv android_vr; do
+              echo "=== client=$CFG outer=$OUTER ==="
+              yt-dlp --no-cache-dir --no-check-certificates -v --remote-components ejs:github \
+                $PARGS \
+                --extractor-args "youtube:player_client=$CFG;youtubepot-bgutilhttp:base_url=http://127.0.0.1:4416" \
+                -f "bv*[vcodec^=avc][height<=1080]+ba[ext=m4a]/bv*[vcodec^=avc][height<=1080]+ba/bv*+ba/b" \
+                --merge-output-format mp4 \
+                --retries 3 --fragment-retries 3 \
+                --postprocessor-args "ffmpeg:-movflags +faststart" \
+                -o "video_${VID}.%(ext)s" \
+                "https://www.youtube.com/watch?v=${VID}" \
+                && OK=1 && break 2
+            done
+            sleep 15
+          done
+          [ "$OK" = "1" ] || {
+            echo "=== final: android_vr with manual GVS PO token ==="
+            POT=$(curl -s -X POST http://127.0.0.1:4416/get_pot -H 'Content-Type: application/json' -d "{\"content_binding\":\"$VID\"}" | python3 -c "import sys,json; print(json.load(sys.stdin).get('poToken',''))" 2>/dev/null)
+            if [ -n "$POT" ]; then
+              yt-dlp --no-cache-dir --no-check-certificates -v --remote-components ejs:github \
+                $PARGS \
+                --extractor-args "youtube:player_client=android_vr;po_token=android_vr.gvs+$POT" \
+                -f "bv*[vcodec^=avc][height<=1080]+ba[ext=m4a]/bv*[vcodec^=avc][height<=1080]+ba/bv*+ba/b" \
+                --merge-output-format mp4 \
+                --retries 3 --fragment-retries 3 \
+                --postprocessor-args "ffmpeg:-movflags +faststart" \
+                -o "video_${VID}.%(ext)s" \
+                "https://www.youtube.com/watch?v=${VID}" \
+                && OK=1
+            else
+              echo 'could not fetch POT from bgutil server'
+            fi
+          }
+          [ "$OK" = "1" ] || exit 1
+
+      - name: Verify video
+        run: |
+          VID="${{ steps.vid.outputs.video_id }}"
+          ls -la video_${VID}.*
+          file video_${VID}.*
+          ffprobe -v error -show_format -show_streams video_${VID}.* 2>&1 | head -20
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: video_${{ steps.vid.outputs.video_id }}
+          path: video_${{ steps.vid.outputs.video_id }}.*
+          retention-days: 7
+          compression-level: 0  # video is already compressed
+
+      - name: Mirror to release (unthrottled download path)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VID="${{ steps.vid.outputs.video_id }}"
+          REPO="$GITHUB_REPOSITORY"
+          F=$(ls video_${VID}.* | head -1)
+          gh release view "vid-${VID}" --repo "$REPO" >/dev/null 2>&1 \
+            || gh release create "vid-${VID}" --repo "$REPO" \
+                 --title "farm: ${VID}" \
+                 --notes "auto: farm mirror for ${VID}" --latest=false || true
+          gh release upload "vid-${VID}" "$F" --repo "$REPO" --clobber
+          echo "release assets:"
+          gh release view "vid-${VID}" --repo "$REPO" --json assets \
+            -q '.assets[].name'
+

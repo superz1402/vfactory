@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>vfactory — Film Library</title>
+<style>
+  :root {
+    --bg: #0b0e13; --panel: #12161f; --line: #232a38;
+    --text: #e8ecf3; --dim: #8b94a7; --accent: #f0b429; --accent2: #5aa7ff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text);
+         font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+  .hero { padding: 72px 24px 40px; text-align: center;
+          background: linear-gradient(180deg, #0d1017 0%, var(--bg) 100%); }
+  .hero h1 { font-size: clamp(28px, 5vw, 44px); letter-spacing: 0.5px; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { color: var(--dim); margin-top: 12px; font-size: 15px; max-width: 640px; margin-left: auto; margin-right: auto; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 24px; }
+  .film { background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+          overflow: hidden; margin: 32px 0; }
+  .film video, .film .poster { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; background: #000; }
+  .film .body { padding: 24px 28px 28px; }
+  .film h2 { font-size: 24px; margin-bottom: 6px; }
+  .meta { color: var(--dim); font-size: 13px; margin-bottom: 14px; letter-spacing: 0.4px; }
+  .meta b { color: var(--accent); font-weight: 600; }
+  .film p.syn { color: #c3cad8; font-size: 15px; line-height: 1.65; margin-bottom: 18px; }
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 10px 18px; border-radius: 10px; font-size: 14px;
+         text-decoration: none; font-weight: 600; border: 1px solid var(--line); color: var(--text);
+         transition: 0.15s; }
+  .btn:hover { border-color: var(--accent2); }
+  .btn.primary { background: var(--accent); color: #14181f; border-color: var(--accent); }
+  .btn.primary:hover { filter: brightness(1.08); }
+  .acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+  .acts span { font-size: 12px; color: var(--dim); border: 1px solid var(--line);
+               border-radius: 999px; padding: 4px 12px; }
+  .soon { border: 1px dashed var(--line); border-radius: 16px; padding: 28px;
+          color: var(--dim); text-align: center; font-size: 14px; margin: 32px 0; }
+  footer { text-align: center; color: var(--dim); font-size: 13px; padding: 48px 24px 64px; }
+  footer a { color: var(--accent2); text-decoration: none; }
+  .tag { display: inline-block; background: #1a2130; color: var(--accent); font-size: 11px;
+         letter-spacing: 1.4px; border-radius: 6px; padding: 4px 10px; margin-bottom: 14px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="tag">VFAMILY / VFILMS</div>
+  <h1>The <span>Film</span> Library</h1>
+  <p>Documentaries built end-to-end by the vfactory pipeline — real footage,
+     scene-matched editing, narrated. Every film lists its sources.</p>
+</div>
+
+<div class="wrap">
+
+  <div class="film">
+    <video controls preload="metadata" poster="posters/ahyeon_doc.jpg"
+           src="https://github.com/superz1402/vfactory/releases/download/ahyeon-doc-v1/ahyeon_doc_trailer.mp4"></video>
+    <div class="body">
+      <h2>AHYEON: The Voice That Refused to Wait</h2>
+      <div class="meta"><b>17 min</b> &middot; 52 scenes &middot; 8 acts &middot; 1080p &middot; real footage &middot; 2026</div>
+      <p class="syn">
+        From an eleven-year-old audition in Chuncheon to stadium stages across Asia — the full arc of
+        BABYMONSTER's main vocalist: the reveal, the viral Last Evaluation performance of
+        <i>Dangerously</i>, the debut she had to miss, the 900-day wait, and the return that rewrote
+        the story. Cut entirely from real Ahyeon and BABYMONSTER footage — Last Evaluation tapes,
+        official music videos, THE FIRST TAKE one-takes, world-tour fancams — with a narrated,
+        scene-matched edit and an original synthesized score.
+      </p>
+      <div class="acts">
+        <span>Act I — The Girl From Chuncheon</span><span>Act II — The Reveal</span>
+        <span>Act III — Dangerously</span><span>Act IV — The Silence</span>
+        <span>Act V — SHEESH</span><span>Act VI — DRIP &amp; Takeoff</span>
+        <span>Act VII — 2026</span><span>Act VIII — Coda</span>
+      </div>
+      <div class="btns" style="margin-top: 20px;">
+        <a class="btn primary" href="https://github.com/superz1402/vfactory/releases/download/ahyeon-doc-v1/ahyeon_doc_full_720p.mp4">Watch full film (720p, 210 MB)</a>
+        <a class="btn" href="https://github.com/superz1402/vfactory/releases/download/ahyeon-doc-v1/ahyeon_doc_trailer.mp4">Download trailer</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="soon">
+    More films in production — same pipeline: research &rarr; script &rarr; voice &rarr; real-footage edit &rarr; score &rarr; delivery.
+  </div>
+
+</div>
+
+<footer>
+  built by <a href="https://github.com/superz1402/vfactory">vfactory</a> — a 7-stage autonomous film pipeline
+</footer>
+
+</body>
+</html>
