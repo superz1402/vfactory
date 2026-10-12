@@ -31,6 +31,14 @@
 8. **CREDENTIALS NEVER ENTER THE REPO.** Tokens live in `~/.tg_token`,
    `~/.gh_token` (chmod 600, gitignored). The footage farm lives in GitHub
    Actions workflows, tokens passed as runtime secrets/inputs only. (Round 5)
+9. **MAIN VIDEO ALWAYS AS A GIT RELEASE — LINK ALWAYS SHARED.** Every run's
+   main film (+720p mirror + trailer when present) is uploaded by s7 as
+   assets of the film's release tag (`film-<slug>`) on the PUBLIC repo
+   (superz1402/vfactory) — automatically, every delivery, no exceptions.
+   The release link is then ALWAYS sent to the user (Telegram/chat).
+   Telegram parts or storage.to mirrors alone are NOT a complete delivery.
+   Verbatim directive: "Always upload the main video as a git release and
+   share the link". (Round 10+)
 
 ## The footage problem (datacenter IP vs YouTube) — solved architecture
 
@@ -58,7 +66,7 @@ s3 voice         -> 03_voice/*.wav + timings    (edge-tts en-US-AndrewNeural -4%
 s4 media         -> 04_media/*.mp4 + manifest   (footage-first cuts + cutaways; images only as last resort)
 s5 music         -> 05_music/bed.wav            (numpy: Am-F-C-G progression, plucks, pulse, swells)
 s6 render        -> final.mp4                   (concat demuxer -c copy; per-scene fades; HARD voice QA)
-s7 deliver       -> delivery.json               (TG <=48MB direct; storage.to single-PUT <50MB; GitHub Releases for big files)
+s7 deliver       -> delivery.json               (TG <=48MB direct; storage.to single-PUT <50MB; GitHub Releases ALWAYS for main film + link shared)
 ```
 
 - Checkpoints: `.done_<stage>` markers + per-scene sidecars (`04_media/*.json`)
@@ -88,4 +96,6 @@ See `docs/MOTION_PLAN.md`. Rule: **optional s6.5 overlay stage, never a rewrite*
 3. Dispatch farm pulls for missing eras BEFORE s4. 4. Run stages with
 checkpoints; resume on timeout (2-CPU box: parallelize s4, chunk s6 pass_a).
 5. Verify QA pass + spot-check frames with the Read tool. 6. Deliver: trailer
-+ parts + library link. 7. Update worklog; push repo; verify remote.
++ parts + **git-release link (Rule 9, mandatory — s7 does it automatically,
+verify `delivery.json.release.ok == true`)** + library link. 7. Update
+worklog; push repo; verify remote.
