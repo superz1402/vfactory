@@ -77,3 +77,24 @@ phone browser (any cookies.txt extension), save it as
 pulls every machine-fetchable mirror, **verifies sha256**, ffprobe-validates,
 and drops `~/ytdl-agent/downloads/harvest/<source_id>.mp4` — ready for the
 Ahyeon-dedicated edit (character-locked clips per act).
+
+## Server-side companion: cobalt_drip_harvest.py
+
+Discovered 2026-10-16: the only no-JWT cobalt relay (api.cobalt.liubquanti.click)
+rate-limits ~1 request per 90-100s per source IP, then RECOVERS. Behind it, tunnel
+hosts rotate across community instances — some healthy, some googlevideo-blocked
+(0-byte tunnels = upstream roulette, NOT a dead item).
+
+So the server CAN harvest without any new IPs, slowly: 1 request per cooldown
+window, full download + ffprobe validation, resumable state.
+
+```bash
+python3 tools/harvest/cobalt_drip_harvest.py --budget-sec 470 --max-priority 1
+```
+
+- Yield: ~1 video / 3-4 attempts (~30-40 min per item at 720p)
+- State: ytdl-agent/downloads/harvest/drip_state.json (per-burst fail decay,
+  flaky items requeued last, persistent api_error items die after 6)
+- Files land next to state as <source_id>.mp4 — same pool fetch_manifest.py reads
+- This lane accumulates P1 footage server-side; the Termux one-run script
+  remains the primary mass lane for the full 45-item list
