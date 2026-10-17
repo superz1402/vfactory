@@ -243,53 +243,787 @@ write_sources() {
 cat > "$SOURCES_JSON" <<'JSONEOF'
 {
   "schema": "ahyeon.harvest/1.0",
-  "note": "Ahyeon-dedicated sources only. role: ahyeon_primary | ahyeon_cam | evaluation_doc | ensemble_context. ensemble_context = used ONLY for non-Ahyeon establishing beats.",
+  "note": "Ahyeon-dedicated sources only. role: ahyeon_primary | ahyeon_cam | evaluation_doc | ensemble_context. ensemble_context = used ONLY for non-Ahyeon establishing beats. | v3.0-sync: +Director's Cut Appendix C/D gap sources",
   "items": [
-    ["xw7Y2gviWbA","xw7Y2gviWbA","ahyeon_primary",1,["s1_origin","s5_vocal"],"Dangerously","BABYMONSTER","Dangerously COVER (Last Evaluation, origin artifact)"],
-    ["ysJCTCQYJyg","ysJCTCQYJyg","ahyeon_primary",1,["s1_origin"],"","","Ahyeon 15-year-old evaluation performance (~18M views)"],
-    ["O99aP4AvEF8","O99aP4AvEF8","ahyeon_primary",1,["s4_coronation","s5_vocal"],"SHEESH","THE FIRST TAKE","SHEESH / THE FIRST TAKE (one-take live)"],
-    ["06mCrMgv0zY","06mCrMgv0zY","ahyeon_primary",1,["s5_vocal"],"DRIP","THE FIRST TAKE","DRIP / THE FIRST TAKE (climax C5-G5 window ~t150-198)"],
-    ["hSgMTFImB7c","hSgMTFImB7c","ahyeon_primary",1,["s5_vocal"],"vampire","KBS","AHYEON vampire - Limousine Service clip (MBC/KBS)"],
-    ["MsOOG4Q5HvQ","MsOOG4Q5HvQ","ahyeon_primary",1,["s5_vocal"],"Monster","Begin Again","AHYEON Monster - Begin Again Open Mic"],
-    ["1TYYOw-815A","1TYYOw-815A","ahyeon_primary",1,["s6_group_rise"],"Golden","Netflix","MAMA 2025 Golden - PHARITA/AHYEON/RORA (Mnet)"],
-    ["e3U5Cz_ZASU","e3U5Cz_ZASU","ahyeon_cam",1,["s7_now"],"Problem","AHYEON","Problem (Ariana Grande) WORLD TOUR 4K fan cam"],
-    ["ItDZsiOhG6M","ItDZsiOhG6M","ahyeon_cam",1,["s7_now"],"MOON","M2","MOON fancam MCOUNTDOWN 4K (Mnet MPD)"],
-    ["OMeeqIge53E","OMeeqIge53E","ahyeon_cam",1,["s7_now"],"CHOOM","SBS","CHOOM fancam Inkigayo 4K (SBS)"],
-    ["8l5q7ZmZN-s","8l5q7ZmZN-s","ahyeon_cam",1,["s7_now"],"PSYCHO","AHYEON","PSYCHO fancam WORLD TOUR 4K"],
-    ["2wA_b6YHjqQ","2wA_b6YHjqQ","ahyeon_primary",1,["s3_return","s4_coronation"],"SHEESH","BABYMONSTER","SHEESH official MV"],
-    ["GsV1i0QHi-o","GsV1i0QHi-o","ahyeon_primary",1,["s3_return"],"Stuck In The Middle","BABYMONSTER","Stuck In The Middle official MV (return era)"],
-    ["Zp-Jhuhq0bQ","Zp-Jhuhq0bQ","ahyeon_primary",1,["s5_vocal"],"DRIP","BABYMONSTER","DRIP official MV"],
-    ["VQOizqBsqLc","VQOizqBsqLc","ahyeon_cam",1,["s4_coronation"],"SHEESH","M2","SHEESH MPD fancam 4K (Mnet official)"],
-    ["karQAIwewUk","karQAIwewUk","ahyeon_cam",1,["s5_vocal"],"DRIP","SBS","DRIP fancam 4K (SBS Inkigayo)"],
-    ["hCgZqFscMp0","hCgZqFscMp0","evaluation_doc",1,["s1_origin","s2_system"],"Last Evaluation","BABYMONSTER","Last Evaluation EP.1 (YG)"],
-    ["Gi0ezbc0OwU","Gi0ezbc0OwU","evaluation_doc",1,["s2_system"],"Last Evaluation","BABYMONSTER","Last Evaluation EP.8 (YG)"],
-    ["UESsLN8i63w","UESsLN8i63w","evaluation_doc",1,["s2_system"],"Vocal Mission","BABYMONSTER","Last Evaluation Individual Vocal Mission"],
-    ["UTfHawj9Z6w","UTfHawj9Z6w","ahyeon_primary",1,["s5_vocal"],"Leemujin","KBS","Leemujin Service EP.140 AHYEON (full live vocal show)"],
-    ["Kxb0aUqmex0","Kxb0aUqmex0","evaluation_doc",1,["s2_system"],"Behind The Scenes","BABYMONSTER","Last Evaluation BTS #2 (dorm)"],
-    ["eJCHKjt0MPw","eJCHKjt0MPw","ahyeon_primary",2,["s6_group_rise"],"FOREVER","BABYMONSTER","FOREVER official MV"],
-    ["xn8mQqz2xmM","xn8mQqz2xmM","ahyeon_primary",2,["s6_group_rise"],"HOT SAUCE","BABYMONSTER","HOT SAUCE official MV"],
-    ["gyRcsW9ORR4","gyRcsW9ORR4","ahyeon_cam",2,["s4_coronation"],"SHEESH","SBS","SHEESH fancam 4K (SBS Inkigayo)"],
-    ["1vNM1ANg_3w","1vNM1ANg_3w","ahyeon_cam",2,["s4_coronation"],"SHEESH","SBS","SHEESH facecam 4K (SBS)"],
-    ["uVjLpYYfsy4","uVjLpYYfsy4","ahyeon_cam",2,["s7_now"],"LIKE THAT","M2","LIKE THAT MPD fancam 4K (Mnet)"],
-    ["lt_LdIkPYkY","lt_LdIkPYkY","ahyeon_cam",2,["s6_group_rise"],"Really Like You","M2","Really Like You fancam 4K (Mnet)"],
-    ["jap9rSZds7U","jap9rSZds7U","ahyeon_primary",2,["s1_origin","s5_vocal"],"Dangerously","Knowing","Dangerously - Knowing Bros cut"],
-    ["6kGauBXhawU","6kGauBXhawU","ahyeon_primary",2,["s7_now"],"Dangerously","","Dangerously live - HELLO MONSTERS tour Kanagawa"],
-    ["olDWm2veCrM","olDWm2veCrM","ensemble_context",2,["s1_origin"],"BATTER UP","BABYMONSTER","BATTER UP MV - DEBUT WITHOUT AHYEON context only"],
-    ["4pcmRcjMhvc","4pcmRcjMhvc","evaluation_doc",2,["s2_system"],"Last Evaluation","BABYMONSTER","Last Evaluation EP.2"],
-    ["mO9VkglQKgg","mO9VkglQKgg","evaluation_doc",2,["s2_system"],"Last Evaluation","BABYMONSTER","Last Evaluation EP.3"],
-    ["LN-G05mqGjY","LN-G05mqGjY","evaluation_doc",2,["s2_system"],"Last Evaluation","BABYMONSTER","Last Evaluation EP.4"],
-    ["geVfm6A7CHw","geVfm6A7CHw","evaluation_doc",2,["s2_system"],"Last Evaluation","BABYMONSTER","Last Evaluation EP.5"],
-    ["W8qUoHsE-wQ","W8qUoHsE-wQ","evaluation_doc",2,["s2_system"],"Last Evaluation","BABYMONSTER","Last Evaluation EP.6"],
-    ["k2GNcev8kaA","k2GNcev8kaA","evaluation_doc",2,["s2_system"],"Last Evaluation","BABYMONSTER","Last Evaluation EP.7"],
-    ["HFLq5j8wU5Q","HFLq5j8wU5Q","ensemble_context",2,["s7_now"],"HELLO MONSTERS","BABYMONSTER","HELLO MONSTERS BEHIND in LA #1"],
-    ["4NvYGr1YWr4","4NvYGr1YWr4","ensemble_context",2,["s7_now"],"SEE YOU THERE","BABYMONSTER","SEE YOU THERE BEHIND in JAKARTA"],
-    ["6BVnhqQ28Vw","6BVnhqQ28Vw","ahyeon_cam",3,["s7_now"],"SUGAR HONEY","M2","SUGAR HONEY ICE TEA MPD fancam 4K"],
-    ["lCO7-Z7ng-Q","lCO7-Z7ng-Q","ahyeon_cam",3,["s6_group_rise"],"HOT SAUCE","AHYEON","HOT SAUCE Summer Sonic Osaka 4K fan cam"],
-    ["7xUO44qVEDc","7xUO44qVEDc","ahyeon_cam",3,["s3_return"],"STUCK","AHYEON","Stuck In The Middle Tokyo Summer Sonic 4K fan cam"],
-    ["hQD8rwwB-Vc","hQD8rwwB-Vc","ahyeon_cam",3,["s6_group_rise"],"FOREVER","SBS","FOREVER fancam 4K (SBS)"],
-    ["YGG3936Bt2c","YGG3936Bt2c","evaluation_doc",3,["s2_system"],"Behind The Scenes","BABYMONSTER","Last Evaluation BTS #3"],
-    ["Am2NBfQ3I2g","Am2NBfQ3I2g","evaluation_doc",3,["s2_system"],"Behind The Scenes","BABYMONSTER","Last Evaluation BTS #4"],
-    ["6ha4zBqRkUE","6ha4zBqRkUE","ensemble_context",3,["s8_future"],"Zach Sang","","Zach Sang Show interview (group)"]
+    [
+      "xw7Y2gviWbA",
+      "xw7Y2gviWbA",
+      "ahyeon_primary",
+      1,
+      [
+        "s1_origin",
+        "s5_vocal"
+      ],
+      "Dangerously",
+      "BABYMONSTER",
+      "Dangerously COVER (Last Evaluation, origin artifact)"
+    ],
+    [
+      "ysJCTCQYJyg",
+      "ysJCTCQYJyg",
+      "ahyeon_primary",
+      1,
+      [
+        "s1_origin"
+      ],
+      "",
+      "",
+      "Ahyeon 15-year-old evaluation performance (~18M views)"
+    ],
+    [
+      "O99aP4AvEF8",
+      "O99aP4AvEF8",
+      "ahyeon_primary",
+      1,
+      [
+        "s4_coronation",
+        "s5_vocal"
+      ],
+      "SHEESH",
+      "THE FIRST TAKE",
+      "SHEESH / THE FIRST TAKE (one-take live)"
+    ],
+    [
+      "06mCrMgv0zY",
+      "06mCrMgv0zY",
+      "ahyeon_primary",
+      1,
+      [
+        "s5_vocal"
+      ],
+      "DRIP",
+      "THE FIRST TAKE",
+      "DRIP / THE FIRST TAKE (climax C5-G5 window ~t150-198)"
+    ],
+    [
+      "hSgMTFImB7c",
+      "hSgMTFImB7c",
+      "ahyeon_primary",
+      1,
+      [
+        "s5_vocal"
+      ],
+      "vampire",
+      "KBS",
+      "AHYEON vampire - Limousine Service clip (MBC/KBS)"
+    ],
+    [
+      "MsOOG4Q5HvQ",
+      "MsOOG4Q5HvQ",
+      "ahyeon_primary",
+      1,
+      [
+        "s5_vocal"
+      ],
+      "Monster",
+      "Begin Again",
+      "AHYEON Monster - Begin Again Open Mic"
+    ],
+    [
+      "1TYYOw-815A",
+      "1TYYOw-815A",
+      "ahyeon_primary",
+      1,
+      [
+        "s6_group_rise"
+      ],
+      "Golden",
+      "Netflix",
+      "MAMA 2025 Golden - PHARITA/AHYEON/RORA (Mnet)"
+    ],
+    [
+      "e3U5Cz_ZASU",
+      "e3U5Cz_ZASU",
+      "ahyeon_cam",
+      1,
+      [
+        "s7_now"
+      ],
+      "Problem",
+      "AHYEON",
+      "Problem (Ariana Grande) WORLD TOUR 4K fan cam"
+    ],
+    [
+      "ItDZsiOhG6M",
+      "ItDZsiOhG6M",
+      "ahyeon_cam",
+      1,
+      [
+        "s7_now"
+      ],
+      "MOON",
+      "M2",
+      "MOON fancam MCOUNTDOWN 4K (Mnet MPD)"
+    ],
+    [
+      "OMeeqIge53E",
+      "OMeeqIge53E",
+      "ahyeon_cam",
+      1,
+      [
+        "s7_now"
+      ],
+      "CHOOM",
+      "SBS",
+      "CHOOM fancam Inkigayo 4K (SBS)"
+    ],
+    [
+      "8l5q7ZmZN-s",
+      "8l5q7ZmZN-s",
+      "ahyeon_cam",
+      1,
+      [
+        "s7_now"
+      ],
+      "PSYCHO",
+      "AHYEON",
+      "PSYCHO fancam WORLD TOUR 4K"
+    ],
+    [
+      "2wA_b6YHjqQ",
+      "2wA_b6YHjqQ",
+      "ahyeon_primary",
+      1,
+      [
+        "s3_return",
+        "s4_coronation"
+      ],
+      "SHEESH",
+      "BABYMONSTER",
+      "SHEESH official MV"
+    ],
+    [
+      "GsV1i0QHi-o",
+      "GsV1i0QHi-o",
+      "ahyeon_primary",
+      1,
+      [
+        "s3_return"
+      ],
+      "Stuck In The Middle",
+      "BABYMONSTER",
+      "Stuck In The Middle official MV (return era)"
+    ],
+    [
+      "Zp-Jhuhq0bQ",
+      "Zp-Jhuhq0bQ",
+      "ahyeon_primary",
+      1,
+      [
+        "s5_vocal"
+      ],
+      "DRIP",
+      "BABYMONSTER",
+      "DRIP official MV"
+    ],
+    [
+      "VQOizqBsqLc",
+      "VQOizqBsqLc",
+      "ahyeon_cam",
+      1,
+      [
+        "s4_coronation"
+      ],
+      "SHEESH",
+      "M2",
+      "SHEESH MPD fancam 4K (Mnet official)"
+    ],
+    [
+      "karQAIwewUk",
+      "karQAIwewUk",
+      "ahyeon_cam",
+      1,
+      [
+        "s5_vocal"
+      ],
+      "DRIP",
+      "SBS",
+      "DRIP fancam 4K (SBS Inkigayo)"
+    ],
+    [
+      "hCgZqFscMp0",
+      "hCgZqFscMp0",
+      "evaluation_doc",
+      1,
+      [
+        "s1_origin",
+        "s2_system"
+      ],
+      "Last Evaluation",
+      "BABYMONSTER",
+      "Last Evaluation EP.1 (YG)"
+    ],
+    [
+      "Gi0ezbc0OwU",
+      "Gi0ezbc0OwU",
+      "evaluation_doc",
+      1,
+      [
+        "s2_system"
+      ],
+      "Last Evaluation",
+      "BABYMONSTER",
+      "Last Evaluation EP.8 (YG)"
+    ],
+    [
+      "UESsLN8i63w",
+      "UESsLN8i63w",
+      "evaluation_doc",
+      1,
+      [
+        "s2_system"
+      ],
+      "Vocal Mission",
+      "BABYMONSTER",
+      "Last Evaluation Individual Vocal Mission"
+    ],
+    [
+      "UTfHawj9Z6w",
+      "UTfHawj9Z6w",
+      "ahyeon_primary",
+      1,
+      [
+        "s5_vocal"
+      ],
+      "Leemujin",
+      "KBS",
+      "Leemujin Service EP.140 AHYEON (full live vocal show)"
+    ],
+    [
+      "Kxb0aUqmex0",
+      "Kxb0aUqmex0",
+      "evaluation_doc",
+      1,
+      [
+        "s2_system"
+      ],
+      "Behind The Scenes",
+      "BABYMONSTER",
+      "Last Evaluation BTS #2 (dorm)"
+    ],
+    [
+      "eJCHKjt0MPw",
+      "eJCHKjt0MPw",
+      "ahyeon_primary",
+      2,
+      [
+        "s6_group_rise"
+      ],
+      "FOREVER",
+      "BABYMONSTER",
+      "FOREVER official MV"
+    ],
+    [
+      "xn8mQqz2xmM",
+      "xn8mQqz2xmM",
+      "ahyeon_primary",
+      2,
+      [
+        "s6_group_rise"
+      ],
+      "HOT SAUCE",
+      "BABYMONSTER",
+      "HOT SAUCE official MV"
+    ],
+    [
+      "gyRcsW9ORR4",
+      "gyRcsW9ORR4",
+      "ahyeon_cam",
+      2,
+      [
+        "s4_coronation"
+      ],
+      "SHEESH",
+      "SBS",
+      "SHEESH fancam 4K (SBS Inkigayo)"
+    ],
+    [
+      "1vNM1ANg_3w",
+      "1vNM1ANg_3w",
+      "ahyeon_cam",
+      2,
+      [
+        "s4_coronation"
+      ],
+      "SHEESH",
+      "SBS",
+      "SHEESH facecam 4K (SBS)"
+    ],
+    [
+      "uVjLpYYfsy4",
+      "uVjLpYYfsy4",
+      "ahyeon_cam",
+      2,
+      [
+        "s7_now"
+      ],
+      "LIKE THAT",
+      "M2",
+      "LIKE THAT MPD fancam 4K (Mnet)"
+    ],
+    [
+      "lt_LdIkPYkY",
+      "lt_LdIkPYkY",
+      "ahyeon_cam",
+      2,
+      [
+        "s6_group_rise"
+      ],
+      "Really Like You",
+      "M2",
+      "Really Like You fancam 4K (Mnet)"
+    ],
+    [
+      "jap9rSZds7U",
+      "jap9rSZds7U",
+      "ahyeon_primary",
+      2,
+      [
+        "s1_origin",
+        "s5_vocal"
+      ],
+      "Dangerously",
+      "Knowing",
+      "Dangerously - Knowing Bros cut"
+    ],
+    [
+      "6kGauBXhawU",
+      "6kGauBXhawU",
+      "ahyeon_primary",
+      2,
+      [
+        "s7_now"
+      ],
+      "Dangerously",
+      "",
+      "Dangerously live - HELLO MONSTERS tour Kanagawa"
+    ],
+    [
+      "olDWm2veCrM",
+      "olDWm2veCrM",
+      "ensemble_context",
+      2,
+      [
+        "s1_origin"
+      ],
+      "BATTER UP",
+      "BABYMONSTER",
+      "BATTER UP MV - DEBUT WITHOUT AHYEON context only"
+    ],
+    [
+      "4pcmRcjMhvc",
+      "4pcmRcjMhvc",
+      "evaluation_doc",
+      2,
+      [
+        "s2_system"
+      ],
+      "Last Evaluation",
+      "BABYMONSTER",
+      "Last Evaluation EP.2"
+    ],
+    [
+      "mO9VkglQKgg",
+      "mO9VkglQKgg",
+      "evaluation_doc",
+      2,
+      [
+        "s2_system"
+      ],
+      "Last Evaluation",
+      "BABYMONSTER",
+      "Last Evaluation EP.3"
+    ],
+    [
+      "LN-G05mqGjY",
+      "LN-G05mqGjY",
+      "evaluation_doc",
+      2,
+      [
+        "s2_system"
+      ],
+      "Last Evaluation",
+      "BABYMONSTER",
+      "Last Evaluation EP.4"
+    ],
+    [
+      "geVfm6A7CHw",
+      "geVfm6A7CHw",
+      "evaluation_doc",
+      2,
+      [
+        "s2_system"
+      ],
+      "Last Evaluation",
+      "BABYMONSTER",
+      "Last Evaluation EP.5"
+    ],
+    [
+      "W8qUoHsE-wQ",
+      "W8qUoHsE-wQ",
+      "evaluation_doc",
+      2,
+      [
+        "s2_system"
+      ],
+      "Last Evaluation",
+      "BABYMONSTER",
+      "Last Evaluation EP.6"
+    ],
+    [
+      "k2GNcev8kaA",
+      "k2GNcev8kaA",
+      "evaluation_doc",
+      2,
+      [
+        "s2_system"
+      ],
+      "Last Evaluation",
+      "BABYMONSTER",
+      "Last Evaluation EP.7"
+    ],
+    [
+      "HFLq5j8wU5Q",
+      "HFLq5j8wU5Q",
+      "ensemble_context",
+      2,
+      [
+        "s7_now"
+      ],
+      "HELLO MONSTERS",
+      "BABYMONSTER",
+      "HELLO MONSTERS BEHIND in LA #1"
+    ],
+    [
+      "4NvYGr1YWr4",
+      "4NvYGr1YWr4",
+      "ensemble_context",
+      2,
+      [
+        "s7_now"
+      ],
+      "SEE YOU THERE",
+      "BABYMONSTER",
+      "SEE YOU THERE BEHIND in JAKARTA"
+    ],
+    [
+      "6BVnhqQ28Vw",
+      "6BVnhqQ28Vw",
+      "ahyeon_cam",
+      3,
+      [
+        "s7_now"
+      ],
+      "SUGAR HONEY",
+      "M2",
+      "SUGAR HONEY ICE TEA MPD fancam 4K"
+    ],
+    [
+      "lCO7-Z7ng-Q",
+      "lCO7-Z7ng-Q",
+      "ahyeon_cam",
+      3,
+      [
+        "s6_group_rise"
+      ],
+      "HOT SAUCE",
+      "AHYEON",
+      "HOT SAUCE Summer Sonic Osaka 4K fan cam"
+    ],
+    [
+      "7xUO44qVEDc",
+      "7xUO44qVEDc",
+      "ahyeon_cam",
+      3,
+      [
+        "s3_return"
+      ],
+      "STUCK",
+      "AHYEON",
+      "Stuck In The Middle Tokyo Summer Sonic 4K fan cam"
+    ],
+    [
+      "hQD8rwwB-Vc",
+      "hQD8rwwB-Vc",
+      "ahyeon_cam",
+      3,
+      [
+        "s6_group_rise"
+      ],
+      "FOREVER",
+      "SBS",
+      "FOREVER fancam 4K (SBS)"
+    ],
+    [
+      "YGG3936Bt2c",
+      "YGG3936Bt2c",
+      "evaluation_doc",
+      3,
+      [
+        "s2_system"
+      ],
+      "Behind The Scenes",
+      "BABYMONSTER",
+      "Last Evaluation BTS #3"
+    ],
+    [
+      "Am2NBfQ3I2g",
+      "Am2NBfQ3I2g",
+      "evaluation_doc",
+      3,
+      [
+        "s2_system"
+      ],
+      "Behind The Scenes",
+      "BABYMONSTER",
+      "Last Evaluation BTS #4"
+    ],
+    [
+      "6ha4zBqRkUE",
+      "6ha4zBqRkUE",
+      "ensemble_context",
+      3,
+      [
+        "s8_future"
+      ],
+      "Zach Sang",
+      "",
+      "Zach Sang Show interview (group)"
+    ],
+    [
+      "shit_mv",
+      "naoGk-Zjc1s",
+      "ahyeon_primary",
+      1,
+      [
+        "act6_itgirl",
+        "act8_close"
+      ],
+      "SUGAR HONEY ICE TEA",
+      "BABYMONSTER",
+      "SUGAR HONEY ICE TEA official MV (DC 0.76x2+0.73+0.68 windows; s35+s47+cards)"
+    ],
+    [
+      "choom_mv",
+      "x3eqqoZPV_E",
+      "ahyeon_primary",
+      1,
+      [
+        "act0_open",
+        "act6_itgirl"
+      ],
+      "CHOOM",
+      "BABYMONSTER",
+      "CHOOM (chum) official MV (DC 0.60; s01/s32/s33/s34)"
+    ],
+    [
+      "moon_mv",
+      "xXZwZ0DolJc",
+      "ahyeon_primary",
+      1,
+      [
+        "act6_itgirl"
+      ],
+      "MOON",
+      "BABYMONSTER",
+      "MOON official MV (DC 0.55; s32)"
+    ],
+    [
+      "dream_mv",
+      "ynOtYmpZxak",
+      "ahyeon_primary",
+      1,
+      [
+        "act2_voice",
+        "act3_wait"
+      ],
+      "DREAM",
+      "BABYMONSTER",
+      "DREAM pre-debut MV (Act2 backbone; s09/s10/s12 era-absence context)"
+    ],
+    [
+      "rly_mv",
+      "XShaIZs7J7M",
+      "ahyeon_primary",
+      1,
+      [
+        "act6_itgirl"
+      ],
+      "REALLY LIKE YOU",
+      "BABYMONSTER",
+      "REALLY LIKE YOU official MV (DC 0.70x2+0.69; cards+s32-35+s46)"
+    ],
+    [
+      "intro_ahyeon",
+      "8i_wZQoqbwU",
+      "ahyeon_primary",
+      1,
+      [
+        "act1_origin",
+        "act3_wait"
+      ],
+      "Introducing AHYEON",
+      "BABYMONSTER",
+      "BABYMONSTER - Introducing AHYEON (leval_ahyeon proxy; s11/s18 backbone)"
+    ],
+    [
+      "choom_stage_a",
+      "UPkyursCTfE",
+      "ahyeon_cam",
+      1,
+      [
+        "act6_itgirl"
+      ],
+      "CHOOM",
+      "MBCkpop",
+      "CHOOM Show! MusicCore 260509 comeback stage (DC 0.77 top window source)"
+    ],
+    [
+      "choom_stage_b",
+      "c1jLt0EarG4",
+      "ahyeon_cam",
+      1,
+      [
+        "act6_itgirl"
+      ],
+      "CHOOM",
+      "MBCkpop",
+      "CHOOM Show! MusicCore 260516 stage (DC choom_stage alt)"
+    ],
+    [
+      "kspo_behind",
+      "qoDZQ3-CtCY",
+      "ahyeon_cam",
+      1,
+      [
+        "act5_monster",
+        "act8_dome"
+      ],
+      "HELLO MONSTERS",
+      "BABYMONSTER",
+      "HELLO MONSTERS BEHIND in SEOUL (kspo proxy 21:44; s27/s30/s43-45)"
+    ],
+    [
+      "nextmovement",
+      "rYyUpQ_veL4",
+      "ensemble_context",
+      1,
+      [
+        "act1_origin",
+        "act2_voice"
+      ],
+      "NEXT MOVEMENT",
+      "YG ENTERTAINMENT",
+      "YG NEXT MOVEMENT official trailer (era context s04/s06/s12)"
+    ],
+    [
+      "choom_inkigayo",
+      "4cGD1koF2bk",
+      "ahyeon_cam",
+      2,
+      [
+        "act6_itgirl"
+      ],
+      "CHOOM",
+      "SBSKPOP X INKIGAYO",
+      "CHOOM SBS Inkigayo 260517 (choom_stage alt)"
+    ],
+    [
+      "shit_perf",
+      "SsuCimm5BIU",
+      "ahyeon_primary",
+      2,
+      [
+        "act6_itgirl"
+      ],
+      "SUGAR HONEY ICE TEA",
+      "BABYMONSTER",
+      "SUGAR HONEY ICE TEA PERFORMANCE VIDEO (alt 0.76-window source)"
+    ],
+    [
+      "choom_perf",
+      "wqSHogLRtJI",
+      "ahyeon_primary",
+      2,
+      [
+        "act6_itgirl"
+      ],
+      "CHOOM",
+      "BABYMONSTER",
+      "CHOOM PERFORMANCE VIDEO (alt source)"
+    ],
+    [
+      "interview_instyle",
+      "a5cHf4Ls3o4",
+      "evaluation_doc",
+      2,
+      [
+        "act7_analysis"
+      ],
+      "interview",
+      "InStyle",
+      "BABYMONSTER Answers Fan Mail | InStyle (interview proxy)"
+    ],
+    [
+      "interview_cosmo",
+      "6y0MD1WkMN0",
+      "evaluation_doc",
+      2,
+      [
+        "act7_analysis"
+      ],
+      "interview",
+      "Cosmopolitan",
+      "BABYMONSTER Rapid-Fire | Cosmopolitan (interview alt)"
+    ],
+    [
+      "batterup_stage_p",
+      "FinTVHCeYBo",
+      "ahyeon_cam",
+      2,
+      [
+        "act4_sheesh"
+      ],
+      "BATTER UP",
+      "BABYMONSTER",
+      "BATTER UP LIVE PERFORMANCE Stadium Ver (batterup_stage proxy; s24)"
+    ],
+    [
+      "airport_gmp_news",
+      "n5ZKXeXSVeg",
+      "ahyeon_cam",
+      2,
+      [
+        "act6_itgirl"
+      ],
+      "airport",
+      "Newsen",
+      "AHYEON GMP Airport Arrival 2026.9.2 (v3.0 airport era s32-35)"
+    ],
+    [
+      "airport_icn_short",
+      "5LWSNVhkDgY",
+      "ahyeon_cam",
+      2,
+      [
+        "act6_itgirl"
+      ],
+      "airport",
+      "YouTube Shorts",
+      "Incheon solo no-bodyguard Aug 2024 short (D1 A1; s32 anchor)"
+    ],
+    [
+      "sheesh_facecam_sbs",
+      "ILOm4yRXvuw",
+      "ahyeon_cam",
+      1,
+      [
+        "act4_sheesh"
+      ],
+      "SHEESH",
+      "SBSKPOP X INKIGAYO",
+      "SHEESH FaceCam 4K SBS Inkigayo 240428 (DC D3-P2; s21 wide-flag primary fix)"
+    ]
   ]
 }
 JSONEOF

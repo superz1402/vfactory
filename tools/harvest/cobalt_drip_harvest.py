@@ -103,9 +103,13 @@ def main():
     ap.add_argument("--max-priority", type=int, default=1)
     ap.add_argument("--max-bytes", type=int, default=700 * 1024 * 1024)
     ap.add_argument("--max-fails", type=int, default=6)
+    ap.add_argument("--ids", type=str, default="", help="comma-separated source_ids to restrict")
     a = ap.parse_args()
 
     items = [i for i in json.load(open(SOURCES))["items"] if i[3] <= a.max_priority]
+    if a.ids:
+        wanted = {x.strip() for x in a.ids.split(",") if x.strip()}
+        items = [i for i in items if i[0] in wanted or i[1] in wanted]
     items.sort(key=lambda i: i[3])
     st = load_state()
     # decay soft-fail counters each burst: upstream roulette is transient,
